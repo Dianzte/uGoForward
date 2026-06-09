@@ -13,6 +13,8 @@
     <h2> Beca {{ $beca->titulo }}</h2>
     <p>{{ $beca->descripcion }}</p> 
 
+    <p> Universidad: {{ $beca->universidad->nombre_completo }}</p>
+
     <a href="{{ route('becas.index') }}">Volver</a>
 
 </body>

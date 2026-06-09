@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Beca;
 use Illuminate\Http\Request;
+use App\Models\Universidad;
 
 class BecaController extends Controller
 {
@@ -22,7 +23,9 @@ class BecaController extends Controller
      */
     public function create()
     {
-        //
+        return view('becas.crear', [
+            'universidades' => Universidad::get(),
+        ]);
     }
 
     /**
@@ -30,10 +33,14 @@ class BecaController extends Controller
      */
     public function store(Request $request)
     {
-        Beca::create([
-            'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
+        $data = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'universidad_id' => 'required|exists:universidades,id',
         ]);
+
+        
+        Beca::create($data);
         return redirect()->route('becas.index');
     }
 
@@ -42,8 +49,13 @@ class BecaController extends Controller
      */
     public function show($id)
     {
+        
         $beca = Beca::findOrFail($id);
-        return view('becas.detalle', compact('beca'));
+        $beca->load('universidad');
+
+        return view('becas.detalle', [
+            'beca' => $beca,
+        ]);
     }
 
     /**

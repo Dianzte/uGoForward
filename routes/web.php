@@ -8,9 +8,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/becas/crear', function() {
-    return view('becas.crear');
-})->name('becas.crear');
+Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
 
 Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
 

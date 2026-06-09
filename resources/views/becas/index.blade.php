@@ -21,7 +21,7 @@
         </a>
     @endforeach
 
-    <a href="{{ route('becas.crear') }}">Crear nueva beca</a>
+    <a href="{{ route('becas.create') }}">Crear nueva beca</a>
 
 </body>
 
