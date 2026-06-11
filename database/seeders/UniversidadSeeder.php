@@ -16,10 +16,10 @@ class UniversidadSeeder extends Seeder
         $universidades = [
             ['siglas' => 'uca', 'nombre_completo' => 'Universidad Centroamericana José Simeón Cañas'],
             ['siglas' => 'udb', 'nombre_completo' => 'Universidad Don Bosco'],
-            ['siglas' => 'utec', 'nombre_completo' => 'Universidad Tecnológica de El Salvador'],
-            ['siglas' => 'ufg', 'nombre_completo' => 'Universidad Francisco Gavidia El Salvador'],
-            ['siglas' => 'uees', 'nombre_completo' => 'Universidad Evangélica de El Salvador'],
-            ['siglas' => 'unicaes', 'nombre_completo' => 'Universidad Católica de El Salvador'],
+            ['siglas' => 'utec', 'nombre_completo' => 'Universidad Tecnológica'],
+            ['siglas' => 'ufg', 'nombre_completo' => 'Universidad Francisco Gavidia'],
+            ['siglas' => 'uees', 'nombre_completo' => 'Universidad Evangélica'],
+            ['siglas' => 'unicaes', 'nombre_completo' => 'Universidad Católica'],
         ];
 
         foreach ($universidades as $universidad) {

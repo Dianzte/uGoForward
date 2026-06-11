@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Beca;
 use Illuminate\Http\Request;
 use App\Models\Universidad;
+use App\Models\Carrera;
+use App\Models\Ayuda;
+use App\Models\Condicion;
+use App\Models\Imagen;
 
 class BecaController extends Controller
 {
@@ -25,6 +29,10 @@ class BecaController extends Controller
     {
         return view('becas.crear', [
             'universidades' => Universidad::get(),
+            'carreras' => Carrera::get(),
+            'ayuda' => Ayuda::get(),
+            'condiciones' => Condicion::get(),
+            'imagenes' => Imagen::get(),
         ]);
     }
 
@@ -37,6 +45,11 @@ class BecaController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'universidad_id' => 'required|exists:universidades,id',
+            'carrera_id' => 'required|exists:carreras,id',
+            'condicion_id' => 'required|exists:condiciones,id',
+            'duracion' => 'required|',
+            'imagen_id' => 'required|exists:imagenes,id',
+            'ayuda_id' => 'required|exists:ayuda,id',
         ]);
 
         

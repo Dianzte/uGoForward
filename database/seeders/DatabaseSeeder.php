@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
 
         
         $this->call(UniversidadSeeder::class);
+        $this->call(CarreraSeeder::class);
+        $this->call(CondicionSeeder::class);
+        $this->call(AyudaSeeder::class);
+        $this->call(ImagenSeeder::class);
 
         Beca::factory(5)->create();
 
