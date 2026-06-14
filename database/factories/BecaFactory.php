@@ -9,6 +9,7 @@ use App\Models\Carrera;
 use App\Models\Condicion;
 use App\Models\Ayuda;
 use App\Models\Imagen;
+use carbon\Carbon;
 
 /**
  * @extends Factory<Beca>
@@ -29,7 +30,7 @@ class BecaFactory extends Factory
             'carrera_id' => Carrera::inRandomOrder()->value('id'),
             'condicion_id' => Condicion::inRandomOrder()->value('id'),
             'ayuda_id' => Ayuda::inRandomOrder()->value('id'),
-            'duracion' => fake()->dateTime(),
+            'vencimiento' => fake()->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             'imagen_id' => Imagen::inRandomOrder()->value('id'),
         ];
     }

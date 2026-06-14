@@ -62,9 +62,9 @@
             <div> {{ $message }}</div>
         @enderror
 
-        <label for="duracion">Duración:</label>
-        <input type="date" id="duracion" name="duracion" required>
-        @error('duracion')
+        <label for="vencimiento">Vencimiento:</label>
+        <input type="dateTime-local" id="vencimiento" name="vencimiento"  min="{{ date('Y-m-d') }}" required>
+        @error('vencimiento')
             <div> {{ $message }}</div>
         @enderror
 

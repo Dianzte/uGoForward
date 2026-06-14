@@ -12,14 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('becas', function (Blueprint $table) {
-            $table->foreignId('carrera_id')->constrained('carreras')->onDelete('cascade');
-            $table->foreignId('condicion_id')->constrained('condiciones')->onDelete('cascade');
-            $table->foreignId('ayuda_id')->constrained('ayuda')->onDelete('cascade');
-            $table->datetime('vencimiento');
-            $table->foreignId('imagen_id')->constrained('imagenes')->onDelete('cascade');
-            
-
-
+            $table->renameColumn('vencimiento', 'vencimiento');
+            $table->dateTime('vencimiento')->change();
         });
     }
 
@@ -29,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('becas', function (Blueprint $table) {
-            //
+            $table->renameColumn('vencimiento', 'vencimiento');
+            $table->date('vencimiento')->change();
         });
     }
 };

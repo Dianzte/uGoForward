@@ -17,8 +17,10 @@
             <div class="beca">
                 <h2>{{ $beca->titulo }}</h2>
                 <p>{{ $beca->descripcion }}</p>
+                <p>Última fecha para aplicar: {{$beca->vencimiento}}</p>
             </div>
         </a>
+
     @endforeach
 
     <a href="{{ route('becas.create') }}">Crear nueva beca</a>

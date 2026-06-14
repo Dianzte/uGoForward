@@ -10,7 +10,7 @@ class Beca extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['titulo', 'descripcion', 'universidad_id', 'carrera_id', 'condicion_id', 'duracion', 'imagen_id', 'ayuda_id'];
+    protected $fillable = ['titulo', 'descripcion', 'universidad_id', 'carrera_id', 'condicion_id', 'vencimiento', 'imagen_id', 'ayuda_id'];
 
     public function universidad(): BelongsTo
     {

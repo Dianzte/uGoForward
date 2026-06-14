@@ -47,7 +47,7 @@ class BecaController extends Controller
             'universidad_id' => 'required|exists:universidades,id',
             'carrera_id' => 'required|exists:carreras,id',
             'condicion_id' => 'required|exists:condiciones,id',
-            'duracion' => 'required|',
+            'vencimiento' => 'required|date|after_or_equal:today|date_format:Y-m-d',
             'imagen_id' => 'required|exists:imagenes,id',
             'ayuda_id' => 'required|exists:ayuda,id',
         ]);
