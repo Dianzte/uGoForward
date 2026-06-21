@@ -14,7 +14,7 @@ class ImagenSeeder extends Seeder
     public function run(): void
     {
         $imagenes = [
-            'ruta' => 'imagen1.png',          
+            'ruta' => 'imagenes/imagen1.png',          
         ];
 
         Imagen::create($imagenes);

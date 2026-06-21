@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Beca;
-use Illuminate\Http\Request;
-use App\Models\Universidad;
-use App\Models\Carrera;
 use App\Models\Ayuda;
+use App\Models\Beca;
+use App\Models\Carrera;
 use App\Models\Condicion;
 use App\Models\Imagen;
+use App\Models\Universidad;
+use Illuminate\Http\Request;
 
 class BecaController extends Controller
 {
@@ -17,9 +17,9 @@ class BecaController extends Controller
      */
     public function index()
     {
-        $becas = beca::get();
+        $becas = Beca::get();
 
-    return view('becas.index', compact('becas'));
+        return view('becas.index', compact('becas'));
     }
 
     /**
@@ -48,13 +48,36 @@ class BecaController extends Controller
             'carrera_id' => 'required|exists:carreras,id',
             'condicion_id' => 'required|exists:condiciones,id',
             'vencimiento' => 'required|date|after_or_equal:today|date_format:Y-m-d',
-            'imagen_id' => 'required|exists:imagenes,id',
             'ayuda_id' => 'required|exists:ayuda,id',
+            'imagenes' => 'mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        
-        Beca::create($data);
-        return redirect()->route('becas.index');
+        $imagenId = null;
+
+        if ($request->hasFile('imagenes')) {
+            $rutaArchivo = $request->file('imagenes')->store('imagenes', 'public');
+
+            $imagenCreada = Imagen::create([
+                'ruta' => $rutaArchivo,
+            ]);
+
+            $imagenId = $imagenCreada->id;
+
+        }
+
+
+        $beca = Beca::create([
+            'titulo' => $data['titulo'],
+            'descripcion' => $data['descripcion'],
+            'universidad_id' => $data['universidad_id'],
+            'carrera_id' => $data['carrera_id'],
+            'condicion_id' => $data['condicion_id'],
+            'vencimiento' => $data['vencimiento'],
+            'ayuda_id' => $data['ayuda_id'],
+            'imagen_id' => $imagenId,
+        ]);
+
+        return redirect()->route('becas.index')->with('success', 'Beca e imágenes guardadas.');
     }
 
     /**
@@ -62,7 +85,7 @@ class BecaController extends Controller
      */
     public function show($id)
     {
-        
+
         $beca = Beca::findOrFail($id);
         $beca->load('universidad');
 

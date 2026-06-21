@@ -26,9 +26,12 @@
     <h2> Ayuda</h2>
     <p>  {{ $beca->ayuda->nombre }}</p>
 
+    @if (isset($beca->imagen->ruta))
+
     <div style="width: 300px; height: 200px; ">
-        <img src="{{ asset('storage/' . $beca->imagen->ruta) }}" alt="Imagen de la beca" style=" width: 100%; height: 100%;" >
+        <img src="{{ asset('storage/' . $beca->imagen->ruta)  }}" alt="Imagen de la beca" style=" width: 100%; height: 100%;" >
     </div>
+    @endif
     <a href="{{ route('becas.index') }}">Volver</a>
 
 </body>
