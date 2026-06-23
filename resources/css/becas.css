@@ -1,5 +1,9 @@
+:root {
+    --fondo: #00fa;
+}
+
 .becas-index-background{
-    background-color: red;
+    background-color: var(--fondo);
 }
 
 .tarjetas-grid {
