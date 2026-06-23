@@ -1,0 +1,16 @@
+.becas-index-background{
+    background-color: red;
+}
+
+.tarjetas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    grid-auto-rows: 200px;
+    gap: 30px;
+    padding: 40px;
+}
+
+.tarjeta {
+    border: 1px solid #000;
+    height: 100%;
+}

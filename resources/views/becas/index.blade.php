@@ -1,30 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-layout background='becas-index-background'>
+    <x-slot:titulo>
+        Becas disponibles
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Becas disponibles</title>
-    <link rel="stylesheet" href="{{ asset('css/becas.css') }}">
-</head>
+    </x-slot:titulo>
 
-<body>
+    <div class="tarjetas-grid">
 
-    <h1>Becas disponibles</h1>
-
-    @foreach ($becas as $beca)
+        @foreach ($becas as $beca)
         <a href="{{ route('becas.show', $beca->id) }}">
-            <div class="beca">
+            <div class="tarjeta">
                 <h2>{{ $beca->titulo }}</h2>
                 <p>{{ $beca->descripcion }}</p>
-                <p>Última fecha para aplicar: {{$beca->vencimiento}}</p>
+                <p>Última fecha para aplicar: {{ $beca->vencimiento }}</p>
             </div>
         </a>
-
-    @endforeach
+        @endforeach
+    </div>
 
     <a href="{{ route('becas.create') }}">Crear nueva beca</a>
-
-</body>
-
-</html>
+</x-layout>

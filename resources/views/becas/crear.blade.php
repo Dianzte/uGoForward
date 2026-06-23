@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Beca</title>
-</head>
-
-<body>
-
-    <h1>Crear Nueva Beca</h1>
+    <x-slot:titulo>
+        Crear Nueva Beca
+    </x-slot:titulo>
     <form action="{{ route('becas.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="titulo">Título:</label>
@@ -83,7 +76,7 @@
         @enderror
 
         <label for="imagenes">Imagen </label>
-        <input type="file" id="imagenes" name="imagenes" accept="image/*" >
+        <input type="file" id="imagenes" name="imagenes" accept="image/*">
 
 
         @error('imagen_id')
@@ -92,32 +85,31 @@
 
         <button type="submit">Crear Beca</button>
 
-        
+
     </form>
     <button onclick="testValores()">valores de prueba</button>
 
     <a href="{{ route('becas.index') }}">Volver a la lista de becas</a>
 
-</body>
-
-<script>
-    let numeroTest = 1;
+    
+    <script>
+        let numeroTest = 1;
 
     function testValores() {
-        let fechaAleatoria = intervalo(2028, 2030) + "-" + 0  + intervalo(1, 9) + "-"  + intervalo(1, 2)+ intervalo(1, 7)
+        let fechaAleatoria = intervalo(2028, 2030) + "-" + 0 + intervalo(1, 9) + "-" + intervalo(1, 2) + intervalo(1, 7)
 
         document.getElementById("titulo").value = "Titulo de prueba" + numeroTest
-
+        
         document.getElementById("universidad_id").value = intervalo(1, 6)
         document.getElementById("carrera_id").value = intervalo(1, 5)
         document.getElementById("ayuda_id").value = intervalo(1, 5)
         document.getElementById("condicion_id").value = intervalo(1, 5)
-        document.getElementById("vencimiento").value =  fechaAleatoria
+        document.getElementById("vencimiento").value = fechaAleatoria
         document.getElementById("descripcion").value = "descripción de prueba número" + numeroTest
-
+        
         numeroTest++
-
-
+        
+        
     }
 
     function intervalo(min, max) {
@@ -125,4 +117,5 @@
     }
 </script>
 
-</html>
+
+</x-layout>
