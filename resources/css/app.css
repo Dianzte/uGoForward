@@ -1,3 +1,21 @@
-@import 'tailwindcss';
+:root {
+    --cielo: #53C3EB;
+    --fondoTarjeta1: #55fba884;
+    --fondoTarjeta2: #005d47;
+    --informacionTarjeta: #fff;
 
-@import "becas.css";
+    --bordesFormulario: #000;
+    --oro: #FFD014;
+    --blanco: #fff;
+
+    --tituloTarjeta: 35px;
+    --tamanoBotones: 30px;
+    --fuenteTarjeta: 'times new romans';
+}
+
+.encabezado {
+    display: block;
+    color: var(--oro);
+    font-size: var(--tituloTarjeta);
+
+}

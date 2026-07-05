@@ -1,0 +1,62 @@
+.formularioCrear form input,
+.formularioCrear form select,
+.formularioCrear form button,
+.formularioCrear form textarea,
+a {
+    border: 1px solid var(--oro);
+    border-radius: 20px;
+    background-color: var(--fondoTarjeta);
+    padding: 0;
+    margin: 0;
+    color: var(--oro);
+}
+
+body {
+    background-color: var(--cielo);
+}
+
+
+.encabezado {
+    display: block;
+    color: var(--oro);
+    font-size: var(--tituloTarjeta);
+
+}
+
+.contenedorFormulario {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 700px;
+    min-width: 150px;
+    max-width: 500px;
+}
+
+.contenedorFormulario form {
+    border: 1px solid var(--oro);
+    background-color: var(--fondoTarjeta1);
+    width: 100%;
+    color: var(--blanco);
+    height: auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-auto-columns: 1px;
+    border-radius: 50px;
+    box-sizing: border-box;
+    padding: 30px;
+    flex-grow: 1;
+}
+
+.contenedorFormulario form label {
+    color: var(--oro);
+}
+
+.grupoCampo {
+    display: flex;
+    flex-direction: column; /* Alinea el label arriba del input */
+    gap: 8px;
+}
+
+.grupoCampoAnchoCompleto{
+    grid-column: span 2;
+}
