@@ -949,6 +949,7 @@ a { text-decoration: none; color: inherit; }
 
 .map-tooltip {
   position: absolute;
+  margin-top: 200px;
   background: rgba(8, 20, 50, 0.96);
   border: 1px solid rgba(110, 180, 255, 0.35);
   border-radius: 10px;
@@ -966,7 +967,7 @@ a { text-decoration: none; color: inherit; }
 
 .map-tooltip.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(25px);
 }
 
 .map-tooltip strong {
