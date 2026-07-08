@@ -1,3 +1,7 @@
+/* IMPORTAR EL TAILWIND */
+@import "tailwindcss";
+
+
 /* ===================================
    UGF ScholarShip — style.css
    Ocean depth scroll theme
@@ -727,6 +731,23 @@ a { text-decoration: none; color: inherit; }
   fill: rgba(0, 0, 0, 0);
 }
 
+.dept {
+  fill: #e0f2fe;
+  stroke: #0ea5e9;
+  stroke-width: 8;
+  transition: all 0.2s ease;
+}
+
+.dept:hover {
+  fill: #3b82f6;
+  stroke: #1e40af;
+  filter: brightness(1.1);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 
 
 
@@ -985,7 +1006,183 @@ a { text-decoration: none; color: inherit; }
   filter: drop-shadow(0 0 6px rgba(110,180,255,0.5));
 }
 
-.container-mapa path.dept.active {
-  fill: rgba(232, 200, 71, 0.40) !important;
-  filter: drop-shadow(0 0 8px rgba(232,200,71,0.5));
+
+/* modal mapa */
+
+.modal{
+
+display:none;
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.75);
+z-index:9999;
+overflow:auto;
+
+}
+
+.modal-content{
+
+background:rgba(21, 13, 55, 0.629);
+margin:40px auto;
+width:90%;
+max-width:900px;
+padding:30px;
+border-radius:15px;
+
+}
+
+#closeModal{
+
+float:right;
+font-size:35px;
+cursor:pointer;
+
+}
+
+.universidad{
+
+display:flex;
+gap:20px;
+margin-bottom:25px;
+padding-bottom:20px;
+border-bottom:1px solid #ddd;
+
+}
+
+.universidad img{
+
+width:220px;
+height:140px;
+object-fit:cover;
+border-radius:10px;
+
+}
+
+.uni-info{
+
+flex:1;
+
+}
+
+.uni-info h3{
+
+margin-bottom:10px;
+
+}
+
+
+/*PAGINA DE CARGA*/
+
+/* Importamos una fuente robusta estilo GTA */
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&family=Roboto+Condensed:wght@700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Contenedor Principal */
+.gta-loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+    font-family: 'Roboto Condensed', sans-serif;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+/* Fondo con degradado radial (Efecto viñeta de las pantallas de GTA) */
+.gta-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(20,20,20,0.4) 0%, rgba(0,0,0,0.95) 100%);
+    z-index: 1;
+}
+
+/* Contenido Central (UGF) */
+.gta-content {
+    text-align: center;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.ugf-title {
+    font-family: 'Changa One', sans-serif;
+    font-size: 7rem;
+    color: #ffffff;
+    letter-spacing: 5px;
+    text-shadow: 5px 5px 0px #000000, -2px -2px 0px #000000;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.gta-slogan {
+    font-size: 1.5rem;
+    color: #f1c40f; /* Amarillo clásico de acentos de GTA V */
+    letter-spacing: 3px;
+    font-weight: 700;
+    text-shadow: 2px 2px 0px #000;
+    margin-top: 10px;
+}
+
+/* Spinner en la esquina inferior derecha */
+.gta-spinner-wrapper {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 2;
+}
+
+.gta-loading-text {
+    color: #ffffff;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0px #000;
+}
+
+/* El Spinner estilo GTA (Línea discontinua que gira) */
+.gta-spinner {
+    width: 35px;
+    height: 35px;
+    border: 4px dashed #ffffff; /* El truco del estilo GTA es el borde discontinuo */
+    border-radius: 50%;
+    animation: gta-spin 1.2s linear infinite;
+}
+
+/* ANIMACIONES */
+
+/* Giro del Spinner */
+@keyframes gta-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pulso suave para las letras de UGF */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* Clase para desaparecer la pantalla */
+.gta-loader-hidden {
+    opacity: 0;
+    visibility: hidden;
 }

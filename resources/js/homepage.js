@@ -491,3 +491,82 @@ document.addEventListener('click', e => {
     activedept = null;
   }
 });
+
+
+/*MODAL 1*/ 
+
+const modal = document.getElementById("uniModal");
+const closeModal = document.getElementById("closeModal");
+const modalDept = document.getElementById("modalDept");
+const universidadesContainer =
+document.getElementById("universidadesContainer");
+
+document.querySelectorAll(".dept").forEach(dept=>{
+
+    dept.addEventListener("click",()=>{
+
+        modalDept.innerText=dept.dataset.name;
+
+        universidadesContainer.innerHTML="";
+
+        const universidades=JSON.parse(dept.dataset.universities || "[]");
+
+        universidades.forEach(u=>{
+
+            universidadesContainer.innerHTML+=`
+
+            <div class="universidad">
+
+                <img src="${u.image}">
+
+                <div class="uni-info">
+
+                    <h3>${u.name}</h3>
+
+                    <p>${u.description}</p>
+
+                    <p><strong>Carreras:</strong> ${u.careers}</p>
+
+                    <a href="${u.website}" target="_blank">
+                        Sitio web
+                    </a>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+        modal.style.display="block";
+
+    });
+
+});
+
+closeModal.onclick=()=>{
+
+modal.style.display="none";
+
+}
+
+window.onclick=(e)=>{
+
+if(e.target==modal){
+
+modal.style.display="none";
+
+}
+
+}
+
+/* JS DE PAGINA DE CARGA BELLACONA       */
+window.addEventListener("load", () => {
+    const loader = document.getElementById("gta-loader");
+    
+    // Agregamos un retraso de 2000 milisegundos (2 segundos) estilo videojuego
+    setTimeout(() => {
+        loader.classList.add("gta-loader-hidden");
+    }, 2000); 
+});
