@@ -9,6 +9,7 @@ body {
     background-color: var(--difuminado);
     border-radius: 20px;
     padding: 60px;
+    backdrop-filter: blur(10px);
 }
 
 section {
@@ -53,8 +54,8 @@ section {
     border-radius: 20px;
     background-color: var(--tarjeta);
     position: relative;
+    transition: height 0.3s linear;
     overflow: hidden;
-    transition: height 0.3s linear ;
 }
 
 .tarjeta:hover {
@@ -68,6 +69,7 @@ section {
     border: 3px solid var(--blanco);
 
 }
+
 .tarjetaAbierta::before {
     height: 20%;
 }
@@ -76,8 +78,7 @@ section {
 
 
 .tarjetaPortada {
-    
-    position: absolute;
+    display: block;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -85,11 +86,19 @@ section {
     background-color: var(--tarjetaPortada);
     z-index: 50;
     pointer-events: none;
-    transition: height 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.tarjeta:hover .tarjetaPortada {
+    height: 65%;
+} 
+
+.tarjetaAbierta:hover .tarjetaPortada {
+    height: 30%;
+} 
+
 .tarjetaAbierta .tarjetaPortada {
-    height: 40%;
+    height: 30%;
 }
 
 
@@ -128,9 +137,9 @@ section {
     font-size: var(--tamanoBotones)
 }
 
-.contenedorMar {
+.ocean {
     width: 100%;
-    height: 60%;
+    height: 80%;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -140,28 +149,45 @@ section {
 }
 
 .mar {
-    
+
     background-color: var(--mar);
-   flex-grow: 5;
+    flex-grow: 12;
 }
 
 .ola {
-    
-   flex-grow: 1;
-   mask-image: url('../../imagenes/ola.png');
-   background-color: var(--mar);
-   animation: animacionOla 10s linear infinite;
-   mask-size: contain;
-   mask-repeat: repeat-x;
+
+    flex-grow: 1;
+    display: flex;
 }
 
-@keyframes animacionOla {
+.onda {
+    animation: animacionOnda 1.5s linear infinite;
+    fill: var(--mar);
+}
+
+.ondaTarjeta {
+    fill: var(--tarjetaPortada);
+
+}
+
+.oceanTarjeta {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    height: 130%;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+@keyframes animacionOnda {
     from {
-        mask-position: 0 bottom;
+        transform: translateX(0);
     }
 
     to {
-        mask-position: 2928px bottom;
+        transform: translateX(50%);
     }
 }
-

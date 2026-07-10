@@ -11,13 +11,37 @@
     --blanco: #fff;
 
     --tituloTarjeta: 35px;
+    --tamanoh1: 40px;
     --tamanoBotones: 30px;
-    --fuenteTarjeta: 'times new romans';
+    --fuenteTarjeta: "SplineSans";
+    --fuenteEncabezado: "SplineSans-bold";
+}
+
+@font-face {
+    font-family: "SplineSans-bold";
+    src: url("fonts/SplineSans/SplineSans-Bold.ttf") format("ttf");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SplineSans";
+    src: url("fonts/SplineSans/SplineSans-Light.ttf") format("ttf");
+    font-weight: 300;
+    font-display: swap;
 }
 
 .encabezado {
     display: block;
     color: var(--oro);
     font-size: var(--tituloTarjeta);
+    font-family: var(--fuenteTarjeta);
 
+}
+
+h1 {
+    display: block;
+    color: var(--oro);
+    font-size: var(--tamanoh1);
+    font-family: var(--fuenteEncabezado);
+    font-weight: 700;
 }

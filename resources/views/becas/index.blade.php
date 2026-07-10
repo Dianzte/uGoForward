@@ -13,7 +13,8 @@
 
     <section>
         <div class="difuminado">
-            <span class="encabezado">Oportunidades</span>
+            <span class="encabezado">Un mar de oportunidades</span>
+            <h1>Busca por universidades</h1>
 
             <div class="destacados">
                 <div class="">hola</div>
@@ -31,8 +32,23 @@
                             <p>Última fecha para aplicar: {{ $beca->vencimiento }}</p>
                             <p id="descripcion">{{ $beca->descripcion }}</p>
                         </div>
-                        <div class="tarjetaPortada">
+                        <div class="oceanTarjeta">
+
+                            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                <g id="onda-base2">
+                                    <path d="M0,60 Q150,0 300,60 T600,60 T900,60 T1200,60 L1200,120 L0,120 Z"
+                                        class="onda ondaTarjeta"></path>
+                                </g>
+
+
+                                <use href="#onda-base2" x="0" y="2" />
+
+                                <use href="#onda-base2" x="-600" y="2" />
+                            </svg>
+                            <div class="tarjetaPortada"></div>
                         </div>
+
+
                     </div>
                 @endforeach
 
@@ -41,9 +57,19 @@
 
             <a href="{{ route('becas.create') }}" class="enlaceVolver">Crear nueva beca</a>
         </div>
-        <div class="contenedorMar">
-            <div class="ola"></div>
+        <div class="ocean">
+            <div class="ola">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <g id="onda-base">
+                        <path d="M0,60 Q150,0 300,60 T600,60 T900,60 T1200,60 L1200,120 L0,120 Z" class="onda"></path>
+                    </g>
+
+                    <use href="#onda-base" x="0" y="0" />
+
+                    <use href="#onda-base" x="-600" y="0" />
+                </svg>
+            </div>
             <div class="mar"></div>
-            </div
+        </div>
     </section>
 </x-layout>
