@@ -4,42 +4,46 @@
 
     </x-slot:titulo>
     @push('estilo')
-    @vite(['resources/css/becas/index.css'])
+        @vite(['resources/css/becas/index.css'])
     @endpush
 
     @push('script')
-    @vite(['resources/js/becas/index.js'])
+        @vite(['resources/js/becas/index.js'])
     @endpush
 
-    <!--
-    
-    <div class="contenedorTransparencia">
-    <span class="encabezado">Oportunidades</span>
-    <div class="tarjetasGrid">
+    <section>
+        <div class="difuminado">
+            <span class="encabezado">Oportunidades</span>
 
-        @foreach ($becas as $beca)
-            <div class="tarjeta" id="tarjeta" data-url="{{ route('becas.show', $beca->id) }}">
-                <div class="texto" >
-                    <p>{{ $beca->titulo }}</p>
-                    <p>Última fecha para aplicar: {{ $beca->vencimiento }}</p>
-                    <p id="descripcion">{{ $beca->descripcion }}</p>
-                </div>
-                @if (isset($beca->imagen->ruta))
-                    <img src="{{ asset('storage/' . $beca?->imagen->ruta) }}" alt="" class="fondoTarjeta">
-                @endif
+            <div class="destacados">
+                <div class="">hola</div>
+                <div class="">hola</div>
+                <div class="">hola</div>
             </div>
-        @endforeach
-    </div>
 
-    <div class="contenedorOla">
+            <div>Aquí habra un boton para filtrar</div>
 
-    </div>
+            <div class="indexGrid">
+                @foreach ($becas as $beca)
+                    <div class="tarjeta" id="tarjeta" data-url="{{ route('becas.show', $beca->id) }}">
+                        <div class="texto">
+                            <p>{{ $beca->titulo }}</p>
+                            <p>Última fecha para aplicar: {{ $beca->vencimiento }}</p>
+                            <p id="descripcion">{{ $beca->descripcion }}</p>
+                        </div>
+                        <div class="tarjetaPortada">
+                        </div>
+                    </div>
+                @endforeach
 
-    <a href="{{ route('becas.create') }}" class="enlaceVolver">Crear nueva beca</a>
-    -->
-    <div>
-
-        
+            </div>
 
 
+            <a href="{{ route('becas.create') }}" class="enlaceVolver">Crear nueva beca</a>
+        </div>
+        <div class="contenedorMar">
+            <div class="ola"></div>
+            <div class="mar"></div>
+            </div
+    </section>
 </x-layout>

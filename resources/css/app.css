@@ -1,8 +1,10 @@
 :root {
     --cielo: #53C3EB;
-    --fondoTarjeta1: #55fba884;
-    --fondoTarjeta2: #005d47;
+    --tarjeta: #00C8FF;
+    --tarjetaPortada: #028CF6;
     --informacionTarjeta: #fff;
+    --difuminado: #002b7c4d;
+    --mar: #0059FF;
 
     --bordesFormulario: #000;
     --oro: #FFD014;

@@ -2,60 +2,94 @@ body {
     background-color: var(--cielo);
 }
 
-.contenedorTransparencia {
+.difuminado {
     width: 80vw;
     height: 100%;
     margin: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--difuminado);
+    border-radius: 20px;
+    padding: 60px;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+
+
+.indexGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 300px;
+    gap: 80px 30px;
+
+}
+
+.destacados {
+    display: flex;
+    gap: 1vw;
+    width: 100%;
+    height: 300px;
+    justify-content: space-between;
+}
+
+.destacados * {
+    Background-color: var(--blanco);
+    flex-grow: 1;
     border-radius: 20px;
 }
 
-.tarjetasGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-auto-rows: 300px;
-    gap: 80px 30px;
-    padding: 40px;
-
+.destacados :nth-child(2) {
+    flex-grow: 5;
 }
 
 .tarjeta {
-    border: 1px solid #000;
     height: 100%;
     border-radius: 20px;
-    background-color: var(--fondoTarjeta);
+    background-color: var(--tarjeta);
     position: relative;
     overflow: hidden;
+    transition: height 0.3s linear ;
+}
+
+.tarjeta:hover {
+    border: 3px solid var(--blanco);
+
 }
 
 .tarjetaAbierta {
     height: 150%;
     z-index: 100;
-}
-
-.tarjeta img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    object-fit: cover;
+    border: 3px solid var(--blanco);
 
 }
+.tarjetaAbierta::before {
+    height: 20%;
+}
 
-.tarjeta::before {
-    content: '';
+
+
+
+.tarjetaPortada {
+    
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom left,
-            var(--fondoTarjeta1) 0%,
-            var(--fondoTarjeta2) 100%);
+    background-color: var(--tarjetaPortada);
     z-index: 50;
     pointer-events: none;
+    transition: height 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tarjetaAbierta .tarjetaPortada {
+    height: 40%;
 }
 
 
@@ -94,10 +128,40 @@ body {
     font-size: var(--tamanoBotones)
 }
 
-.contenedorOla {
+.contenedorMar {
     width: 100%;
-    height: 100px;
-    background-color: #000;
-    background: url('../../imagenes/ola.png');
-    
+    height: 60%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
 }
+
+.mar {
+    
+    background-color: var(--mar);
+   flex-grow: 5;
+}
+
+.ola {
+    
+   flex-grow: 1;
+   mask-image: url('../../imagenes/ola.png');
+   background-color: var(--mar);
+   animation: animacionOla 10s linear infinite;
+   mask-size: contain;
+   mask-repeat: repeat-x;
+}
+
+@keyframes animacionOla {
+    from {
+        mask-position: 0 bottom;
+    }
+
+    to {
+        mask-position: 2928px bottom;
+    }
+}
+
