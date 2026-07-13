@@ -9,39 +9,113 @@
     --bordesFormulario: #000;
     --oro: #FFD014;
     --blanco: #fff;
+    --fondoInputs: #000422;
 
     --tituloTarjeta: 35px;
-    --tamanoh1: 40px;
+    --subtitulo: 2.5vw;
+    --tamanoh1: 5vw;
     --tamanoBotones: 30px;
-    --fuenteTarjeta: "SplineSans";
-    --fuenteEncabezado: "SplineSans-bold";
+    --fuenteBeca: "SplineSans";
+
+
 }
 
 @font-face {
-    font-family: "SplineSans-bold";
-    src: url("fonts/SplineSans/SplineSans-Bold.ttf") format("ttf");
+    font-family: "SplineSans";
+    src: url("fonts/SplineSans/SplineSans-Light.ttf") format('truetype');
+    font-weight: 300;
     font-display: swap;
 }
 
 @font-face {
     font-family: "SplineSans";
-    src: url("fonts/SplineSans/SplineSans-Light.ttf") format("ttf");
-    font-weight: 300;
+    src: url("fonts/SplineSans/SplineSans-Regular.ttf") format('truetype');
+    font-weight: 500;
     font-display: swap;
 }
 
-.encabezado {
-    display: block;
-    color: var(--oro);
-    font-size: var(--tituloTarjeta);
-    font-family: var(--fuenteTarjeta);
-
+@font-face {
+    font-family: "SplineSans";
+    src: url("fonts/SplineSans/SplineSans-Bold.ttf") format('truetype');
+    font-weight: 700;
+    font-display: swap;
 }
 
-h1 {
+
+
+
+body {
+    background-color: var(--cielo);
+    font-family: "SplineSans";
+}
+
+.difuminado {
+    width: 80vw;
+    height: 100%;
+    margin: auto;
+    background-color: var(--difuminado);
+    border-radius: 20px;
+    padding: 60px;
+    backdrop-filter: blur(10px);
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.subtitulo {
+    display: block;
+    color: var(--oro);
+    font-size: var(--subtitulo);
+    font-weight: 700;
+}
+
+.importante {
     display: block;
     color: var(--oro);
     font-size: var(--tamanoh1);
-    font-family: var(--fuenteEncabezado);
-    font-weight: 700;
+    font-weight: 300;
+}
+
+.ocean {
+    width: 100%;
+    height: 80%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mar {
+
+    background-color: var(--mar);
+    flex-grow: 12;
+}
+
+.ola {
+
+    flex-grow: 1;
+    display: flex;
+}
+
+.onda {
+    animation: animacionOnda 3s linear infinite;
+    fill: var(--mar);
+}
+
+@keyframes animacionOnda {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(50%);
+    }
 }

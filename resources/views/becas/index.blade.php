@@ -11,15 +11,14 @@
         @vite(['resources/js/becas/index.js'])
     @endpush
 
-    <section>
-        <div class="difuminado">
-            <span class="encabezado">Un mar de oportunidades</span>
-            <h1>Busca por universidades</h1>
+    
+            <span class="subtitulo">Un mar de oportunidades</span>
+            <h1 class="importante">Busca por universidades</h1>
 
             <div class="destacados">
-                <div class="">hola</div>
-                <div class="">hola</div>
-                <div class="">hola</div>
+                <div class="destacado">UCA</div>
+                <div class="destacado activo">UDB</div>
+                <div class="destacado">UTEC</div>
             </div>
 
             <div>Aquí habra un boton para filtrar</div>
@@ -57,19 +56,5 @@
 
             <a href="{{ route('becas.create') }}" class="enlaceVolver">Crear nueva beca</a>
         </div>
-        <div class="ocean">
-            <div class="ola">
-                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <g id="onda-base">
-                        <path d="M0,60 Q150,0 300,60 T600,60 T900,60 T1200,60 L1200,120 L0,120 Z" class="onda"></path>
-                    </g>
-
-                    <use href="#onda-base" x="0" y="0" />
-
-                    <use href="#onda-base" x="-600" y="0" />
-                </svg>
-            </div>
-            <div class="mar"></div>
-        </div>
-    </section>
+       
 </x-layout>

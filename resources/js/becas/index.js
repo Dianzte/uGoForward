@@ -22,3 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const destacados = document.querySelectorAll('.destacado');
+
+    destacados.forEach(destacado => {
+        destacado.addEventListener('click', (e) => {
+            const estaActivo = destacado.classList.contains('activo');
+            if (!estaActivo) {
+                destacados.forEach(d => d.classList.remove('activo'));
+                destacado.classList.add('activo');
+            }
+        })
+    })
+
+    
+});
