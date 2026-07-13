@@ -1,9 +1,13 @@
 <x-layout>
+    @push('estilo')
+        @vite(['resources/css/becas/detalle.css'])
+    @endpush
+
     <x-slot:titulo>
         Buenos días
     </x-slot:titulo>
     
-    <h2> Beca {{ $beca->titulo }}</h2>
+    <h2 class="importante"> Beca {{ $beca->titulo }}</h2>
     <h2>Descripción</h2>
     <p>{{ $beca->descripcion }}</p>
 
