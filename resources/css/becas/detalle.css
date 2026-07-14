@@ -1,0 +1,16 @@
+* {
+    color: var(--blanco);
+}
+h2 {
+    font-family: "SplineSans";
+    font-weight: 500;
+    color: var(--oro);
+    margin-top: 0;
+}
+
+.difuminado {
+    backdrop-filter: blur(40px);
+    background-color: var(--difuminado);
+    width: 50%;
+    
+}

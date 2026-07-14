@@ -1,0 +1,70 @@
+:root {
+    --difuminadoCrear: #00000080;
+}
+
+.difuminado {
+    background-color: var(--difuminadoCrear);
+    backdrop-filter: blur(40px);
+    min-width: 50px;
+    max-width: 600px;
+    height: 500px;
+    margin: 50px auto;
+}
+
+.importante {
+    margin-top: 0;
+    font-size: 3cqw;
+}
+
+form label {
+    font-family: "SplineSans";
+    font-weight: 500;
+    color: #fff;
+}
+
+form input,
+form select,
+form button,
+form textarea,
+a {
+    border-radius: 20px;
+    background-color: var(--fondoTarjeta);
+    padding: 7px;
+    margin: 0;
+    color: var(--blanco);
+    border: none;
+    background-color: var(--fondoInputs);
+    font-family: var(--fuenteBeca);
+    font-weight: 700;
+}
+
+#imagenes {
+    display: none;
+}
+
+form {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+.grupoCampo {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    width: 100%;
+}
+
+
+.inputInterior {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.grupoCampo.completo .inputInterior{
+    width: 100%;
+}
