@@ -237,7 +237,7 @@
     <path class="dept cursor-pointer" data-name="Ahuachapán" data-unis="2" data-desc="Universidad Gerardo Barrios, UNIVO" d="M183.1 180l3.2 1.3 6.8 4.3 1.3 1.2 0.7 0.8 0.4 0.8 0.8 3.2 0.4 0.9 0.6 0.9 1.3 1.3 1.6 1.2 1.3 1.4 0.1 0.1 0.8 1.5 0.3 0.9-1.1 6.9-7.5 25.9-6.7 2.8-8.2 2.3-4.6 0.7-1 0.7-0.8 1.1-0.4 2.5-0.1 1.6 0.9 7.2 0.6 2.3 0.7 1.7 0.9 1.8 0.3 0.9-0.2 1.3-7.6 11.7-0.7 2.1-0.2 1.6 3.1 10 0.4 2.2-0.5 1.5-1.1 1.8-2.8 3.4-1.1 2.1-0.6 1.6-0.3 3.6-0.3 1-4.8 8.6-0.7 1.9-2.1 8.6-1.9 0.8-3.1 0.4-11.3-0.7-2.3-0.5-0.8-0.5-2.7-2.6-4.9-5.7-0.8-0.6-1.5-1.1-0.9-0.4-1-0.4-1.4-0.1-1.5 0-2.1 0.4-1.3 0.4-1.1 0.5-0.9 0.6-1.1 0.9-2.8 3.4-5.9 9.4-0.9 1.4-25.4-11.6-29-14-6-25.1-0.1-6 0.9-6.3 2-6.1 3-5.6 4.5-4.6 10.3-5.5 4.6-3.8 3.4-5.4 2.5-5.6 3.2-5.5 5.6-4.9 36.1-25.3 7.9-8 4-2.7 16.7-6.3 5.5-0.4 6.8 1.8 9.8 7.6 5.5 2.3 5.5-3 0.1-2.2-0.3-0.6z" id="SVAH" name="Ahuachapán">
   </path>
   <a>
-    <path class="dept cursor-pointer" data-name="Santa Ana" data-unis="4" data-desc="UNASA, UNICO, Galileo, UCO" data-universities='[
+    <path class="dept cursor-pointer" data-name="Santa Ana" data-unis="4" data-desc="UNASA, UNICO, Galileo, UCO"  data-universities='[
 {
 "name":"UNASA",
 "image":"https://campussostenible.unasa.edu.sv/images/UNASA2024/UNASA_SUR_2024.jpg",
@@ -247,7 +247,7 @@
 },
 {
 "name":"Universidad Católica de Occidente",
-"image":"https://scontent.fsal11-1.fna.fbcdn.net/v/t39.30808-6/622399698_1322521109917829_5299339464549451420_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1154&ctp=s2048x1154&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Z-CBWps3u0gQ7kNvwErn0dJ&_nc_oc=AdqQLaEKdnj1eJViC5bMgu_TuIn0E18q9RZ_KwV3jOZxSXIyoVro9tEc2Je-nIO-AXI&_nc_zt=23&_nc_ht=scontent.fsal11-1.fna&_nc_gid=sDzZH0ys_BBusmHsPOEIkA&_nc_ss=7a289&oh=00_AQCjWAIIFQFCaoV9d_aluZEUyOmxxe8Roa21qyx25P-SFQ&oe=6A530756",
+"image":"https://i.ytimg.com/vi/28XYWdg6QJw/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGFcgYShlMA8=&rs=AOn4CLBxZoHvR9NMNLy6U48wmWikOfqrCQ",
 "description":"Universidad privada.",
 "careers":"Derecho, Ingeniería, Arquitectura.",
 "website":"https://www.uco.edu.sv"
@@ -360,7 +360,7 @@
 
   <!--- div del modal mapa --->
 
-  <div id="uniModal" class="modal">
+ <div id="uniModal" class="modal">
 
     <div class="modal-content">
 
@@ -371,6 +371,8 @@
         <div id="universidadesContainer"></div>
 
     </div>
+
+</div>
 
 </div>
 
