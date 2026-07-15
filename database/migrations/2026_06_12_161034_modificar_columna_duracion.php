@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('becas', function (Blueprint $table) {
-            $table->renameColumn('vencimiento', 'vencimiento');
+            // Eliminamos el renameColumn y dejamos solo el cambio de tipo
             $table->dateTime('vencimiento')->change();
-        });
+    });
     }
 
     /**
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('becas', function (Blueprint $table) {
-            $table->renameColumn('vencimiento', 'vencimiento');
+            // Lo mismo aquí para cuando se haga un rollback
             $table->date('vencimiento')->change();
-        });
+    });
     }
 };
