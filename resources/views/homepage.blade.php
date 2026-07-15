@@ -421,7 +421,7 @@
     <div class="treasure-glow"></div>
     <div class="container cta-content" data-reveal>
       <p>Miles de estudiantes ya están navegando con UGF. ¿Que esperas?</p>
-      <a href="#" class="btn-primary btn-xl">
+      <a href="{{ url('/becas') }}">Ver lista de Becas</a>
         Únete ahora
         <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>

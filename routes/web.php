@@ -11,6 +11,10 @@ Route::get('/homepage' , function () {
     return view('homepage');
 });
 
+Route::get('/becas', function () {
+    return view('becas.index'); 
+});
+
 
 Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
 
@@ -19,3 +23,5 @@ Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
 Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
 
 Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
+
+
