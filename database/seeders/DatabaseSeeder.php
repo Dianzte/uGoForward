@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CondicionSeeder::class);
         $this->call(AyudaSeeder::class);
         $this->call(ImagenSeeder::class);
+        $this->call(CategoriasForoSeeder::class);
 
         Beca::factory(5)->create();
 

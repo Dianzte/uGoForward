@@ -112,10 +112,10 @@ section {
 
 @keyframes animacionOnda {
     from {
-        transform: translateX(0);
+        transform: translate(0, 2%);
     }
 
     to {
-        transform: translateX(50%);
+        transform: translate(50%, 2%);
     }
 }
