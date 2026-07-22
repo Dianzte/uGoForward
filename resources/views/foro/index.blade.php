@@ -58,99 +58,114 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="foro-main">
         <div class="container main-container">
 
-            <!-- Left Side: Active Thread Detail (Rectangle 26 in Figma) -->
             <section class="active-thread-container">
                 <div class="thread-card">
-                    <!-- Dynamic check for Laravel -->
-                    @if (isset($activeThread))
+                    @if (isset($ejemplo))
                         <div class="thread-header">
-                            <span class="thread-meta">Publicado por {{ $activeThread->author ?? 'Usuario' }} •
-                                {{ $activeThread->created_at->diffForHumans() ?? '' }}</span>
-                            <h2 class="thread-title">{{ $activeThread->title }}</h2>
+                            <span class="thread-meta">Publicado por ESTOQUEDAPENDIENTE •
+                                {{ $ejemplo->created_at->diffForHumans() ?? '' }}</span>
+                            <h2 class="thread-title">{{ $ejemplo->titulo }}</h2>
                         </div>
                         <div class="thread-body">
-                            <p>{{ $activeThread->content }}</p>
+                            <p>{{ $ejemplo->contenido }}</p>
                         </div>
                     @else
-                        <!-- Demo Content matching Figma exactly -->
                         <div class="thread-header">
-                            <span class="thread-meta">Publicado por @EstudianteUGF • Hace 2 horas</span>
-                            <h2 class="thread-title">¿Qué debo saber antes de iniciar la universidad?</h2>
+                            <span class="thread-meta">Publicado por @equipoUGF • Hace 2 horas</span>
+                            <h2 class="thread-title">Bienvenido</h2>
                         </div>
                         <div class="thread-body">
-                            <p>Resulta que estoy muy entusiasmado pero no sé cómo será el ambiente, la carga de materias
-                                o el ritmo de estudio.</p>
-                            <p>Me gustaría saber sus experiencias de primer ingreso en la Universidad Don Bosco (UDB).
-                                ¿Qué herramientas son esenciales? ¿Cuáles son los mejores hábitos para no morir en el
-                                intento? ¡Cualquier consejo es bienvenido!</p>
+                            <p>Comparte tus preguntas y tus conocimientos.</p>
+
                         </div>
                     @endif
 
-                    <!-- Premium Interaction Zone (Like, replies, and comments) -->
                     <div class="thread-footer">
                         <div class="interaction-buttons">
                             <button class="btn-action">
-                                <span class="icon">♥</span> 24 Likes
+                                <span class="icon">👁️</span> {{ $ejemplo->visitas_count }}
                             </button>
-                            <button class="btn-action">
-                                <span class="icon">💬</span> 12 Comentarios
+                            <button class="btn-action" title="Denunciar">
+                                <span class="icon">🏴</span> {{ $ejemplo->reportes_count }}
                             </button>
                         </div>
                     </div>
 
-                    <!-- Comment Section (Laravel Dynamic Loop Placeholder) -->
                     <div class="comments-section">
-                        <h3>Comentarios</h3>
-                        <div class="comment-item">
-                            <div class="comment-avatar">U</div>
-                            <div class="comment-content">
-                                <strong>Usuario123</strong>
-                                <p>Te recomiendo llevar siempre una agenda o usar Notion para organizar tus tareas desde
-                                    el día uno. ¡Muchos éxitos!</p>
+                        <div class="comments-header">
+                            <h3 class="comments-title">
+                                <span class="comments-icon">💬</span> Comentarios
+                                <span class="comments-count-badge">3</span>
+                            </h3>
+                        </div>
+
+                        <form class="comment-form" action="{{ route('comentario.store', $ejemplo) }}" method="POST">
+                            @csrf
+                            
+                            <div class="comment-form-wrapper">
+                                <div class="comment-avatar user-avatar">U</div>
+                                <div class="comment-input-group">
+                                    <textarea name="contenido" class="comment-textarea" placeholder="Escribe un comentario o respuesta..." rows="3"
+                                        required></textarea>
+                                    <div class="comment-form-actions">
+                                        <button type="submit" class="btn-submit-comment">
+                                            <span>Publicar comentario</span>
+                                            <span class="send-icon">➔</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+
+                        </form>
+
+                        <div class="comments-list">
+
+                            @forelse ($ejemplo->comentarios as $comentario)
+                                <div class="comment-item">
+                                    <div class="comment-avatar">!!!</div>
+                                    <div class="comment-content">
+                                        <div class="comment-meta">
+                                            <strong class="comment-author">hay que arreglar esto!!!</strong>
+                                            <span
+                                                class="comment-date">{{ $comentario->created_at ? $comentario->created_at->diffForHumans() : 'Hace unas horas' }}</span>
+                                        </div>
+                                        <p class="comment-text">{{ $comentario->contenido }}</p>
+                                        <div class="comment-actions">
+                                            <button class="btn-comment-action"><span class="icon">♥</span>
+                                                {{ $comentario->likes_count ?? 0 }}</button>
+                                            <button class="btn-comment-action"><span class="icon">↩</span>
+                                                Responder</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            @empty
+                                <p class="comment-text">Aún no hay respuestas en esta publicación</p>
+                            @endforelse
+
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Right Side: Sidebar Forum Threads (Rectangle 35, 53, etc.) -->
             <aside class="threads-sidebar">
                 <h2 class="sidebar-title">Todos los foros</h2>
 
                 <div class="threads-list">
-                    <!-- Dynamic Loop for Laravel -->
-                    @if (isset($threads))
-                        @foreach ($threads as $t)
-                            <a href="{{ route('foro.show', $t->id) }}"
-                                class="thread-link-card {{ isset($activeThread) && $activeThread->id == $t->id ? 'active' : '' }}">
-                                <span class="thread-card-title">{{ $t->title }}</span>
+                    @if (isset($foros))
+                        @foreach ($foros as $foro)
+                            <a href="{{ route('foro.show', $foro->slug) }}" class="thread-link-card ">
+                                <span class="thread-card-title">{{ $foro->titulo }}</span>
                             </a>
                         @endforeach
                     @else
-                        <!-- Demo List matching Figma exactly -->
                         <a href="#" class="thread-link-card active">
                             <span class="thread-card-title">¿Qué debo saber antes de iniciar la universidad?</span>
                         </a>
-                        <a href="#" class="thread-link-card">
-                            <span class="thread-card-title">¿Cuál es la mejor universidad?</span>
-                        </a>
-                        <a href="#" class="thread-link-card">
-                            <span class="thread-card-title">¿Qué necesito para obtener una beca?</span>
-                        </a>
-                        <a href="#" class="thread-link-card">
-                            <span class="thread-card-title">¿Algún consejo para un adolescente que deja el
-                                bachillerato?</span>
-                        </a>
-                        <a href="#" class="thread-link-card">
-                            <span class="thread-card-title">¿Cómo puedo mejorar mis notas?</span>
-                        </a>
-                        <a href="#" class="thread-link-card">
-                            <span class="thread-card-title">Convocatoria de Becas UGF 2026</span>
-                        </a>
+
                     @endif
                 </div>
             </aside>
@@ -158,7 +173,6 @@
         </div>
     </main>
 
-    <!-- Footer decoration (ondaOla at the bottom) -->
     <footer class="foro-footer">
         <div class="footer-waves">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">

@@ -3,8 +3,12 @@
 Este directorio contiene los archivos estructurados para la pantalla de **Foro Estudiantil** (basada en el diseño Figma del proyecto **CreaJ MP**).
 
 ## Archivos Instalados
-*   **Vista Blade:** [resources/views/foro.blade.php](file:///C:/laragon/www/ugf/resources/views/foro.blade.php)
-*   **Estilos CSS:** [public/css/foro.css](file:///C:/laragon/www/ugf/public/css/foro.css)
+*   **Vistas Blade:**
+    *   Listado de Foros: [resources/views/foro/index.blade.php](file:///C:/laragon/www/ugf/resources/views/foro/index.blade.php)
+    *   Formulario de Creación: [resources/views/foro/create.blade.php](file:///C:/laragon/www/ugf/resources/views/foro/create.blade.php)
+*   **Estilos CSS (Vite):**
+    *   Estilos del Listado: [resources/css/foro/index.css](file:///C:/laragon/www/ugf/resources/css/foro/index.css)
+    *   Estilos del Formulario: [resources/css/foro/create.css](file:///C:/laragon/www/ugf/resources/css/foro/create.css)
 
 ---
 
@@ -63,7 +67,33 @@ class ForoController extends Controller
             ? Thread::findOrFail($activeId) 
             : Thread::latest()->first();
 
-        return view('foro', compact('threads', 'activeThread'));
+        return view('foro.index', compact('threads', 'activeThread'));
+    }
+
+    public function create()
+    {
+        return view('foro.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'institucion' => 'required|string',
+            'carrera' => 'required|string',
+            'tipo_ayuda' => 'required|string',
+            'duracion' => 'required|string',
+            'condiciones' => 'required|string',
+            'descripcion' => 'required|string',
+            'imagen' => 'nullable|image|max:2048'
+        ]);
+
+        // Guardar la oportunidad/foro
+        $thread = new Thread();
+        $thread->title = 'Beca ' . $request->tipo_ayuda . ' (' . $request->institucion . '): ' . $request->carrera;
+        $thread->content = $request->descripcion . "\n\nDuración: " . $request->duracion . "\nCondiciones: " . $request->condiciones;
+        $thread->save();
+
+        return redirect()->route('foro.index')->with('success', 'Oportunidad creada con éxito.');
     }
 }
 ```
@@ -71,11 +101,14 @@ class ForoController extends Controller
 ---
 
 ### 3. Definir las Rutas
-Abre `routes/web.php` y registra la ruta:
+Abre `routes/web.php` y registra las rutas:
 ```php
 use App\Http\Controllers\ForoController;
 
-Route::get('/foro/{activeId?}', [ForoController::class, 'index'])->name('foro.index');
+Route::get('/foro', [ForoController::class, 'index'])->name('foro.index');
+Route::get('/foro/create', [ForoController::class, 'create'])->name('foro.create');
+Route::post('/foro', [ForoController::class, 'store'])->name('foro.store');
+Route::get('/foro/{activeId}', [ForoController::class, 'index'])->name('foro.show');
 ```
 
 ---
@@ -83,4 +116,5 @@ Route::get('/foro/{activeId?}', [ForoController::class, 'index'])->name('foro.in
 ## Atributos de Diseño de Figma Aplicados
 *   **Tipografía:** Cargado de fuentes Google: `Inria Sans` (títulos y acentos), `Spline Sans` (estructural) y `Nunito` (cuerpo de texto).
 *   **Colores exactos:** Implementados mediante variables CSS (`:root`), incluyendo el azul marino profundo (`#000422`), el azul brillante de los botones (`#018cf5`), el azul del banner (`#0059ff`) y el amarillo/oro de acentos (`#ffc300`).
-*   **Diseño Responsivo:** En pantallas de escritorio se visualiza en dos columnas. En tablets y móviles, el menú lateral de hilos se apila automáticamente debajo del contenido principal.
+*   **Diseño Responsivo:** En pantallas de escritorio se visualiza en dos columnas para el listado, y una columna estrecha centrada para el formulario. En tablets y móviles, todos los elementos se apilan correctamente.
+

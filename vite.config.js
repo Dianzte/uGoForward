@@ -11,7 +11,11 @@ export default defineConfig({
                 'resources/js/app.js',
             
                 'resources/css/becas/index.css',
-                'resources/js/becas/index.js'],
+                'resources/js/becas/index.js',
+                
+                'resources/css/foro/index.css',
+                'resources/css/foro/create.css'
+            ],
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {

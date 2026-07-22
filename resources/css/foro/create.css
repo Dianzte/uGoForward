@@ -1,0 +1,515 @@
+/* CSS Variables derived from extracted Figma tokens & design system */
+:root {
+    --bg-page: #52c2eb;           /* Light Sky Blue (Figma: rgba(82, 194, 235, 1)) */
+    --bg-header: #0059ff;         /* Primary Wave Blue (Figma: rgba(0, 89, 255, 1)) */
+    --bg-card: #000422;           /* Deep Ocean Navy (Figma: rgba(0, 4, 34, 1)) */
+    --color-accent: #ffc300;      /* Sun Gold (Figma: rgba(255, 195, 0, 1)) */
+    --color-btn: #018cf5;         /* Bright Water Blue (Figma: rgba(1, 140, 245, 1)) */
+    --color-btn-hover: #0076d0;
+    --text-light: #ffffff;
+    --text-dark: #0f0f1d;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Font families */
+    --font-heading: 'Spline Sans', 'Inria Sans', sans-serif;
+    --font-body: 'Nunito', sans-serif;
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, var(--bg-page) 0%, #a4e1f7 100%);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Banner (Figma: Top Banner + waves + logo + ship) */
+.foro-header {
+    background-color: var(--bg-header);
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 120px;
+    overflow: hidden;
+    color: var(--text-light);
+}
+
+.header-waves {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.header-waves svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 80px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+}
+
+/* Brand Logo (Figma Group 38) */
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    box-shadow: 0 0 15px rgba(255, 195, 0, 0.4);
+    position: relative;
+}
+
+.logo-circle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 50%;
+    border: 2px solid var(--text-light);
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Titles */
+.header-titles {
+    margin-top: 30px;
+}
+
+.header-titles .subtitle {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.header-titles .main-title {
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1.1;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Sailboat Decoration (Figma: Barquito) */
+.ship-decoration {
+    width: 100px;
+    height: 100px;
+    opacity: 0.95;
+    animation: floatShip 4s ease-in-out infinite;
+}
+
+.ship-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes floatShip {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(-3deg);
+    }
+}
+
+/* Main Layout Grid & Spacing */
+.foro-main {
+    margin-top: -60px;
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    padding-bottom: 80px;
+}
+
+.form-main-container {
+    max-width: 900px; /* Centered narrow width for the form container */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.form-container-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.thread-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    color: var(--text-light);
+    box-shadow: 0 20px 40px rgba(0, 4, 34, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.thread-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-btn));
+}
+
+.thread-header {
+    margin-bottom: 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+}
+
+.thread-meta {
+    font-size: 14px;
+    color: var(--color-accent);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 1.5px;
+}
+
+.thread-title {
+    font-family: var(--font-heading);
+    font-size: clamp(24px, 3.5vw, 36px);
+    color: var(--text-light);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Form Styles */
+.oportunidad-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--text-light);
+    font-family: var(--font-body);
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.form-group .field-error {
+    color: #ffb3b3;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    display: block;
+}
+
+.form-group input.is-invalid,
+.form-group select.is-invalid,
+.form-group textarea.is-invalid {
+    border-color: #ff7a7a;
+    box-shadow: 0 0 0 3px rgba(255, 122, 122, 0.12);
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px rgba(255, 195, 0, 0.2);
+}
+
+/* Select element styling */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffc300' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.form-group select option {
+    background-color: var(--bg-card);
+    color: var(--text-light);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Upload Area (Figma Group 42) */
+.upload-area {
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area:hover {
+    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.upload-area.dragover {
+    border-color: var(--color-accent);
+    background: rgba(255, 195, 0, 0.05);
+}
+
+.upload-area.has-file {
+    border-color: #37ff0f;
+    background: rgba(55, 255, 15, 0.03);
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-icon {
+    font-size: 32px;
+    margin-bottom: 4px;
+    transition: var(--transition);
+}
+
+.upload-area:hover .upload-icon {
+    transform: translateY(-4px);
+}
+
+.upload-text {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.upload-subtext {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 25px;
+    margin-top: 10px;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-light);
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--text-light);
+}
+
+.btn-submit {
+    background-color: var(--color-accent);
+    border: none;
+    color: var(--text-dark);
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(255, 195, 0, 0.25);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 195, 0, 0.4);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Footer Section */
+.foro-footer {
+    position: relative;
+    background-color: var(--bg-header);
+    color: var(--text-light);
+    padding-top: 100px;
+    padding-bottom: 40px;
+    margin-top: auto;
+    overflow: hidden;
+}
+
+.foro-footer .footer-waves {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+}
+
+.foro-footer .footer-waves svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 80px;
+}
+
+.footer-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+    .foro-header {
+        padding-top: 20px;
+        padding-bottom: 80px;
+    }
+    
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .brand-logo {
+        justify-content: center;
+    }
+    
+    .ship-decoration {
+        display: none;
+    }
+    
+    .thread-card {
+        padding: 24px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+    
+    .btn-cancel,
+    .btn-submit {
+        width: 100%;
+    }
+}
