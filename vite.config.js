@@ -9,7 +9,7 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js',
                      'resources/css/homepage.css', 'resources/js/homepage.js',
                      'resources/css/becas/index.css',
-                'resources/js/becas/index.js'
+                'resources/js/becas/index.js', 'resources/css/calendario.css', 'resources/js/calendario.js',
             ],
             refresh: true,
             fonts: [

@@ -12,6 +12,10 @@ class Beca extends Model
     
     protected $fillable = ['titulo', 'descripcion', 'universidad_id', 'carrera_id', 'condicion_id', 'vencimiento', 'imagen_id', 'ayuda_id'];
 
+    protected $casts = [
+        'vencimiento' => 'date',
+    ];
+
     public function universidad(): BelongsTo
     {
         return $this->belongsTo(Universidad::class, 'universidad_id');
