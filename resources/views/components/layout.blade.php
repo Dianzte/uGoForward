@@ -14,9 +14,7 @@
 
 <body class="fondo">
 
-    <nav>
-        Barra de navegación
-    </nav>
+    @include('navegacion.navbar')
 
     <main>
 

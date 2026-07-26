@@ -7,8 +7,9 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js',
-                     'resources/css/homepage.css', 'resources/js/homepage.js',
-                     'resources/css/becas/index.css',
+                'resources/css/homepage.css', 'resources/js/homepage.js',
+                'resources/css/becas/index.css',
+                'resources/css/navbar.css',
                 'resources/js/becas/index.js'
             ],
             refresh: true,
