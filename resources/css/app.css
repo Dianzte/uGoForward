@@ -87,7 +87,7 @@ body {
     background-color: var(--difuminado);
     border-radius: 20px;
     padding: 60px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(40px);
 }
 
 section {
@@ -143,10 +143,10 @@ section {
 
 @keyframes animacionOnda {
     from {
-        transform: translateX(0);
+        transform: translate(0, 2%);
     }
 
     to {
-        transform: translateX(50%);
+        transform: translate(50%, 2%);
     }
 }
