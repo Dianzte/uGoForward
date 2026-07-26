@@ -379,6 +379,34 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 });
 
 /* ─────────────────────────────────────
+   8.1 USER MENU (dropdown de perfil)
+   ───────────────────────────────────── */
+const userMenu    = document.getElementById('userMenu');
+const userMenuBtn = document.getElementById('userMenuBtn');
+
+if (userMenu && userMenuBtn) {
+  userMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = userMenu.classList.toggle('open');
+    userMenuBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!userMenu.contains(e.target)) {
+      userMenu.classList.remove('open');
+      userMenuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      userMenu.classList.remove('open');
+      userMenuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+/* ─────────────────────────────────────
    9. REVEAL ON SCROLL
    ───────────────────────────────────── */
 const revealEls = document.querySelectorAll('[data-reveal]');
@@ -569,4 +597,14 @@ window.addEventListener("load", () => {
     setTimeout(() => {
         loader.classList.add("gta-loader-hidden");
     }, 2000); 
+});
+window.addEventListener('load', () => {
+    const loader = document.getElementById('gta-loader');
+    if (loader) {
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    }
 });

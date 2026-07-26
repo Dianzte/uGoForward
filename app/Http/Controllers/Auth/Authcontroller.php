@@ -8,13 +8,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     /**
-     * Muestra el formulario de login (resources/views/login.blade.php)
+     * Muestra el formulario de login.
      */
     public function showLogin()
     {
@@ -22,7 +21,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Muestra el formulario de registro (resources/views/Register.blade.php)
+     * Muestra el formulario de registro.
      */
     public function showRegister()
     {
@@ -30,7 +29,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Procesa el login.
+     * Muestra la vista de ajustes/perfil.
+     */
+    public function showSettings()
+    {
+        return view('settings');
+    }
+
+    /**
+     * Procesa el inicio de sesión.
      */
     public function login(Request $request): RedirectResponse
     {
@@ -39,27 +46,25 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
-            throw ValidationException::withMessages([
-                'email' => 'Las credenciales no coinciden con nuestros registros.',
-            ]);
+        if (Auth::attempt(['correo' => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('home'))->with('status', '¡Bienvenido de nuevo!');
         }
 
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('home'))
-            ->with('status', '¡Bienvenido de nuevo!');
+        throw ValidationException::withMessages([
+            'email' => 'Las credenciales no coinciden con nuestros registros.',
+        ]);
     }
 
     /**
-     * Procesa el registro.
+     * Procesa el registro de usuario.
      */
     public function register(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'usuario' => ['required', 'string', 'max:255', 'unique:users,usuario'],
             'nombre' => ['required', 'string', 'max:255'],
-            'correo' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'correo' => ['required', 'string', 'email', 'max:255', 'unique:users,correo'],
             'contrasena' => ['required', 'string', 'min:8'],
             'fechaNac' => ['required', 'date', 'before:today'],
             'departamento' => ['required', 'string', 'max:255'],
@@ -67,42 +72,55 @@ class AuthController extends Controller
             'dui' => ['nullable', 'string', 'max:20'],
         ]);
 
-        // La edad se recalcula en el servidor: nunca confiar solo en el JS del formulario.
-        $edad = now()->diffInYears($validated['fechaNac']);
-
-        if ($edad < 16) {
-            throw ValidationException::withMessages([
-                'fechaNac' => 'Debes tener al menos 16 años para registrarte.',
-            ]);
-        }
-
-        if ($edad < 18) {
-            $request->validate(['nie' => ['required', 'string', 'max:20']]);
-        } else {
-            $request->validate(['dui' => ['required', 'string', 'max:20']]);
-        }
-
         $user = User::create([
             'usuario' => $validated['usuario'],
             'nombre' => $validated['nombre'],
-            'email' => $validated['correo'],
-            'password' => Hash::make($validated['contrasena']),
-            'fecha_nac' => $validated['fechaNac'],
+            'correo' => $validated['correo'],
+            'contrasena' => Hash::make($validated['contrasena']),
+            'fechaNac' => $validated['fechaNac'],
             'departamento' => $validated['departamento'],
-            'nie' => $edad < 18 ? $request->input('nie') : null,
-            'dui' => $edad >= 18 ? $request->input('dui') : null,
+            'nie' => $request->input('nie'),
+            'dui' => $request->input('dui'),
         ]);
 
         Auth::login($user);
-
         $request->session()->regenerate();
 
-        return redirect()->route('home')
-            ->with('status', '¡Cuenta creada con éxito! Bienvenido a UGF.');
+        return redirect()->route('home')->with('status', '¡Cuenta creada con éxito!');
     }
 
     /**
-     * Cierra sesión.
+     * Procesa la actualización del perfil/ajustes.
+     */
+    public function updateProfile(Request $request): RedirectResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $validated = $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'departamento' => ['required', 'string', 'max:255'],
+            'contrasena' => ['nullable', 'string', 'min:8'],
+        ]);
+
+        $user->nombre = $validated['nombre'];
+        $user->departamento = $validated['departamento'];
+
+        if ($request->filled('contrasena')) {
+            $user->contrasena = Hash::make($validated['contrasena']);
+        }
+
+        $user->save();
+
+        return back()->with('status', 'Perfil actualizado correctamente.');
+    }
+
+    /**
+     * Cierra la sesión activa.
      */
     public function logout(Request $request): RedirectResponse
     {

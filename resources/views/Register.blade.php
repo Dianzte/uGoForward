@@ -93,9 +93,8 @@
         <h2>Crear cuenta</h2>
         <p>Completa el formulario para registrarte</p>
 
-        {{-- Si el formulario vuelve con errores de validación, arrancamos ya
-             mostrando la cara del formulario en vez de la de elección --}}
-        <form id="formRegistro" action="{{ route('registro.store') }}" method="POST">
+        {{-- 💡 Ruta corregida a /registro para coincidir con tu web.php --}}
+        <form id="formRegistro" action="{{ url('/registro') }}" method="POST">
           @csrf
 
           @if ($errors->any())
@@ -152,19 +151,8 @@
             @error('departamento')<span class="error-message">{{ $message }}</span>@enderror
           </div>
 
-          {{-- Si la petición anterior falló y ya se sabía si era NIE o DUI, lo re-mostramos
-               para no perder el valor; si no, el script de abajo lo genera al elegir la fecha --}}
           <div class="field" id="campoDocumento">
-            @error('nie')
-              <label>NIE</label>
-              <input type="text" name="nie" placeholder="Ingrese su NIE" value="{{ old('nie') }}" required>
-              <span class="error-message">{{ $message }}</span>
-            @enderror
-            @error('dui')
-              <label>DUI</label>
-              <input type="text" name="dui" placeholder="Ingrese su DUI" value="{{ old('dui') }}" required>
-              <span class="error-message">{{ $message }}</span>
-            @enderror
+            {{-- Se autocompleta mediante JavaScript con el evento change/DOMContentLoaded --}}
           </div>
 
           <button type="submit" class="btn-login">Registrarse</button>
@@ -179,8 +167,6 @@
 </div>
 
 <script>
-  // Flip de la tarjeta (elección -> formulario). Autocontenido: ya no depende
-  // de un Regis.js externo que Vite no estaba resolviendo.
   function mostrarFormulario() {
     document.getElementById('flipper').classList.add('is-flipped');
   }
@@ -188,41 +174,59 @@
     document.getElementById('flipper').classList.remove('is-flipped');
   }
 
-  // Si la página vuelve con errores de validación del registro, mostramos
-  // directamente el formulario en vez de la pantalla de elección.
   @if ($errors->any())
     document.addEventListener('DOMContentLoaded', mostrarFormulario);
   @endif
 
-  // Script dinámico de fecha de nacimiento: decide si pedir NIE o DUI.
-  document.getElementById("fechaNac").addEventListener("change", function() {
-      let fecha = new Date(this.value);
+  // Función corregida para calcular la edad exacta sin problemas de zona horaria
+  function evaluarEdad() {
+      let inputFecha = document.getElementById("fechaNac").value;
+      if (!inputFecha) return;
+
+      // Dividimos el string "YYYY-MM-DD" directamente para evitar fallos de zona horaria UTC
+      let partes = inputFecha.split('-');
+      let anoNac = parseInt(partes[0], 10);
+      let mesNac = parseInt(partes[1], 10) - 1; // Los meses en JS van de 0 a 11
+      let diaNac = parseInt(partes[2], 10);
+
+      let fechaNacimiento = new Date(anoNac, mesNac, diaNac);
       let hoy = new Date();
 
-      let edad = hoy.getFullYear() - fecha.getFullYear();
-      let m = hoy.getMonth() - fecha.getMonth();
+      let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      let mesDiferencia = hoy.getMonth() - fechaNacimiento.getMonth();
 
-      if (m < 0 || (m === 0 && hoy.getDate() < fecha.getDate())) {
+      // Ajuste si aún no ha cumplido años en el año actual
+      if (mesDiferencia < 0 || (mesDiferencia === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
           edad--;
       }
 
       let campo = document.getElementById("campoDocumento");
 
       if (edad < 16) {
-          campo.innerHTML = "<p style='color:red;'>Debes tener al menos 16 años</p>";
+          campo.innerHTML = "<p style='color:red; font-size:.85rem; font-weight:600; margin-top:.3rem;'>Debes tener al menos 16 años para registrarte.</p>";
       }
-      else if (edad < 18) {
+      else if (edad >= 16 && edad < 18) {
+          let oldNie = "{{ old('nie') }}";
           campo.innerHTML = `
             <label>NIE</label>
-            <input type="text" name="nie" placeholder="Ingrese su NIE" required>
+            <input type="text" name="nie" placeholder="Ingrese su NIE" value="${oldNie}" required>
           `;
       }
       else {
+          let oldDui = "{{ old('dui') }}";
           campo.innerHTML = `
             <label>DUI</label>
-            <input type="text" name="dui" placeholder="Ingrese su DUI" required>
+            <input type="text" name="dui" placeholder="Ingrese su DUI" value="${oldDui}" required>
           `;
       }
+  }
+
+  // Escuchar el evento de cambio de fecha
+  document.getElementById("fechaNac").addEventListener("change", evaluarEdad);
+
+  // Evaluar automáticamente si la página se recarga o si viene un valor previo
+  document.addEventListener('DOMContentLoaded', function() {
+      evaluarEdad();
   });
 </script>
 
