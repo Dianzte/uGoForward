@@ -355,7 +355,7 @@ body {
     color: var(--text-light);
     font-family: var(--font-body);
     font-size: 16px;
-    resize: vertical;
+    resize: none;
     min-height: 70px;
 }
 

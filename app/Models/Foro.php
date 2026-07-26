@@ -22,4 +22,9 @@ class Foro extends Model
     {
         return $this->hasMany(Comentario::class)->latest(); 
     }
+
+    public function comentariosPrincipales()
+    {
+        return $this->hasMany(Comentario::class)->whereNull('padre_id')->latest();
+    }
 }

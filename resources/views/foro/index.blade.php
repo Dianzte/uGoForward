@@ -6,24 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foro Estudiantil - UGF</title>
 
-    <!-- Google Fonts matching Figma Design -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&family=Nunito:wght@300;400;600;700&family=Spline+Sans:wght@400;500;700&display=swap"
         rel="stylesheet">
 
-    <!-- Stylesheet -->
-    @vite(['resources/css/foro/index.css']) <!-- Fallback stylesheet link for local preview without Laravel server running -->
+    @vite(['resources/css/foro/index.css'])
     <link rel="stylesheet" href="foro.css">
 </head>
 
 <body>
 
-    <!-- Header Section (Inspired by Figma Banner & Wave) -->
     <header class="foro-header">
         <div class="header-waves">
-            <!-- SVG Waves mimicking 'ondaOla' for premium feel -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
                 <path fill="#0059ff" fill-opacity="1"
                     d="M0,192L48,181.3C96,171,192,149,288,144C384,139,480,149,576,176C672,203,768,245,864,245.3C960,245,1056,203,1152,176C1248,149,1344,139,1392,133.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
@@ -32,19 +28,16 @@
         </div>
 
         <div class="container header-container">
-            <!-- Brand Logo (Group 38 in Figma) -->
             <div class="brand-logo">
                 <div class="logo-circle"></div>
                 <span class="logo-text">UGF</span>
             </div>
 
-            <!-- Header Titles -->
             <div class="header-titles">
                 <span class="subtitle">Explora, comparte, aprende</span>
                 <h1 class="main-title">Foro estudiantil</h1>
             </div>
 
-            <!-- Ship Icon Container (Barquito in Figma) -->
             <div class="ship-decoration">
                 <svg viewBox="0 0 100 100" class="ship-svg">
                     <!-- Premium minimal sailboat SVG matching 'Barquito' theme -->
@@ -98,13 +91,13 @@
                         <div class="comments-header">
                             <h3 class="comments-title">
                                 <span class="comments-icon">💬</span> Comentarios
-                                <span class="comments-count-badge">3</span>
+                                <span class="comments-count-badge">{{ $ejemplo->comentarios->count() }}</span>
                             </h3>
                         </div>
 
                         <form class="comment-form" action="{{ route('comentario.store', $ejemplo) }}" method="POST">
                             @csrf
-                            
+
                             <div class="comment-form-wrapper">
                                 <div class="comment-avatar user-avatar">U</div>
                                 <div class="comment-input-group">
@@ -124,24 +117,53 @@
                         <div class="comments-list">
 
                             @forelse ($ejemplo->comentarios as $comentario)
-                                <div class="comment-item">
-                                    <div class="comment-avatar">!!!</div>
-                                    <div class="comment-content">
-                                        <div class="comment-meta">
-                                            <strong class="comment-author">hay que arreglar esto!!!</strong>
-                                            <span
-                                                class="comment-date">{{ $comentario->created_at ? $comentario->created_at->diffForHumans() : 'Hace unas horas' }}</span>
-                                        </div>
-                                        <p class="comment-text">{{ $comentario->contenido }}</p>
-                                        <div class="comment-actions">
-                                            <button class="btn-comment-action"><span class="icon">♥</span>
-                                                {{ $comentario->likes_count ?? 0 }}</button>
-                                            <button class="btn-comment-action"><span class="icon">↩</span>
-                                                Responder</button>
+                                @if ($comentario->padre_id == null)
+                                    <div class="comment-item">
+                                        <div class="comment-avatar">!!!</div>
+                                        <div class="comment-content">
+                                            <div class="comment-meta">
+                                                <strong class="comment-author">hay que arreglar esto!!!</strong>
+                                                <span
+                                                    class="comment-date">{{ $comentario->created_at ? $comentario->created_at->diffForHumans() : 'Hace unas horas' }}</span>
+                                            </div>
+                                            <p class="comment-text">{{ $comentario->contenido }}</p>
+                                            <div class="comment-actions">
+                                                <button class="btn-comment-action"><span class="icon">♥</span>
+                                                    {{ $comentario->likes_count ?? 0 }}</button>
+                                                <button class="btn-comment-action"
+                                                    onclick="toggleForm('form-respuesta-{{ $comentario->id }}')"><span
+                                                        class="icon">↩</span>
+                                                    Responder</button>
+                                            </div>
+
+                                            <form id="form-respuesta-{{ $comentario->id }}"
+                                                action="{{ route('comentario.store', $ejemplo) }}" method="POST"
+                                                style="display: none; margin-top: 10px;">
+                                                @csrf
+                                                <input type="hidden" name="padre_id" value="{{ $comentario->id }}">
+
+                                                <textarea name="contenido" rows="2" required style="width: 100%; margin-bottom: 5px;"></textarea>
+                                                <button type="submit"
+                                                    style="background: #2563eb; color: white; padding: 4px 10px; border-radius: 4px; border: none;">Publicar
+                                                    respuesta</button>
+                                            </form>
+
+                                            @if ($comentario->respuestas->count() > 0)
+                                                <div class="respuestas-anidadas"
+                                                    style="margin-left: 30px; border-left: 3px solid #e5e7eb; padding-left: 15px; margin-top: 15px;">
+                                                    @foreach ($comentario->respuestas as $respuesta)
+                                                        <div class="respuesta-item" style="margin-bottom: 10px;">
+                                                            <strong> nombre usuario</strong>
+                                                            <small>{{ $respuesta->created_at->diffForHumans() }}</small>
+                                                            <p style="margin: 3px 0;">{{ $respuesta->contenido }}</p>
+                                                        </div>
+                                                        
+                                                    @endforeach
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
-
+                                @endif
                             @empty
                                 <p class="comment-text">Aún no hay respuestas en esta publicación</p>
                             @endforelse
@@ -172,6 +194,17 @@
 
         </div>
     </main>
+
+    <script>
+        function toggleForm(id) {
+            const form = document.getElementById(id);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
 
     <footer class="foro-footer">
         <div class="footer-waves">

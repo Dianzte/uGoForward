@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foro;
+use App\Models\Comentario;
 use Illuminate\Http\Request;
 
 class ComentarioController extends Controller
@@ -30,11 +31,14 @@ class ComentarioController extends Controller
     {
         
         $data = $request->validate([
-            'contenido' => 'required|max:5000|min:0',
+            'contenido' => 'required|max:5000|min:1',
+            'padre_id' => 'nullable|exists:comentarios,id'
         ]);
+
         $ejemplo->comentarios()->create([
             'contenido' => $request->contenido,
             'user_id' => 1, // hay que arreglar esto !!!
+            'padre_id' => $request->padre_id ?? null
         ]);
 
         return back();

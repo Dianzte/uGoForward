@@ -17,13 +17,14 @@ class ForoController extends Controller
      */
     public function index()
     {
-        $id = Foro::inRandomOrder()->value('id');
+        
         $foros = Foro::get();
         $foro_id = Comentario::get()->value('foro_id');
+        $comentarios = Comentario::findOrFail($foro_id);
 
 
 
-       $mostrar = Foro::findOrFail($id);
+       $mostrar = Foro::findOrFail(1);
 
         return view('foro.index', [
             'foros' => $foros,
@@ -70,6 +71,7 @@ class ForoController extends Controller
     public function show( $slug)
     {
         $foros = Foro::get();
+        /*$foros->load(['comentariosPrincipales.user', 'comentariosPrincipales.respuestas.user']);*/
         
         $seleccionado = Foro::where('slug', $slug)->firstOrFail();
         $comentarios = Comentario::findOrFail($seleccionado->id);
