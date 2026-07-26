@@ -10,38 +10,6 @@
 /* === RESET & BASE === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  /* Sky / Surface colors */
-  --sky-top:     #0a1a2e;
-  --sky-mid:     #0d2240;
-  --ocean-surf:  #0e3a5c;
-  /* Underwater depth ramp */
-  --deep-1:      #0a2e4a;
-  --deep-2:      #071f35;
-  --deep-3:      #041525;
-  --deep-4:      #020d18;
-  --abyss:       #01070f;
-  /* Accent */
-  --gold:        #e8c847;
-  --gold-2:      #f0d060;
-  --gold-glow:   rgba(232,200,71,0.15);
-  --teal:        #2dd4bf;
-  --teal-dim:    rgba(45,212,191,0.12);
-  /* Water */
-  --wave-light:  rgba(100,200,255,0.18);
-  --wave-foam:   rgba(200,240,255,0.55);
-  /* Text */
-  --white:       #ffffff;
-  --text:        #c8dff0;
-  --text-2:      #7aa8c8;
-  --text-3:      #4a7a9a;
-  /* Cards */
-  --card-bg:     rgba(255, 255, 255, 0);
-  --card-border: rgba(100,200,255,0.1);
-  --radius:      16px;
-  --radius-sm:   8px;
-  --ease:        cubic-bezier(0.4,0,0.2,1);
-}
 
 html { scroll-behavior: smooth; }
 
@@ -227,14 +195,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 
-/* === NAV === */
-#navbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
-}
 
+<<<<<<< HEAD
 #navbar.scrolled {
   background: rgba(4, 21, 37, 0.9);
   backdrop-filter: blur(20px);
@@ -574,6 +536,8 @@ a { text-decoration: none; color: inherit; }
 .mobile-menu.open { display: flex; }
 .mobile-menu a { color: var(--text-2); font-size: 1rem; font-weight: 500; padding: 0.4rem 0; }
 .mobile-menu .btn-primary { width: fit-content; margin-top: 0.5rem; }
+=======
+>>>>>>> e506ea30f5354ac1f743ac8809445d015fdc9d19
 
 /* === BUTTONS === */
 .btn-primary {
