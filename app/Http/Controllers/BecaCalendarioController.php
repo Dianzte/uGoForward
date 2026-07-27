@@ -116,7 +116,7 @@ class BecaCalendarioController extends Controller
                 foreach ($tareas as $tarea) {
                     $eventos[] = [
                         'id'    => 'tarea_' . $tarea->id,
-                        'title' => '📌 ' . $tarea->titulo,
+                        'title' => ' ' . $tarea->titulo,
                         'start' => Carbon::parse($tarea->fecha)->format('Y-m-d'), // Formato YYYY-MM-DD
                         'color' => '#3B82F6', // Azul para la agenda
                         'extendedProps' => [
@@ -164,4 +164,60 @@ class BecaCalendarioController extends Controller
         ], 500);
     }
 }
+    /**
+     * Modificar una tarea existente
+     */
+    public function actualizarTarea(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'titulo' => 'required|string|max:255',
+                'fecha'  => 'required|date',
+            ]);
+
+            $userId = auth()->id() ?? \App\Models\User::first()?->id;
+
+            $tarea = CalendarioTarea::where('id', $id)
+                ->where('user_id', $userId)
+                ->firstOrFail();
+
+            $tarea->update([
+                'titulo' => $request->titulo,
+                'fecha'  => $request->fecha,
+            ]);
+
+            return response()->json(['success' => true, 'tarea' => $tarea]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Eliminar una tarea existente
+     */
+    public function eliminarTarea($id)
+    {
+        try {
+            $userId = auth()->id() ?? \App\Models\User::first()?->id;
+
+            $tarea = CalendarioTarea::where('id', $id)
+                ->where('user_id', $userId)
+                ->firstOrFail();
+
+            $tarea->delete();
+
+            return response()->json(['success' => true]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

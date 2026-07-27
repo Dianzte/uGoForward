@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
+@import "tailwindcss";
+
+/* ==========================================================================
+   UGF CALENDAR CUSTOM DESIGN SYSTEM & STYLES
+   ========================================================================== */
+
+:root {
+    --primary-cyan: #00C8FF;
+    --primary-blue: #028CF6;
+    --deep-ocean: #0a192f;
+    --ocean-navy: #0f172a;
+    --accent-gold: #FFD014;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(226, 232, 240, 0.8);
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    background: #f8fafc;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* Typography Utility */
+.font-heading {
+    font-family: var(--font-heading);
+}
+
+/* Ambient Background Orbs */
+.ambient-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.ambient-orb-1 {
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(2, 140, 246, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    filter: blur(60px);
+}
+
+.ambient-orb-2 {
+    position: absolute;
+    bottom: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 200, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+    filter: blur(80px);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+}
+
+.glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.09), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+}
+
+/* Modern Header Gradient Banner */
+.calendar-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #978606 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.calendar-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(circle at top right, rgba(0, 200, 255, 0.25), transparent 60%);
+    pointer-events: none;
+}
+
+/* Status Indicator Dots with Glow */
+.status-dot {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.status-dot-emerald {
+    background-color: #10B981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.status-dot-amber {
+    background-color: #F59E0B;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.status-dot-rose {
+    background-color: #EF4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+    animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+.status-dot-blue {
+    background-color: #3B82F6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+/* Glowing Primary Button */
+.btn-ugf-primary {
+    background: linear-gradient(135deg, #028CF6 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 14px 0 rgba(2, 140, 246, 0.39);
+    transition: all 0.25s ease;
+}
+
+.btn-ugf-primary:hover {
+    background: linear-gradient(135deg, #00C8FF 0%, #1d4ed8 100%);
+    box-shadow: 0 6px 20px 0 rgba(2, 140, 246, 0.55);
+    transform: translateY(-1px);
+}
+
+.btn-ugf-primary:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FULLCALENDAR CUSTOM OVERRIDES
+   ========================================================================== */
+
+#calendar {
+    font-family: var(--font-body);
+}
+
+/* Header Toolbar */
+.fc .fc-toolbar {
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem !important;
+}
+
+.fc .fc-toolbar-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem !important;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+}
+
+/* Toolbar Buttons */
+.fc .fc-button-primary {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    padding: 0.45rem 0.9rem !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.2s ease !important;
+    text-transform: capitalize !important;
+}
+
+.fc .fc-button-primary:hover {
+    background-color: #f1f5f9 !important;
+    color: #028CF6 !important;
+    border-color: #cbd5e1 !important;
+}
+
+.fc .fc-button-primary:focus,
+.fc .fc-button-primary:active,
+.fc .fc-button-primary-active {
+    background-color: #028CF6 !important;
+    border-color: #028CF6 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(2, 140, 246, 0.3) !important;
+}
+
+.fc .fc-button-group {
+    gap: 2px;
+    border-radius: 0.6rem;
+    overflow: hidden;
+}
+
+.fc .fc-button-group > .fc-button {
+    border-radius: 0.6rem !important;
+}
+
+/* Grid Styling */
+.fc-theme-standard td, 
+.fc-theme-standard th {
+    border-color: #f1f5f9 !important;
+}
+
+.fc .fc-col-header-cell {
+    padding: 0.75rem 0 !important;
+    background-color: #f8fafc;
+}
+
+.fc .fc-col-header-cell-cushion {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    text-decoration: none !important;
+}
+
+/* Today Cell Highlight */
+.fc .fc-day-today {
+    background-color: rgba(2, 140, 246, 0.04) !important;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+    background-color: #028CF6;
+    color: white !important;
+    border-radius: 9999px;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.fc .fc-daygrid-day-number {
+    font-weight: 600;
+    color: #475569;
+    padding: 6px 10px !important;
+    text-decoration: none !important;
+    font-size: 0.85rem;
+}
+
+/* Event Styling */
+.fc-daygrid-event {
+    border-radius: 0.5rem !important;
+    padding: 3px 6px !important;
+    margin-top: 3px !important;
+    margin-bottom: 2px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    cursor: pointer !important;
+}
+
+.fc-daygrid-event:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12) !important;
+    filter: brightness(1.03);
+}
+
+.fc-event-main {
+    padding: 1px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Modal Animations */
+@keyframes modalScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-modal-in {
+    animation: modalScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Scrollbar for Modal content */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

@@ -38,5 +38,9 @@ Route::get('/api/becas-calendario/eventos', [BecaCalendarioController::class, 'o
 
 Route::post('/api/calendario/tareas', [BecaCalendarioController::class, 'guardarTarea']);
 
+// Rutas para Modificar y Eliminar Tareas de la Agenda
+Route::put('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'actualizarTarea']);
+Route::delete('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'eliminarTarea']);
+
 
 
