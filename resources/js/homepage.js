@@ -461,150 +461,1065 @@ const heroStats = document.querySelector('.hero-stats');
 if (heroStats) counterObs.observe(heroStats);
 
 /* ─────────────────────────────────────
-   11. MAP INTERACTIVITY — Popup/Tooltip
+   11. MAP INTERACTIVITY — Premium University Modal
    ───────────────────────────────────── */
+
+// === BASE DE DATOS DE UNIVERSIDADES POR DEPARTAMENTO ===
+const UNI_DATA = {
+  'san-salvador': {
+    name: 'San Salvador',
+    region: 'Zona Central',
+    unis: [
+      {
+        name: 'UES',
+        fullName: 'Universidad de El Salvador',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_de_la_Universidad_de_El_Salvador.svg/1200px-Logo_de_la_Universidad_de_El_Salvador.svg.png',
+        youtubeId: null,
+        desc: 'La principal institución pública de educación superior del país. Fundada en 1841, ofrece la mayor oferta académica a nivel nacional con el sistema de becas remuneradas más amplio de El Salvador.',
+        badges: ['🏛️ Pública', '👨‍🎓 65,000 Estudiantes', '⭐ Fundada 1841', '📅 Beca 2026 Abierta'],
+        careers: ['Medicina', 'Ingeniería Industrial', 'Derecho', 'Economía', 'Ciencias Químicas', 'Informática', 'Odontología', 'Arquitectura', 'Química y Farmacia'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:00 PM' },
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:00 PM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+        ],
+        services: ['🏥 Clínica Médica Gratuita', '📚 Biblioteca Central 24H', '🍽️ Comedor Universitario', '🚌 Transporte Colectivo', '💻 Laboratorios TI', '🏋️ Deportes', '🎨 Arte y Cultura', '🔬 Centro de Investigación'],
+        beca: {
+          tipo: 'Beca Remunerada y Exoneración de Escolaridad',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo de 7.0 en bachillerato' },
+            { icon: '💰', text: 'Comprobante de necesidad económica' },
+            { icon: '📋', text: 'Partida de nacimiento certificada' },
+            { icon: '🎯', text: 'Prueba de aptitudes aprobada' },
+            { icon: '📆', text: 'Aplicación antes de Enero 2026' },
+          ],
+        },
+        website: 'https://www.ues.edu.sv',
+      },
+      {
+        name: 'UCA',
+        fullName: 'Universidad Centroamericana José Simeón Cañas',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwjqm5gCq_2DYlnuKO0g7HRGDJfUvSqOXhpQ&s',
+        youtubeId: null,
+        desc: 'Universidad privada de alto prestigio y orientación social. Sus programas de beca de excelencia son reconocidos en todo Centroamérica.',
+        badges: ['🎓 Privada', '👨‍🎓 8,000 Estudiantes', '⭐ Alta Calidad Académica', '🌎 Reconocimiento Internacional'],
+        careers: ['Ingeniería Informática', 'Administración de Empresas', 'Psicología', 'Comunicaciones', 'Maestría en Derecho', 'Ingeniería Civil', 'Teología'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 7:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '8:00 AM – 4:00 PM' },
+        ],
+        services: ['📚 Biblioteca Especializada', '💻 Campus Digital', '🌱 Cafetería', '🔬 Laboratorios Modernos', '🎭 Centro Cultural', '♿ Accesibilidad Total'],
+        beca: {
+          tipo: 'Beca Excelencia Académica 2026',
+          requisitos: [
+            { icon: '📊', text: 'Promedio de bachillerato de 8.5 o superior' },
+            { icon: '🏆', text: 'Participación en actividades comunitarias' },
+            { icon: '📋', text: 'Carta de motivación personal' },
+            { icon: '💼', text: 'Entrevista con comité de admisiones' },
+            { icon: '📆', text: 'Convocatoria: Febrero – Marzo 2026' },
+          ],
+        },
+        website: 'https://www.uca.edu.sv',
+      },
+    ],
+  },
+  'santa-ana': {
+    name: 'Santa Ana',
+    region: 'Zona Occidental',
+    unis: [
+      {
+        name: 'UNASA',
+        fullName: 'Universidad Autónoma de Santa Ana',
+        image: 'https://campussostenible.unasa.edu.sv/images/UNASA2024/UNASA_SUR_2024.jpg',
+        youtubeId: null,
+        desc: 'Institución líder en la zona occidental especializada en ciencias de la salud y tecnología. Cuenta con convenios de beca con la municipalidad.',
+        badges: ['🏥 Especialidad Salud', '🌍 Zona Occidental', '📅 Beca Parcial Activa'],
+        careers: ['Medicina', 'Laboratorio Clínico', 'Enfermería', 'Fisioterapia', 'Nutrición y Dietética'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:30 AM – 6:30 PM' },
+          { dia: 'Sábado', turno: 'Complementario', hora: '8:00 AM – 1:00 PM' },
+        ],
+        services: ['🏥 Clínica de Práctica', '🔬 Laboratorio Biomédico', '📚 Biblioteca', '🍽️ Cafetería', '🏋️ Área Deportiva'],
+        beca: {
+          tipo: 'Beca Mérito Académico — Zona Occidental',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 8.0 en bachillerato' },
+            { icon: '🏠', text: 'Residir en Santa Ana, Ahuachapán o Sonsonate' },
+            { icon: '💰', text: 'Ingreso familiar menor a $500/mes' },
+            { icon: '📋', text: 'DUI del solicitante o tutor' },
+          ],
+        },
+        website: 'https://www.unasa.edu.sv',
+      },
+      {
+        name: 'UCO',
+        fullName: 'Universidad Católica de Occidente',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/d/db/Logo_UCO_unico.png',
+        youtubeId: null,
+        desc: 'Universidad de tradición católica en el corazón de Santa Ana con oferta académica en derecho, negocios y ciencias.',
+        badges: ['⛪ Privada Católica', '👨‍🎓 4,500 Estudiantes', '🏛️ Tradición Santa Ana'],
+        careers: ['Derecho', 'Ciencias Empresariales', 'Arquitectura', 'Ingeniería Civil', 'Educación'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 4:00 PM' },
+        ],
+        services: ['⛪ Capilla Universitaria', '📚 Biblioteca Jurídica', '💻 Sala de Computación', '🎓 Bienestar Estudiantil'],
+        beca: {
+          tipo: 'Beca Vocacional Occidental',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '📋', text: 'Carta parroquial o de comunidad religiosa' },
+            { icon: '💰', text: 'Comprobante de ingreso familiar' },
+          ],
+        },
+        website: 'https://www.uco.edu.sv',
+      },
+    ],
+  },
+  'la-libertad': {
+    name: 'La Libertad',
+    region: 'Zona Central-Sur',
+    unis: [
+      {
+        name: 'UTEC',
+        fullName: 'Universidad Tecnológica de El Salvador',
+        image: 'https://www.utec.edu.sv/images/utec-campus.jpg',
+        youtubeId: null,
+        desc: 'Una de las universidades privadas más grandes del país. Fuertemente orientada a tecnología, negocios y diseño.',
+        badges: ['💻 Tecnología', '👨‍🎓 30,000 Estudiantes', '🌐 Sede Nacional', '📅 Beca Activa'],
+        careers: ['Informática', 'Diseño Gráfico', 'Administración', 'Mercadotecnia', 'Periodismo', 'Ingeniería Electrónica', 'Gastronomía'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:00 PM' },
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:30 PM' },
+        ],
+        services: ['💻 Data Center Propio', '🎨 Estudio de Diseño', '📡 Canal Universitario UTEC TV', '🍽️ Comedor', '🏋️ Gimnasio', '🚌 Buses Inter-Sede'],
+        beca: {
+          tipo: 'Beca Digital Futuro',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '💰', text: 'Estudio socioeconómico aprobado' },
+            { icon: '🖥️', text: 'Interés comprobado en áreas tecnológicas' },
+          ],
+        },
+        website: 'https://www.utec.edu.sv',
+      },
+      {
+        name: 'UDB',
+        fullName: 'Universidad Don Bosco',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJelJuKqLj7HCIIFwKzeFWt2cQHVdvCFEPQ&s',
+        youtubeId: null,
+        desc: 'Reconocida por su excelencia en ingeniería y formación técnica de alto nivel. Muy fuerte en STEM con equipamiento de primer nivel.',
+        badges: ['⚙️ Ingeniería & STEM', '🤖 Mecatrónica', '🌟 Top STEM El Salvador', '📅 Convocatoria Abierta'],
+        careers: ['Mecatrónica', 'Ingeniería de Sistemas', 'Electrónica', 'Industrial', 'Software', 'Biomédica'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:30 PM' },
+          { dia: 'Sábado', turno: 'Especial', hora: '8:00 AM – 12:00 PM' },
+        ],
+        services: ['🔬 Laboratorio Mecatrónica', '🏭 Taller Industrial', '📡 Red WiFi Campus', '🍽️ Cafetería', '🏋️ Área Deportiva', '🤝 Vinculación Empresarial'],
+        beca: {
+          tipo: 'Beca Talento STEM — Don Bosco',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 8.0 en materias STEM' },
+            { icon: '🏆', text: 'Participación en ferias científicas o robótica' },
+            { icon: '📋', text: 'Carta de recomendación del bachillerato' },
+            { icon: '💡', text: 'Examen de habilidades científicas' },
+          ],
+        },
+        website: 'https://www.udb.edu.sv',
+      },
+    ],
+  },
+  'san-miguel': {
+    name: 'San Miguel',
+    region: 'Zona Oriental',
+    unis: [
+      {
+        name: 'UES Oriente',
+        fullName: 'Universidad de El Salvador — Sede Oriental',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_de_la_Universidad_de_El_Salvador.svg/1200px-Logo_de_la_Universidad_de_El_Salvador.svg.png',
+        youtubeId: null,
+        desc: 'Sede de la Universidad de El Salvador en el oriente del país. La opción pública más accesible para estudiantes de San Miguel, Usulután, Morazán y La Unión.',
+        badges: ['🏛️ Pública', '🌍 Zona Oriental', '📅 Beca Remunerada 2026'],
+        careers: ['Derecho', 'Economía', 'Agronomía', 'Enfermería', 'Ingeniería', 'Educación'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:00 PM' },
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:00 PM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '🍽️ Comedor Estudiantil', '💻 Sala de Computación', '🏋️ Deportes', '🏥 Clínica'],
+        beca: {
+          tipo: 'Beca Pública Oriental 2026',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '🏠', text: 'Residir en zona oriental del país' },
+            { icon: '💰', text: 'Necesidad económica comprobada' },
+          ],
+        },
+        website: 'https://www.ues.edu.sv',
+      },
+      {
+        name: 'UGB',
+        fullName: 'Universidad Gerardo Barrios',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'La universidad privada más importante del oriente. Cubre los 14 departamentos con sedes estratégicas y becas de liderazgo.',
+        badges: ['🎓 Privada', '📍 14 Departamentos', '🏆 Liderazgo Estudiantil'],
+        careers: ['Administración', 'Contaduría', 'Derecho', 'Ingeniería Industrial', 'Turismo', 'Psicología'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+        ],
+        services: ['📚 Biblioteca Digital', '💻 Laboratorios', '🎓 Bolsa de Trabajo', '🏋️ Deportes', '🌐 Campus Virtual'],
+        beca: {
+          tipo: 'Beca Liderazgo UGB',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5 en bachillerato' },
+            { icon: '🏆', text: 'Demostrar liderazgo en comunidad escolar' },
+            { icon: '📋', text: 'Cartas de recomendación' },
+            { icon: '📝', text: 'Ensayo de 500 palabras sobre metas académicas' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+    ],
+  },
+  'ahuachaapan': {
+    name: 'Ahuachapán',
+    region: 'Zona Occidental',
+    unis: [
+      {
+        name: 'UGB — Sede Ahuachapán',
+        fullName: 'Universidad Gerardo Barrios — Sede Ahuachapán',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'Sede de la Universidad Gerardo Barrios que atiende a los estudiantes del departamento de Ahuachapán con carreras enfocadas en negocios y tecnología.',
+        badges: ['🎓 Privada', '📍 Zona Occidental', '📅 Beca Liderazgo'],
+        careers: ['Administración de Empresas', 'Contaduría Pública', 'Ingeniería en Sistemas', 'Derecho'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 4:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Laboratorio Informático', '🎓 Orientación Vocacional', '📶 WiFi Campus'],
+        beca: {
+          tipo: 'Beca Liderazgo Occidental — UGB',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '🏠', text: 'Residir en Ahuachapán' },
+            { icon: '🏆', text: 'Participación activa en actividades estudiantiles' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+      {
+        name: 'UNIVO — Sede Ahuachapán',
+        fullName: 'Universidad de Oriente — Sede Ahuachapán',
+        image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
+        youtubeId: null,
+        desc: 'La Universidad de Oriente con presencia nacional ofrece carreras accesibles para bachilleres de Ahuachapán.',
+        badges: ['🌾 Zona Occidental', '💼 Enfoque Empresarial', '📅 Admisión Abierta'],
+        careers: ['Ciencias Jurídicas', 'Administración de Empresas', 'Contaduría Pública'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Nocturno', hora: '5:00 PM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '8:00 AM – 4:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Computación', '🎓 Bolsa de Empleo'],
+        beca: {
+          tipo: 'Beca Socioeconómica UNIVO',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '💰', text: 'Estudio socioeconómico favorable' },
+            { icon: '📋', text: 'Documentos personales completos' },
+          ],
+        },
+        website: 'https://www.univo.edu.sv',
+      },
+    ],
+  },
+  'sonsonate': {
+    name: 'Sonsonate',
+    region: 'Zona Occidental',
+    unis: [
+      {
+        name: 'UNICO',
+        fullName: 'Universidad de Sonsonate (UNICO)',
+        image: 'https://www.unico.edu.sv/images/campus.jpg',
+        youtubeId: null,
+        desc: 'La principal institución privada en Sonsonate, con enfoque en negocios, tecnología y carreras de la salud.',
+        badges: ['🏫 Privada', '📍 Sonsonate', '📅 Convocatoria Activa'],
+        careers: ['Administración', 'Informática', 'Nutrición', 'Derecho', 'Contaduría'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 4:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Laboratorios', '🍽️ Cafetería', '🎓 Bienestar Estudiantil'],
+        beca: {
+          tipo: 'Beca Municipal Sonsonate',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '🏠', text: 'Residir en municipio de Sonsonate' },
+            { icon: '💰', text: 'Necesidad económica verificada' },
+          ],
+        },
+        website: 'https://www.unico.edu.sv',
+      },
+    ],
+  },
+  'chalatenango': {
+    name: 'Chalatenango',
+    region: 'Zona Norte',
+    unis: [
+      {
+        name: 'UGB — Chalatenango',
+        fullName: 'Universidad Gerardo Barrios — Sede Chalatenango',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'Sede en la región norte que brinda acceso a educación superior a estudiantes de Chalatenango y sus municipios.',
+        badges: ['🎓 Privada', '📍 Zona Norte', '📅 Beca Liderazgo'],
+        careers: ['Administración de Empresas', 'Derecho', 'Contaduría', 'Ingeniería en Sistemas'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Lab. Informático', '📶 Internet Campus'],
+        beca: {
+          tipo: 'Beca Liderazgo Norte',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '🏠', text: 'Residir en departamento de Chalatenango' },
+            { icon: '🏆', text: 'Participación comunitaria' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+    ],
+  },
+  'cabanas': {
+    name: 'Cabañas',
+    region: 'Zona Norte-Central',
+    unis: [
+      {
+        name: 'UNIVO — Cabañas',
+        fullName: 'Universidad de Oriente — Sede Cabañas',
+        image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
+        youtubeId: null,
+        desc: 'Presencia de la Universidad de Oriente en el departamento de Cabañas, ofreciendo carreras accesibles para la población estudiantil local.',
+        badges: ['🌾 Zona Norte-Central', '💼 Bachilleres Cabañas', '📅 Admisión Agosto'],
+        careers: ['Ciencias Jurídicas', 'Administración de Empresas', 'Contaduría Pública'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Completo', hora: '8:00 AM – 4:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Sala de Cómputo', '🎓 Asesoría Académica'],
+        beca: {
+          tipo: 'Beca Socioeconómica Cabañas',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '🏠', text: 'Residir en Cabañas' },
+            { icon: '💰', text: 'Ingreso familiar comprobado bajo' },
+          ],
+        },
+        website: 'https://www.univo.edu.sv',
+      },
+    ],
+  },
+  'cuscatlan': {
+    name: 'Cuscatlán',
+    region: 'Zona Central',
+    unis: [
+      {
+        name: 'UNICO Cuscatlán',
+        fullName: 'Universidad de Cuscatlán',
+        image: 'https://www.udecusca.edu.sv/images/campus.jpg',
+        youtubeId: null,
+        desc: 'Universidad privada con sede en Cojutepeque, ofreciendo acceso a educación superior para la zona central-norte del país.',
+        badges: ['🏫 Privada', '📍 Cojutepeque', '📅 Beca Parcial'],
+        careers: ['Administración', 'Contaduría', 'Ciencias Jurídicas', 'Ingeniería en Computación'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Sábado', turno: 'Fin de Semana', hora: '8:00 AM – 4:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Laboratorio', '🎓 Orientación'],
+        beca: {
+          tipo: 'Beca Acceso Cuscatlán',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '💰', text: 'Estudio socioeconómico' },
+          ],
+        },
+        website: '#',
+      },
+      {
+        name: 'UNIVO — Sede Cuscatlán',
+        fullName: 'Universidad de Oriente — Cuscatlán',
+        image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
+        youtubeId: null,
+        desc: 'Sede de UNIVO en la zona central ofreciendo continuidad educativa para bachilleres de Cuscatlán.',
+        badges: ['🌾 Zona Central', '📅 Admisión Continua'],
+        careers: ['Administración', 'Derecho', 'Contaduría'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Computación'],
+        beca: {
+          tipo: 'Beca Socioeconómica',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '💰', text: 'Necesidad económica comprobada' },
+          ],
+        },
+        website: 'https://www.univo.edu.sv',
+      },
+    ],
+  },
+  'la-paz': {
+    name: 'La Paz',
+    region: 'Zona Central-Sur',
+    unis: [
+      {
+        name: 'UNIVO — La Paz',
+        fullName: 'Universidad de Oriente — Sede La Paz',
+        image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
+        youtubeId: null,
+        desc: 'Sede en la zona paracentral que atiende a estudiantes de La Paz y municipios circundantes.',
+        badges: ['🌾 Paracentral', '📅 Beca Socioeconómica'],
+        careers: ['Administración de Empresas', 'Contaduría', 'Ciencias Jurídicas'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Computación', '🎓 Asesoría'],
+        beca: {
+          tipo: 'Beca Socioeconómica La Paz',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '🏠', text: 'Residir en La Paz' },
+            { icon: '💰', text: 'Necesidad económica' },
+          ],
+        },
+        website: 'https://www.univo.edu.sv',
+      },
+      {
+        name: 'UGB — La Paz',
+        fullName: 'Universidad Gerardo Barrios — Sede La Paz',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'Sede de UGB en la zona paracentral con énfasis en carreras empresariales y jurídicas.',
+        badges: ['🎓 Privada', '📍 Zacatecoluca', '🏆 Beca Liderazgo'],
+        careers: ['Administración', 'Derecho', 'Contaduría', 'Ingeniería en Sistemas'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Laboratorio', '🎓 Bolsa de Empleo'],
+        beca: {
+          tipo: 'Beca Liderazgo Paracentral',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '🏠', text: 'Residir en La Paz' },
+            { icon: '🏆', text: 'Activismo estudiantil' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+    ],
+  },
+  'san-vicente': {
+    name: 'San Vicente',
+    region: 'Zona Paracentral',
+    unis: [
+      {
+        name: 'UES — San Vicente',
+        fullName: 'Universidad de El Salvador — Paramédica San Vicente',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_de_la_Universidad_de_El_Salvador.svg/1200px-Logo_de_la_Universidad_de_El_Salvador.svg.png',
+        youtubeId: null,
+        desc: 'Centro regional de la UES para la zona paracentral, con enfoque en ciencias de la salud y ciencias agropecuarias.',
+        badges: ['🏛️ Pública', '🌿 Agropecuario', '📅 Beca Nacional'],
+        careers: ['Enfermería', 'Técnico Agropecuario', 'Educación'],
+        schedule: [
+          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 5:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '🌿 Parcela Agrícola', '🏥 Clínica', '🍽️ Cafetería'],
+        beca: {
+          tipo: 'Beca Pública Paracentral',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '🏠', text: 'Residir en zona paracentral' },
+            { icon: '💰', text: 'Necesidad económica comprobada' },
+          ],
+        },
+        website: 'https://www.ues.edu.sv',
+      },
+      {
+        name: 'UNIVO — San Vicente',
+        fullName: 'Universidad de Oriente — Sede San Vicente',
+        image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
+        youtubeId: null,
+        desc: 'Sede universitaria para bachilleres de San Vicente con carreras accesibles en horario nocturno.',
+        badges: ['🌾 Paracentral', '📅 Admisión Continua'],
+        careers: ['Administración', 'Contaduría', 'Derecho'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Computación'],
+        beca: {
+          tipo: 'Beca Socioeconómica',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '💰', text: 'Necesidad económica' },
+          ],
+        },
+        website: 'https://www.univo.edu.sv',
+      },
+    ],
+  },
+  'usulutan': {
+    name: 'Usulután',
+    region: 'Zona Oriental',
+    unis: [
+      {
+        name: 'UGB — Usulután',
+        fullName: 'Universidad Gerardo Barrios — Sede Usulután',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'Sede de UGB en Usulután atendiendo a estudiantes del litoral y zona costera del oriente.',
+        badges: ['🎓 Privada', '🌊 Zona Costera', '🏆 Beca Liderazgo'],
+        careers: ['Administración', 'Turismo y Hotelería', 'Contaduría', 'Derecho'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Laboratorio', '🏋️ Deporte'],
+        beca: {
+          tipo: 'Beca Liderazgo Oriente',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '🏠', text: 'Residir en Usulután' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+    ],
+  },
+  'morazan': {
+    name: 'Morazán',
+    region: 'Zona Oriental',
+    unis: [
+      {
+        name: 'UGB — Morazán',
+        fullName: 'Universidad Gerardo Barrios — Sede Morazán',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'La única sede universitaria privada con beca activa en el departamento de Morazán, facilitando acceso en la zona más rural del oriente.',
+        badges: ['🎓 Privada', '🏔️ Zona Rural', '📅 Beca Acceso Rural'],
+        careers: ['Administración', 'Contaduría', 'Derecho'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Computación', '🎓 Asesoría'],
+        beca: {
+          tipo: 'Beca Acceso Rural Morazán',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '🏠', text: 'Residir en Morazán' },
+            { icon: '💰', text: 'Necesidad económica' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+      {
+        name: 'UNIVO — Morazán',
+        fullName: 'Universidad de Oriente — Sede Morazán',
+        image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
+        youtubeId: null,
+        desc: 'Sede de UNIVO que brinda cobertura educativa en la zona montañosa de Morazán.',
+        badges: ['🌾 Rural', '📅 Admisión Continua'],
+        careers: ['Administración de Empresas', 'Ciencias Jurídicas'],
+        schedule: [
+          { dia: 'Sábado y Domingo', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Computación'],
+        beca: {
+          tipo: 'Beca Socioeconómica Rural',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.0' },
+            { icon: '💰', text: 'Estudio de necesidad económica' },
+          ],
+        },
+        website: 'https://www.univo.edu.sv',
+      },
+    ],
+  },
+  'la-union': {
+    name: 'La Unión',
+    region: 'Zona Oriental',
+    unis: [
+      {
+        name: 'UGB — La Unión',
+        fullName: 'Universidad Gerardo Barrios — Sede La Unión',
+        image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
+        youtubeId: null,
+        desc: 'Sede portuaria de UGB en La Unión, con carreras orientadas a comercio internacional, logística y administración.',
+        badges: ['⚓ Zona Portuaria', '🚢 Logística & Comercio', '📅 Beca Liderazgo'],
+        careers: ['Administración', 'Contaduría', 'Comercio Internacional', 'Derecho'],
+        schedule: [
+          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+        ],
+        services: ['📚 Biblioteca', '💻 Laboratorio', '🌐 Conexión Portuaria'],
+        beca: {
+          tipo: 'Beca Liderazgo La Unión',
+          requisitos: [
+            { icon: '📊', text: 'Promedio mínimo 7.5' },
+            { icon: '🏠', text: 'Residir en La Unión' },
+            { icon: '🏆', text: 'Participación comunitaria' },
+          ],
+        },
+        website: 'https://www.ugb.edu.sv',
+      },
+    ],
+  },
+};
+
+// === GENERADOR DE CARDS DE UNIVERSIDAD ===
+function buildUniCard(uni, idx) {
+  const tabId = `uni-${idx}`;
+
+  const careersHtml = uni.careers.map(c => `<span class="career-chip">${c}</span>`).join('');
+  const badgesHtml = uni.badges.map(b => `<span class="uni-stat-badge"><span>${b}</span></span>`).join('');
+  const scheduleHtml = uni.schedule.map(s => `
+    <tr>
+      <td><span class="schedule-dot"></span>${s.dia}</td>
+      <td>${s.turno}</td>
+      <td><strong style="color:#fff;">${s.hora}</strong></td>
+    </tr>`).join('');
+  const servicesHtml = uni.services.map(s => `
+    <div class="service-item">
+      <span class="service-icon-sm">${s.split(' ')[0]}</span>
+      <span>${s.split(' ').slice(1).join(' ')}</span>
+    </div>`).join('');
+  const reqHtml = uni.beca.requisitos.map(r => `
+    <div class="beca-requirement">
+      <span class="beca-req-icon">${r.icon}</span>
+      <span>${r.text}</span>
+    </div>`).join('');
+
+  const mediaHtml = uni.youtubeId
+    ? `<iframe src="https://www.youtube.com/embed/${uni.youtubeId}?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    : `<img src="${uni.image}" alt="${uni.name}" onerror="this.src='https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=80'">`;
+
+  return `
+  <div class="uni-modal-card">
+    <div class="uni-card-top">
+      <div class="uni-media-wrap">
+        ${mediaHtml}
+        <span class="uni-media-badge">${uni.youtubeId ? '▶ Video' : '📷 Foto'}</span>
+      </div>
+      <div class="uni-card-info">
+        <div class="uni-card-name">${uni.name}</div>
+        <div class="uni-card-full-name">${uni.fullName}</div>
+        <p class="uni-card-desc">${uni.desc}</p>
+        <div class="uni-stat-badges">${badgesHtml}</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="uni-tabs-bar" id="tabs-${tabId}">
+      <button class="uni-tab-btn active" data-tab="carreras-${tabId}">🎓 Carreras</button>
+      <button class="uni-tab-btn" data-tab="horario-${tabId}">🕐 Horarios</button>
+      <button class="uni-tab-btn" data-tab="servicios-${tabId}">🛠️ Servicios</button>
+      <button class="uni-tab-btn" data-tab="beca-${tabId}">⭐ Beca Info</button>
+    </div>
+
+    <div id="carreras-${tabId}" class="uni-tab-panel active">
+      <div class="careers-grid">${careersHtml}</div>
+    </div>
+    <div id="horario-${tabId}" class="uni-tab-panel">
+      <table class="schedule-table">
+        <thead><tr><th>Días</th><th>Turno</th><th>Horario</th></tr></thead>
+        <tbody>${scheduleHtml}</tbody>
+      </table>
+    </div>
+    <div id="servicios-${tabId}" class="uni-tab-panel">
+      <div class="services-list">${servicesHtml}</div>
+    </div>
+    <div id="beca-${tabId}" class="uni-tab-panel">
+      <div class="beca-info-panel">
+        <h4 style="color:var(--gold); margin-bottom:1rem; font-size:1rem;">🏆 ${uni.beca.tipo}</h4>
+        ${reqHtml}
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="uni-modal-card-footer">
+      <a href="${uni.website}" target="_blank" rel="noopener" class="uni-website-link">
+        🌐 Sitio oficial — ${uni.fullName} ↗
+      </a>
+      <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.45rem 1.1rem; font-size:0.82rem;">Ver Calendario de Becas →</a>
+    </div>
+  </div>`;
+}
+
+// === ABRIR MODAL AL HACER CLICK EN DEPT ===
+const mapModalOverlay = document.getElementById('mapModalOverlay');
+const mapModalClose = document.getElementById('mapModalClose');
+const mapModalBody = document.getElementById('mapModalBody');
+const modalDeptNameEl = document.getElementById('modalDeptName');
+const modalDeptUniCount = document.getElementById('modalDeptUniCount');
+const modalDeptRegion = document.getElementById('modalDeptRegion');
+
+function openMapModal(deptId) {
+  const data = UNI_DATA[deptId];
+  if (!data || !data.unis || data.unis.length === 0) {
+    mapModalBody.innerHTML = `
+      <div class="map-modal-empty">
+        <div class="empty-icon">🏗️</div>
+        <h3>Información en construcción</h3>
+        <p>Próximamente agregaremos las universidades de <strong>${deptId}</strong>. ¡Estamos trabajando en ello!</p>
+      </div>`;
+    modalDeptNameEl.textContent = deptId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    modalDeptUniCount.textContent = '0 universidades cargadas';
+    modalDeptRegion.textContent = 'El Salvador';
+    mapModalOverlay.classList.add('open');
+    return;
+  }
+
+  modalDeptNameEl.textContent = data.name;
+  const n = data.unis.length;
+  modalDeptUniCount.textContent = `${n} universidad${n !== 1 ? 'es' : ''} con becas`;
+  modalDeptRegion.textContent = data.region;
+
+  mapModalBody.innerHTML = data.unis.map((uni, idx) => buildUniCard(uni, `${deptId}-${idx}`)).join('');
+
+  // Inicializar tabs para cada universidad
+  mapModalBody.querySelectorAll('.uni-tabs-bar').forEach(bar => {
+    bar.querySelectorAll('.uni-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetPanelId = btn.dataset.tab;
+        const card = btn.closest('.uni-modal-card');
+        card.querySelectorAll('.uni-tab-btn').forEach(b => b.classList.remove('active'));
+        card.querySelectorAll('.uni-tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(targetPanelId)?.classList.add('active');
+      });
+    });
+  });
+
+  mapModalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMapModal() {
+  mapModalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+if (mapModalClose) mapModalClose.addEventListener('click', closeMapModal);
+if (mapModalOverlay) mapModalOverlay.addEventListener('click', e => {
+  if (e.target === mapModalOverlay) closeMapModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMapModal(); });
+
+// === TOOLTIP HOVER + CLICK EN DEPT ===
 const mapWrapper  = document.querySelector('.map-wrapper');
 const tooltip     = document.getElementById('mapTooltip');
 const tooltipName = document.getElementById('tooltipName');
-const tooltipUnis = document.getElementById('tooltipUnis');
-const tooltipDesc = document.getElementById('tooltipDesc');
+const tooltipUnisText = document.getElementById('tooltipUnisText');
 
 let activedept = null;
 
 document.querySelectorAll('.dept').forEach(dept => {
-
-  /* ── HOVER: mostrar tooltip ── */
   dept.addEventListener('mouseenter', () => {
-    tooltipName.textContent = dept.dataset.name || 'Departamento';
-    const n = parseInt(dept.dataset.unis || 0);
-    tooltipUnis.textContent = n === 1 ? '1 universidad con becas' : `${n} universidades con becas`;
-    tooltipDesc.textContent = dept.dataset.desc || '';
-    tooltip.classList.add('visible');
+    if (tooltip) {
+      const deptName = dept.dataset.name || 'Departamento';
+      const n = parseInt(dept.dataset.unis || 0);
+      tooltipName.textContent = deptName;
+      tooltipUnisText.textContent = n === 1 ? '1 universidad con becas' : `${n} universidades con becas`;
+      tooltip.classList.add('visible');
+    }
   });
 
-  /* ── MOUSE MOVE: seguir cursor ── */
   dept.addEventListener('mousemove', e => {
-    if (!mapWrapper) return;
+    if (!mapWrapper || !tooltip) return;
     const rect = mapWrapper.getBoundingClientRect();
     let lx = e.clientX - rect.left + 16;
-    let ly = e.clientY - rect.top  - 50;
-    // Evitar que se salga por la derecha
-    if (lx + 270 > rect.width) lx = e.clientX - rect.left - 275;
-    // Evitar que se salga por arriba
+    let ly = e.clientY - rect.top - 50;
+    if (lx + 290 > rect.width) lx = e.clientX - rect.left - 295;
     if (ly < 0) ly = e.clientY - rect.top + 16;
     tooltip.style.left = lx + 'px';
-    tooltip.style.top  = ly + 'px';
+    tooltip.style.top = ly + 'px';
   });
 
-  /* ── MOUSE LEAVE: ocultar tooltip ── */
   dept.addEventListener('mouseleave', () => {
-    tooltip.classList.remove('visible');
+    if (tooltip) tooltip.classList.remove('visible');
   });
 
-  /* ── CLICK: resaltar departamento ── */
   dept.addEventListener('click', () => {
-    // Quitar active del anterior
-    if (activedept && activedept !== dept) {
-      activedept.classList.remove('active');
-    }
-    dept.classList.toggle('active');
-    activedept = dept.classList.contains('active') ? dept : null;
+    if (tooltip) tooltip.classList.remove('visible');
+    // Mark active
+    document.querySelectorAll('.dept.active').forEach(d => d.classList.remove('active'));
+    dept.classList.add('active');
+    activedept = dept;
+
+    const deptId = dept.dataset.id || '';
+    openMapModal(deptId);
   });
 });
 
-/* Click fuera del mapa: quitar active */
 document.addEventListener('click', e => {
-  if (!e.target.classList.contains('dept')) {
+  if (!e.target.classList.contains('dept') && !mapModalOverlay?.contains(e.target)) {
     document.querySelectorAll('.dept.active').forEach(d => d.classList.remove('active'));
-    activedept = null;
   }
 });
 
 
-/*MODAL 1*/ 
 
-const modal = document.getElementById("uniModal");
-const closeModal = document.getElementById("closeModal");
-const modalDept = document.getElementById("modalDept");
-const universidadesContainer =
-document.getElementById("universidadesContainer");
+/* ==========================================================================
+   INTERACTIVE CAROUSELS, COMPASS & FLOATING DOCK LOGIC
+   ========================================================================== */
 
-document.querySelectorAll(".dept").forEach(dept=>{
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. BECAS CAROUSEL LOGIC
+    const track = document.getElementById('becasTrack');
+    const prevBtn = document.getElementById('prevBecaBtn');
+    const nextBtn = document.getElementById('nextBecaBtn');
+    const filterPills = document.querySelectorAll('#becasFilterPills .filter-pill');
 
-    dept.addEventListener("click",()=>{
+    if (track && prevBtn && nextBtn) {
+        let currentIndex = 0;
 
-        modalDept.innerText=dept.dataset.name;
+        function getCardWidth() {
+            const card = track.querySelector('.beca-card-3d');
+            return card ? card.offsetWidth + 24 : 340; // 24px gap
+        }
 
-        universidadesContainer.innerHTML="";
+        function updateTrackPosition() {
+            const cardWidth = getCardWidth();
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
 
-        const universidades=JSON.parse(dept.dataset.universities || "[]");
-
-        universidades.forEach(u=>{
-
-            universidadesContainer.innerHTML+=`
-
-            <div class="universidad">
-
-                <img src="${u.image}">
-
-                <div class="uni-info">
-
-                    <h3>${u.name}</h3>
-
-                    <p>${u.description}</p>
-
-                    <p><strong>Carreras:</strong> ${u.careers}</p>
-
-                    <a href="${u.website}" target="_blank">
-                        Sitio web
-                    </a>
-
-                </div>
-
-            </div>
-
-            `;
-
+        nextBtn.addEventListener('click', () => {
+            const visibleCards = track.querySelectorAll('.beca-card-3d:not([style*="display: none"])');
+            const maxIndex = Math.max(0, visibleCards.length - 1);
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+            } else {
+                currentIndex = 0; // loop back
+            }
+            updateTrackPosition();
         });
 
-        modal.style.display="block";
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = 0;
+            }
+            updateTrackPosition();
+        });
 
+        // Filter Pills Event
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+
+                const filter = pill.dataset.filter;
+                const cards = track.querySelectorAll('.beca-card-3d');
+
+                cards.forEach(card => {
+                    const cat = card.dataset.category || '';
+                    if (filter === 'todos' || cat.includes(filter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                currentIndex = 0;
+                updateTrackPosition();
+            });
+        });
+
+        // Responsive resize
+        window.addEventListener('resize', updateTrackPosition);
+    }
+
+    // 2. FLOATING COMPASS NEEDLE & JUMP TO TOP
+    const compassWidget = document.getElementById('floatingCompass');
+    const compassNeedle = document.getElementById('compassNeedle');
+
+    if (compassWidget && compassNeedle) {
+        window.addEventListener('scroll', () => {
+            const totalScrollable = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalScrollable > 0) {
+                const scrollPercent = window.scrollY / totalScrollable;
+                const angle = scrollPercent * 720; // rotates as you scroll deeper
+                compassNeedle.style.transform = `rotate(${angle}deg)`;
+            }
+        });
+
+        compassWidget.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // 3. FLOATING MARINE DOCK ACTIVE LINK
+    const dockItems = document.querySelectorAll('#marineDock .dock-item');
+    const sections = document.querySelectorAll('section[id]');
+
+    if (dockItems.length && sections.length) {
+        window.addEventListener('scroll', () => {
+            let currentSec = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.scrollY >= sectionTop) {
+                    currentSec = section.getAttribute('id');
+                }
+            });
+
+            dockItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${currentSec}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    }
+
+    // 4. 3D CARD TILT EFFECT ON HOVER
+    const tiltCards = document.querySelectorAll('.beca-card-3d, .bitacora-card, .service-card');
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -6;
+            const rotateY = ((x - centerX) / centerX) * 6;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
     });
 
-});
+    // 5. SIMULADOR DE BECA CALCULATOR LOGIC
+    const btnCalcularSim = document.getElementById('btnCalcularSim');
+    if (btnCalcularSim) {
+        btnCalcularSim.addEventListener('click', () => {
+            const prom = document.getElementById('simPromedio')?.value || '100';
+            const dest = document.getElementById('simDestino')?.value || 'sv';
 
-closeModal.onclick=()=>{
+            let baseScore = parseInt(prom);
+            if (dest === 'es' || dest === 'usa') baseScore = Math.max(75, baseScore - 5);
 
-modal.style.display="none";
+            const scoreEl = document.getElementById('scoreCompat');
+            const descEl = document.getElementById('simDescText');
+            const countEl = document.getElementById('countOpEncontradas');
+            const cobEl = document.getElementById('coberturaEstimada');
 
-}
+            if (scoreEl) {
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += 3;
+                    if (current >= baseScore) {
+                        current = baseScore;
+                        clearInterval(timer);
+                    }
+                    scoreEl.innerText = `${current}%`;
+                }, 20);
+            }
 
-window.onclick=(e)=>{
-
-if(e.target==modal){
-
-modal.style.display="none";
-
-}
-
-}
-
-/* JS DE PAGINA DE CARGA BELLACONA       */
-window.addEventListener("load", () => {
-    const loader = document.getElementById("gta-loader");
-    
-    // Agregamos un retraso de 2000 milisegundos (2 segundos) estilo videojuego
-    setTimeout(() => {
-        loader.classList.add("gta-loader-hidden");
-    }, 2000); 
-});
-window.addEventListener('load', () => {
-    const loader = document.getElementById('gta-loader');
-    if (loader) {
-        loader.style.opacity = '0';
-        loader.style.transition = 'opacity 0.5s ease';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 500);
+            if (baseScore >= 90) {
+                if (descEl) descEl.innerText = '¡Felicidades! Tienes un perfil excepcional para becas completas de Excelencia y Posgrado Internacional con estipendio mensual.';
+                if (countEl) countEl.innerText = '5 Becas Matheadas';
+                if (cobEl) cobEl.innerText = '100% Cobertura + Estipendio';
+            } else if (baseScore >= 80) {
+                if (descEl) descEl.innerText = '¡Gran perfil! Calificas para becas de Pregrado y Padrinazgo Educativo con cobertura de matrícula y mensualidades.';
+                if (countEl) countEl.innerText = '3 Becas Matheadas';
+                if (cobEl) cobEl.innerText = '80% - 100% Matrícula';
+            } else {
+                if (descEl) descEl.innerText = 'Calificas para programas de apoyo socioeconómico y padrinazgo personalizado en universidades de El Salvador.';
+                if (countEl) countEl.innerText = '2 Becas Matheadas';
+                if (cobEl) cobEl.innerText = '50% - 75% Arancel';
+            }
+        });
     }
+
+    // 6. ROADMAP STEPPER LOGIC
+    const roadmapSteps = document.querySelectorAll('.roadmap-step-item');
+    const stepData = {
+        '1': {
+            tag: 'Paso 1 de 5',
+            title: 'Test Socioemocional & Orientación Vocacional',
+            desc: 'Inicias identificando tus inteligencias múltiples y rasgos socioemocionales. Esto te permite elegir la carrera y universidad con mayor proyección para ti.',
+            btnText: 'Hacer el Test Gratis →',
+            btnHref: '#'
+        },
+        '2': {
+            tag: 'Paso 2 de 5',
+            title: 'Exploración en el Mapa Territorial',
+            desc: 'Filtra universidades por departamento para descubrir las ofertas académicas más cercanas a tu municipio con programa de becas activo.',
+            btnText: 'Explorar Mapa →',
+            btnHref: '#universidades'
+        },
+        '3': {
+            tag: 'Paso 3 de 5',
+            title: 'Organización en Agenda & Calendario',
+            desc: 'Añade alertas de cierre y fechas límite para tus entregas de documentos con nuestro semáforo interactivo de urgencias.',
+            btnText: 'Ver Calendario →',
+            btnHref: '/calendario'
+        },
+        '4': {
+            tag: 'Paso 4 de 5',
+            title: 'Conexión Transparente con Padrinos',
+            desc: 'Conecta con patrocinadores e instituciones dispuestas a financiar tu educación bajo condiciones justas y directas.',
+            btnText: 'Conocer Padrinos →',
+            btnHref: '#servicios'
+        },
+        '5': {
+            tag: 'Paso 5 de 5',
+            title: '¡Zarpar a la Universidad y Triunfar!',
+            desc: 'Presenta tu admisión respaldada por UGF y comienza tus clases universitarias rumbo a un futuro brillante.',
+            btnText: 'Buscar Mi Beca →',
+            btnHref: '/becas'
+        }
+    };
+
+    roadmapSteps.forEach(stepItem => {
+        stepItem.addEventListener('click', () => {
+            roadmapSteps.forEach(s => s.classList.remove('active'));
+            stepItem.classList.add('active');
+
+            const stepNum = stepItem.dataset.step;
+            const data = stepData[stepNum];
+
+            if (data) {
+                const stepTag = document.getElementById('stepTag');
+                const stepTitle = document.getElementById('stepTitle');
+                const stepDesc = document.getElementById('stepDesc');
+                const stepBtn = document.getElementById('stepBtn');
+
+                if (stepTag) stepTag.innerText = data.tag;
+                if (stepTitle) stepTitle.innerText = data.title;
+                if (stepDesc) stepDesc.innerText = data.desc;
+                if (stepBtn) {
+                    stepBtn.innerText = data.btnText;
+                    stepBtn.setAttribute('href', data.btnHref);
+                }
+            }
+        });
+    });
+
+    // 7. ACCORDION FAQ LOGIC
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const header = item.querySelector('.faq-header');
+        if (header) {
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    });
 });
