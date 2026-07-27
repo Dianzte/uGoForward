@@ -96,7 +96,7 @@
         <p>Completa el formulario para registrarte</p>
 
         {{-- 💡 Ruta corregida a /registro para coincidir con tu web.php --}}
-        <form id="formRegistro" action="{{ url('/registro') }}" method="POST">
+        <form id="formRegistro" action="{{ route('/registro') }}" method="POST">
           @csrf
 
           @if ($errors->any())

@@ -67,111 +67,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-
-
-
-  <!-- OCEAN CANVAS — fixed background layer -->
-  <canvas id="oceanCanvas"></canvas>
-
-  <!-- UNDERWATER OVERLAY — darkens + tints as you scroll -->
-  <div id="underwaterOverlay"></div>
-
-  <!-- BUBBLES CONTAINER -->
-  <div id="bubblesContainer"></div>
-
-  <!-- SEAWEED CONTAINER -->
-  <div id="seaweedContainer"></div>
-
-  <!-- FISH CONTAINER -->
-  <div id="fishContainer"></div>
-
-<!-- NAV CORREGIDO -->
-<nav id="navbar">
-  <div class="nav-inner">
-    <a class="nav-logo" href="{{ route('home') }}">
-      <span>UGF</span>
-    </a>
-    
-    <ul class="nav-links">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#universidades">Universidades</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-    </ul>
-    
-    <div class="nav-actions">
-      @auth
-        <!-- Nombre de Usuario -->
-        <span class="user-name" style="color: #fff; font-weight: 600; font-size: 0.95rem; margin-right: 8px;">
-          Hola, {{ Auth::user()->usuario }}
-        </span>
-
-        <!-- Menú desplegable -->
-        <div class="user-menu" id="userMenu">
-          <button type="button" class="user-menu-btn" id="userMenuBtn" title="Menú de cuenta" aria-haspopup="true" aria-expanded="false">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-
-          <div class="user-dropdown" id="userDropdown">
-            <a href="{{ route('perfil') }}" class="user-dropdown-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              Perfil
-            </a>
-            <form action="{{ route('logout') }}" method="POST" class="user-dropdown-item-form">
-              @csrf
-              <button type="submit" class="user-dropdown-item user-dropdown-logout">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                  <polyline points="16 17 21 12 16 7"/>
-                  <line x1="21" y1="12" x2="9" y2="12"/>
-                </svg>
-                Cerrar sesión
-              </button>
-            </form>
-          </div>
-        </div>
-      @else
-        <!-- Invitado -->
-        <a href="{{ route('Register') }}" class="btn-ghost">Registrarse</a>
-        <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
-      @endauth
-    </div>
-
-    <button class="burger" id="burger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- Menú móvil (Estructura corregida) -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#servicios">Servicios</a>
-    <a href="#universidades">Universidades</a>
-    <a href="#nosotros">Nosotros</a>
-    @auth
-      <span style="color: var(--gold, #e8c847); padding: 0.4rem 0; font-weight: 600;">
-        Hola, {{ Auth::user()->usuario }}
-      </span>
-      <a href="{{ route('perfil') }}" class="user-dropdown-item">Perfil</a>
-      <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
-        @csrf
-        <button type="submit" style="color:red; background:none; border:none; padding: 0.4rem 0; cursor: pointer; font-weight: 600;">
-          Cerrar sesión
-        </button>
-      </form>
-    @else
-      <a href="{{ route('Register') }}" class="btn-ghost" style="display: block; margin-bottom: 8px;">Registrarse</a>
-      <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
-    @endauth
-  </div>
-</nav>
-=======
     <!-- DEPTH INDICATOR -->
     <div id="depthMeter">
         <div class="depth-label">Profundidad</div>
@@ -241,7 +136,6 @@
             <span>— 10m</span><span>— 20m</span><span>— 30m</span>
         </div>
     </div>
->>>>>>> e506ea30f5354ac1f743ac8809445d015fdc9d19
 
     <!-- SERVICIOS (underwater zone) -->
     <section class="section section-underwater" id="servicios">
@@ -266,68 +160,6 @@
                     <a href="#" class="card-link">Hacer el test →</a>
                 </div>
 
-<<<<<<< HEAD
- <!-- HERO -->
-<section class="hero section-panel" id="inicio">
-  <div class="container hero-content">
-    <div class="badge" data-reveal>
-      <span class="badge-dot"></span>
-      Plataforma de Becas — El Salvador
-    </div>
-
-    <h1 data-reveal>
-      Tu futuro <br />
-      <em>No tiene límites</em>
-    </h1>
-
-    <p class="hero-sub" data-reveal>
-      Conectamos estudiantes salvadoreños con oportunidades de beca,<br class="br-desktop" />
-      padrinos comprometidos y universidades de todo el país.
-    </p>
-
-    <div class="hero-cta" data-reveal>
-      <a href="#" class="btn-primary btn-lg">
-        Comenzar ahora
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <a href="#servicios" class="btn-outline btn-lg">Explorar</a>
-    </div>
-
-    <div class="hero-stats" data-reveal>
-      <div class="stat">
-        <div>
-          <span class="stat-num" data-count="24">0</span><span class="stat-plus">+</span>
-        </div>
-        <span class="stat-label">Universidades</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div>
-          <span class="stat-num" data-count="14">0</span>
-        </div>
-        <span class="stat-label">Departamentos</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div>
-          <span class="stat-num" data-count="1200">0</span><span class="stat-plus">+</span>
-        </div>
-        <span class="stat-label">Estudiantes</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div>
-          <span class="stat-num" data-count="340">0</span>
-        </div>
-        <span class="stat-label">Padrinos</span>
-      </div>
-    </div>
-  </div>
-</section>
-  
-=======
                 <div class="service-card featured" data-reveal>
                     <div class="service-icon" style="--icon-color:#e8c847;">
                         <svg viewBox="0 0 40 40" fill="none">
@@ -406,7 +238,6 @@
             </div>
         </div>
     </section>
->>>>>>> e506ea30f5354ac1f743ac8809445d015fdc9d19
 
     <!-- MAPA  -->
     <section class="section section-deep" id="universidades">
