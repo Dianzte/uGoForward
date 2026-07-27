@@ -11,8 +11,9 @@ class User extends Authenticatable
  protected $fillable = [
     'nombre',       // o 'name' según tu BD
     'usuario',      // o 'username'
-    'email',
-    'password',
+    'correo',
+    'contrasena',
+    'fechaNac',
     'departamento',
     'bio',
     'avatar',
