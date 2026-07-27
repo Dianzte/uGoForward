@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  @vite(['resources/css/homepage.css', 'resources/js/homepage.js'])
+  @vite(['resources/css/homepage.css', 'resources/js/homepage.js' ,'resources/css/app.css'])
+
 </head>
 
 <body>
@@ -30,39 +31,7 @@
   <!-- FISH CONTAINER -->
   <div id="fishContainer"></div>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a class="nav-logo" href="#">
-        <span>UGF</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#becas">Becas Nacionales</a></li>
-        <li><a href="#hub-social">Hub Social</a></li>
-        <li><a href="#universidades">Universidades</a></li>
-        <li><a href="#roadmap">La Ruta</a></li>
-        <li><a href="#testimonios">Bitácora</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="#" class="btn-ghost">Registrarse</a>
-        <a href="#" class="btn-primary">Iniciar sesión</a>
-      </div>
-      <button class="burger" id="burger" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#servicios">Servicios</a>
-      <a href="#becas">Becas Nacionales</a>
-      <a href="#hub-social">Hub Social</a>
-      <a href="#universidades">Universidades</a>
-      <a href="#roadmap">La Ruta</a>
-      <a href="#testimonios">Bitácora</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#" class="btn-primary">Iniciar sesión</a>
-    </div>
+ @include('navegacion.navbar')
 
   <!-- SHIP ELEMENT (DOM, rides on waves) -->
   <div id="shipWrapper">
@@ -81,20 +50,6 @@
       <div class="ship-wake"></div>
     </div>
   </div>
-
-                <div class="service-card" data-reveal>
-                    <div class="service-icon" style="--icon-color:#7ec8e3;">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <circle cx="20" cy="16" r="8" stroke="currentColor" stroke-width="2" />
-                            <path d="M8 32c0-5.523 5.373-10 12-10s12 4.477 12 10" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <h3>Test Socioemocional</h3>
-                    <p>Un análisis profundo de tu perfil emocional e intelectual que te guía hacia la carrera ideal
-                        según tus fortalezas.</p>
-                    <a href="#" class="card-link">Hacer el test →</a>
-                </div>
 
   <!-- HERO -->
   <section class="hero section-panel" id="inicio">
@@ -671,28 +626,6 @@
     </div>
   </div>
 
-  <!-- HISTORIA (abyss zone) -->
-  <section class="section section-abyss" id="nosotros">
-    <div class="container">
-      <div class="historia-grid" data-reveal>
-        <div class="historia-text">
-          <span class="section-tag">Nuestra Historia</span>
-          <h2>Nacimos de la misma<br />necesidad que tú sientes</h2>
-          <p class="historia-quote">
-            UGF nació de la mente de un estudiante de bachillerato que no podía costear la universidad. Hoy es la plataforma que conecta el talento salvadoreño con oportunidades reales, sin importar el origen económico.
-          </p>
-          <a href="#" class="btn-primary">Conocer la historia completa →</a>
-        </div>
-        <div class="mvv-cards">
-          <div class="mvv-card" data-reveal>
-            <div class="mvv-icon">
-              <svg viewBox="0 0 32 32" fill="none"><path d="M16 4L4 12v16h24V12L16 4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="12" y="20" width="8" height="12" stroke="currentColor" stroke-width="1.5"/></svg>
-            </div>
-        </div>
-
-
-
-    </section>
 
     <!--- div del modal mapa --->
 
@@ -780,49 +713,7 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-brand">
-                <a class="nav-logo" href="#"> UGF</a>
-                <p>Plataforma de Becas El Salvador</p>
-            </div>
-            <div class="footer-links">
-                <div>
-                    <h5>Plataforma</h5>
-                    <a href="#">Test Socioemocional</a>
-                    <a href="#">Mapa de Universidades</a>
-                    <a href="#">Calendario de Becas</a>
-                </div>
-                <div>
-                    <h5>Comunidad</h5>
-                    <a href="#">Red Académica</a>
-                    <a href="#">Padrinos</a>
-                    <a href="#">Testimonios</a>
-                </div>
-                <div>
-                    <h5>Empresa</h5>
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Contacto</a>
-                    <a href="#">Privacidad</a>
-                </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA (treasure at the bottom) -->
-  <section class="cta-section section-treasure">
-    <div class="treasure-glow"></div>
-    <div class="container cta-content" data-reveal>
-      <p>Miles de estudiantes ya están navegando con UGF. ¿Qué esperas?</p>
-      <a href="{{ route('becas.index') }}" class="btn-primary btn-lg">
-        Únete ahora
-        <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </section>
+   
 
   <!-- FOOTER -->
   <footer class="footer">

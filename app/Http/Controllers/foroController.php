@@ -19,8 +19,12 @@ class ForoController extends Controller
     {
         
         $foros = Foro::get();
-        $foro_id = Comentario::get()->value('foro_id');
-        $comentarios = Comentario::findOrFail($foro_id);
+        $nForos = Foro::get()->count();
+
+        if($nForos < 1){
+            return $this->create();
+        }
+        $comentarios = Comentario::where('foro_id', 1);
 
 
 
