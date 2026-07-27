@@ -1,4 +1,7 @@
 /* === NAV === */
+
+
+
 #navbar {
   position: fixed;
   top: 0;
@@ -8,6 +11,8 @@
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
   background: rgba(4, 21, 37, 0.9);
   border-bottom: 1px solid rgba(100, 200, 255, 0.08);
+box-sizing: border-box;
+
 
 }
 
@@ -26,6 +31,8 @@
   display: flex;
   align-items: center;
   gap: 2rem;
+box-sizing: border-box;
+
 }
 
 .nav-logo {
@@ -59,6 +66,8 @@
   list-style: none;
   gap: 2rem;
   margin-left: auto;
+box-sizing: border-box;
+
 }
 
 .nav-links a {
@@ -67,6 +76,7 @@
   color: var(--text-2);
   transition: color 0.3s ease;
   position: relative;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .nav-links a::after {
@@ -152,4 +162,28 @@
 
 a {
   text-decoration: none;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: #0a1a2e;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  padding: 0.65rem 1.4rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s var(--ease);
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: var(--gold-2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(232,200,71,0.35);
 }

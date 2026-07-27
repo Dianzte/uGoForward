@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - UGF</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css'])
     @vite(['resources/css/Register.css', 'resources/js/script.js'])
 </head>
 <body>
+  @include('navegacion.navbar')
 
 <canvas id="ocean"></canvas>
 <div id="hint">Haz clic en la luna para cambiar el día</div>
@@ -58,7 +60,7 @@
           Selecciona una opción para continuar
         </div>
 
-        <p class="login-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión aquí</a></p>
+        <p class="login-link">¿Ya tienes cuenta?<a href="">Inicia sesión aquí</a></p>
       </div>
     </div>
 
@@ -171,7 +173,7 @@
         </form>
 
         <div class="divider"><span>o</span></div>
-        <p class="register-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión</a></p>
+        <p class="register-link">¿Ya tienes cuenta?<a href="">Inicia sesión</a></p>
       </div>
     </div>
 

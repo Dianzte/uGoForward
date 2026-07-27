@@ -42,7 +42,6 @@ body {
     padding: 0 20px;
 }
 
-/* Header Banner (Figma: Top Banner + waves + logo + ship) */
 .foro-header {
     background-color: var(--bg-header);
     position: relative;
@@ -50,6 +49,10 @@ body {
     padding-bottom: 120px;
     overflow: hidden;
     color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 70px;
 }
 
 .header-waves {
@@ -76,7 +79,6 @@ body {
     z-index: 2;
 }
 
-/* Brand Logo (Figma Group 38) */
 .brand-logo {
     display: flex;
     align-items: center;
@@ -189,6 +191,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.08);
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .thread-card::before {

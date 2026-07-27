@@ -75,9 +75,11 @@
 
 
 
+
 body {
     background-color: var(--cielo);
     font-family: "SplineSans";
+    
 }
 
 .difuminado {

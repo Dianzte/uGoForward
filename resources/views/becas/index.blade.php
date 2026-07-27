@@ -21,7 +21,6 @@
                 <div class="destacado">UTEC</div>
             </div>
 
-            <div>Aquí habra un boton para filtrar</div>
 
             <div class="indexGrid">
                 @foreach ($becas as $beca)

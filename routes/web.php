@@ -4,19 +4,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BecaController;
 use App\Http\Controllers\ForoController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\Auth\Authcontroller;
 
 Route::get('/', function () {
     return view('homepage');
-});
+})->name('index');
 
 Route::get('/homepage' , function () {
     return view('homepage');
 });
 
-Route::get('/becas', function () {
-    return view('becas.index'); 
-});
 
+Route::get('/registro', [Authcontroller::class, 'showRegister'])->name('registro');
+
+
+Route::post('/registrar', [Authcontroller::class, 'register'])->name('registro.store');
 
 Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
 
