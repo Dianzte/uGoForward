@@ -19,4 +19,6 @@ class CalendarioTarea extends Model
         'fecha',
         'completado'
     ];
+
+    
 }

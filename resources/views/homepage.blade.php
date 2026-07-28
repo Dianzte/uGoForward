@@ -779,6 +779,6 @@
     <a href="{{ route('becas.calendario') }}" class="dock-item">📅 Calendario</a>
   </nav>
 
-1</body>
+</body>
 
 </html>

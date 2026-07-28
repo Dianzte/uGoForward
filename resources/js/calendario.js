@@ -140,19 +140,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({ titulo: titulo, fecha: fecha })
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
+                .then(async res => {
+                    let data = await res.json().catch(() => ({}));
+                    if (res.ok && data.success) {
                         cerrarModalCrear();
                         formCrearTarea.reset();
                         calendar.refetchEvents();
                         mostrarToast('✅ Tarea agregada exitosamente', 'success');
                     } else {
-                        mostrarToast('❌ Error al guardar tarea', 'error');
+                        let errMsg = data.error || 'Error al guardar la tarea';
+                        mostrarToast(`❌ ${errMsg}`, 'error');
                     }
                 })
                 .catch(err => {
@@ -180,18 +182,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({ titulo: titulo, fecha: fecha })
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
+                .then(async res => {
+                    let data = await res.json().catch(() => ({}));
+                    if (res.ok && data.success) {
                         cerrarModal();
                         calendar.refetchEvents();
                         mostrarToast('✅ Tarea actualizada exitosamente', 'success');
                     } else {
-                        mostrarToast('❌ Error al actualizar tarea', 'error');
+                        let errMsg = data.error || 'Error al actualizar tarea';
+                        mostrarToast(`❌ ${errMsg}`, 'error');
                     }
                 })
                 .catch(err => {
@@ -214,17 +218,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
                 }
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
+                .then(async res => {
+                    let data = await res.json().catch(() => ({}));
+                    if (res.ok && data.success) {
                         cerrarModal();
                         calendar.refetchEvents();
                         mostrarToast('🗑️ Tarea eliminada', 'info');
                     } else {
-                        mostrarToast('❌ Error al eliminar la tarea', 'error');
+                        let errMsg = data.error || 'Error al eliminar la tarea';
+                        mostrarToast(`❌ ${errMsg}`, 'error');
                     }
                 })
                 .catch(err => {

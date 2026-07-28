@@ -9,116 +9,152 @@ use Carbon\Carbon;
 
 class BecaCalendarioController extends Controller
 {
+    /**
+     * Helper to obtain or create a valid user ID for tasks.
+     */
+    private function resolveUserId()
+    {
+        if (auth()->check()) {
+            return auth()->id();
+        }
+
+        try {
+            $user = \App\Models\User::first();
+            if (!$user) {
+                // Si no hay usuarios en la BD, se crea uno predeterminado para pruebas con la estructura correcta
+                $user = \App\Models\User::create([
+                    'usuario'      => 'invitado',
+                    'nombre'       => 'Usuario Invitado',
+                    'correo'       => 'invitado@ugoforward.com',
+                    'contrasena'   => \Illuminate\Support\Facades\Hash::make('password123'),
+                    'fechaNac'     => '2000-01-01',
+                    'departamento' => 'San Salvador',
+                ]);
+            }
+            return $user->id;
+        } catch (\Throwable $e) {
+            \Log::error("Error al obtener o crear usuario para el calendario: " . $e->getMessage());
+            // Intenta obtener cualquier usuario existente sin lanzar excepción
+            $user = \App\Models\User::first();
+            return $user ? $user->id : null;
+        }
+    }
+
     public function obtenerEventos(Request $request)
     {
         $eventos = [];
 
-        // 1. LEER LAS BECAS (Creadas por tu compañero)
-        // Ajusta 'fecha_cierre' o 'nombre' según las columnas que usó tu compañero en su tabla
-        $becas = Beca::whereBetween('vencimiento', [$request->start, $request->end])->get();
-
-
-        // =========================================================
-        // AGREGAR DESDE AQUÍ (DATOS QUEMADOS - BECAS NO MODIFICABLES)
-        // =========================================================
+        // 1. BECAS QUEMADAS (DATOS FIJOS DE PRUEBA)
+        // Fechas dinámicas basadas en la fecha actual para que SIEMPRE aparezcan en el mes visible
+        $now = Carbon::now();
         $becasQuemadas = [
             [
-                'id' => 'beca_fija_1',
-                'titulo' => 'Beca Fantel - Postgrados',
-                'vencimiento' => '2026-08-15',
+                'id'          => 'beca_fija_1',
+                'titulo'      => 'Beca Fantel - Postgrados',
+                'vencimiento' => $now->copy()->addDays(4)->format('Y-m-d'),
                 'descripcion' => 'Beca del gobierno para maestrías y doctorados en el extranjero.',
-                'categoria' => 'Maestría'
+                'categoria'   => 'Maestría'
             ],
             [
-                'id' => 'beca_fija_2',
-                'titulo' => 'Beca Fundación Carolina',
-                'vencimiento' => '2026-09-10',
+                'id'          => 'beca_fija_2',
+                'titulo'      => 'Beca Fundación Carolina',
+                'vencimiento' => $now->copy()->addDays(12)->format('Y-m-d'),
                 'descripcion' => 'Becas para estudios de postgrado en España.',
-                'categoria' => 'Postgrado'
+                'categoria'   => 'Postgrado'
             ],
             [
-                'id' => 'beca_fija_3',
-                'titulo' => 'Beca Fulbright - USA',
-                'vencimiento' => '2026-10-05',
+                'id'          => 'beca_fija_3',
+                'titulo'      => 'Beca Fulbright - USA',
+                'vencimiento' => $now->copy()->addDays(25)->format('Y-m-d'),
                 'descripcion' => 'Programa de becas para estudios en Estados Unidos.',
-                'categoria' => 'Maestría / Doctorado'
+                'categoria'   => 'Maestría / Doctorado'
             ],
         ];
 
         foreach ($becasQuemadas as $beca) {
             $fechaVencimiento = Carbon::parse($beca['vencimiento']);
-            $diasRestantes = now()->startOfDay()->diffInDays($fechaVencimiento, false);
+            $diasRestantes    = now()->startOfDay()->diffInDays($fechaVencimiento, false);
 
             if ($diasRestantes < 0) {
-                $color = '#6B7280'; // Gris
+                $color = '#6B7280'; // Gris (Vencida)
             } elseif ($diasRestantes <= 5) {
-                $color = '#EF4444'; // Rojo
+                $color = '#EF4444'; // Rojo (Urgente)
             } elseif ($diasRestantes <= 15) {
-                $color = '#F59E0B'; // Amarillo
+                $color = '#F59E0B'; // Amarillo (Próxima)
             } else {
-                $color = '#10B981'; // Verde
+                $color = '#10B981'; // Verde (Con tiempo)
             }
 
             $eventos[] = [
-                'id' => $beca['id'],
-                'title' => '🎓 ' . $beca['titulo'],
-                'start' => $beca['vencimiento'],
-                'color' => $color,
-                'editable' => false, // 🔒 Impide que el usuario la mueva o modifique
+                'id'            => $beca['id'],
+                'title'         => '🎓 ' . $beca['titulo'],
+                'start'         => $beca['vencimiento'],
+                'color'         => $color,
+                'editable'      => false,
                 'extendedProps' => [
-                    'tipo' => 'beca_fija',
+                    'tipo'        => 'beca_fija',
                     'descripcion' => $beca['descripcion'],
-                    'categoria' => $beca['categoria']
+                    'categoria'   => $beca['categoria']
                 ]
             ];
         }
-        // =========================================================
-        // HASTA AQUÍ
-        // =========================================================
 
-
-        foreach ($becas as $beca) {
-            $fechaVencimiento = Carbon::parse($beca->vencimiento);
-            $diasRestantes = now()->startOfDay()->diffInDays($fechaVencimiento, false);
-
-            // Semáforo de colores
-            if ($diasRestantes < 0) {
-                $color = '#6B7280'; // Gris
-            } elseif ($diasRestantes <= 5) {
-                $color = '#EF4444'; // Rojo
-            } elseif ($diasRestantes <= 15) {
-                $color = '#F59E0B'; // Amarillo
+        // 2. LEER LAS BECAS DE BASE DE DATOS (Si existen)
+        try {
+            if ($request->start && $request->end) {
+                $becas = Beca::whereBetween('vencimiento', [$request->start, $request->end])->get();
             } else {
-                $color = '#10B981'; // Verde
+                $becas = Beca::all();
             }
 
-            $eventos[] = [
-                'id' => 'beca_' . $beca->id,
-                'title' => '🎓 ' . $beca->titulo, // Columna de su tabla
-                'start' => $beca->vencimiento->format('Y-m-d'),  // Columna de su tabla
-                'color' => $color,
-                'extendedProps' => [
-                    'tipo' => 'beca',
-                    'descripcion' => $beca->descripcion ?? 'Sin descripción',
-                ]
-            ];
+            foreach ($becas as $beca) {
+                if (!$beca->vencimiento) continue;
+                $fechaVencimiento = Carbon::parse($beca->vencimiento);
+                $diasRestantes    = now()->startOfDay()->diffInDays($fechaVencimiento, false);
+
+                if ($diasRestantes < 0) {
+                    $color = '#6B7280';
+                } elseif ($diasRestantes <= 5) {
+                    $color = '#EF4444';
+                } elseif ($diasRestantes <= 15) {
+                    $color = '#F59E0B';
+                } else {
+                    $color = '#10B981';
+                }
+
+                $eventos[] = [
+                    'id'            => 'beca_' . $beca->id,
+                    'title'         => '🎓 ' . $beca->titulo,
+                    'start'         => $fechaVencimiento->format('Y-m-d'),
+                    'color'         => $color,
+                    'extendedProps' => [
+                        'tipo'        => 'beca',
+                        'descripcion' => $beca->descripcion ?? 'Sin descripción',
+                    ]
+                ];
+            }
+        } catch (\Exception $e) {
+            // Si falla la BD de becas, no interrumpe los eventos fijados ni las tareas
+            \Log::warning("Error consultando becas: " . $e->getMessage());
         }
 
-                // 2. LEER TUS TAREAS DE AGENDA
-            // Obtenemos el usuario (el autenticado o el primero que exista en la BD para pruebas)
-            $userId = auth()->id() ?? \App\Models\User::first()?->id;
+        // 3. LEER TAREAS DE AGENDA DE LA BASE DE DATOS
+        try {
+            $userId = $this->resolveUserId();
 
             if ($userId) {
-                $tareas = CalendarioTarea::where('user_id', $userId)
-                    ->whereBetween('fecha', [$request->start, $request->end])
-                    ->get();
+                $query = CalendarioTarea::where('user_id', $userId);
+                if ($request->start && $request->end) {
+                    $query->whereBetween('fecha', [$request->start, $request->end]);
+                }
+                $tareas = $query->get();
 
                 foreach ($tareas as $tarea) {
                     $eventos[] = [
-                        'id'    => 'tarea_' . $tarea->id,
-                        'title' => ' ' . $tarea->titulo,
-                        'start' => Carbon::parse($tarea->fecha)->format('Y-m-d'), // Formato YYYY-MM-DD
-                        'color' => '#3B82F6', // Azul para la agenda
+                        'id'            => 'tarea_' . $tarea->id,
+                        'title'         => '📌 ' . $tarea->titulo,
+                        'start'         => Carbon::parse($tarea->fecha)->format('Y-m-d'),
+                        'color'         => '#3B82F6', // Azul para la agenda
                         'extendedProps' => [
                             'tipo'       => 'tarea',
                             'tarea_id'   => $tarea->id,
@@ -127,43 +163,44 @@ class BecaCalendarioController extends Controller
                     ];
                 }
             }
-
-            return response()->json($eventos);
+        } catch (\Exception $e) {
+            \Log::warning("Error consultando tareas del calendario: " . $e->getMessage());
         }
 
-          public function guardarTarea(Request $request)
-{
-    try {
-        $request->validate([
-            'titulo' => 'required|string|max:255',
-            'fecha'  => 'required|date',
-        ]);
-
-        // Busca el ID del usuario activo, o el primer usuario que exista en la BD para pruebas
-        $userId = auth()->id() ?? \App\Models\User::first()?->id;
-
-        if (!$userId) {
-            return response()->json([
-                'success' => false, 
-                'error'   => 'No hay ningún usuario registrado en la base de datos.'
-            ], 400);
-        }
-
-        $tarea = CalendarioTarea::create([
-            'user_id' => $userId,
-            'titulo'  => $request->titulo,
-            'fecha'   => $request->fecha,
-        ]);
-
-        return response()->json(['success' => true, 'tarea' => $tarea]);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'error'   => $e->getMessage()
-        ], 500);
+        return response()->json($eventos);
     }
-}
+
+    public function guardarTarea(Request $request)
+    {
+        try {
+            $request->validate([
+                'titulo' => 'required|string|max:255',
+                'fecha'  => 'required|date',
+            ]);
+
+            $userId = $this->resolveUserId();
+
+            $tarea = CalendarioTarea::create([
+                'user_id' => $userId,
+                'titulo'  => $request->titulo,
+                'fecha'   => $request->fecha,
+            ]);
+
+            return response()->json(['success' => true, 'tarea' => $tarea]);
+
+        } catch (\Illuminate\Validation\ValidationException $ve) {
+            return response()->json([
+                'success' => false,
+                'error'   => implode(', ', array_merge(...array_values($ve->errors())))
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Modificar una tarea existente
      */
@@ -175,7 +212,7 @@ class BecaCalendarioController extends Controller
                 'fecha'  => 'required|date',
             ]);
 
-            $userId = auth()->id() ?? \App\Models\User::first()?->id;
+            $userId = $this->resolveUserId();
 
             $tarea = CalendarioTarea::where('id', $id)
                 ->where('user_id', $userId)
@@ -202,7 +239,7 @@ class BecaCalendarioController extends Controller
     public function eliminarTarea($id)
     {
         try {
-            $userId = auth()->id() ?? \App\Models\User::first()?->id;
+            $userId = $this->resolveUserId();
 
             $tarea = CalendarioTarea::where('id', $id)
                 ->where('user_id', $userId)
@@ -219,5 +256,4 @@ class BecaCalendarioController extends Controller
             ], 500);
         }
     }
-
 }
