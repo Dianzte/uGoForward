@@ -68,7 +68,7 @@
         
         <div class="divider"><span>o</span></div>
         
-        <p class="register-link">¿No tienes cuenta? <a href="{{ route('Register') }}">Regístrate aquí</a></p>
+        <p class="register-link">¿No tienes cuenta? <a href="{{ route('registro') }}">Regístrate aquí</a></p>
     </form>
   </div>
 </div>

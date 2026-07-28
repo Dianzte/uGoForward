@@ -60,7 +60,7 @@
           Selecciona una opción para continuar
         </div>
 
-        <p class="login-link">¿Ya tienes cuenta?<a href="">Inicia sesión aquí</a></p>
+        <p class="login-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión aquí</a></p>
       </div>
     </div>
 
@@ -161,7 +161,7 @@
         </form>
 
         <div class="divider"><span>o</span></div>
-        <p class="register-link">¿Ya tienes cuenta?<a href="">Inicia sesión</a></p>
+        <p class="register-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión</a></p>
       </div>
     </div>
 

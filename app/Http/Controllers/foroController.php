@@ -6,7 +6,6 @@ use App\Models\Carrera;
 use App\Models\CategoriasForo;
 use App\Models\Foro;
 use App\Models\Universidad;
-use App\Models\Comentario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -17,23 +16,14 @@ class ForoController extends Controller
      */
     public function index()
     {
-        
-        $foros = Foro::get();
-        $nForos = Foro::get()->count();
 
-        if($nForos < 1){
-            return $this->create();
-        }
-        $comentarios = Comentario::where('foro_id', 1);
+        $foros = Foro::with('comentarios')->get();
 
-
-
-       $mostrar = Foro::findOrFail(1);
+        $mostrar = Foro::find(1);
 
         return view('foro.index', [
             'foros' => $foros,
             'ejemplo' => $mostrar,
-            'comentarios' => $comentarios
         ]);
 
     }
@@ -72,31 +62,26 @@ class ForoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $slug)
+    public function show($slug)
     {
-        $foros = Foro::get();
-        /*$foros->load(['comentariosPrincipales.user', 'comentariosPrincipales.respuestas.user']);*/
-        
+        $foros = Foro::with('comentarios')->get();
+        /* $foros->load(['comentariosPrincipales.user', 'comentariosPrincipales.respuestas.user']); */
+
         $seleccionado = Foro::where('slug', $slug)->firstOrFail();
-        $comentarios = Comentario::findOrFail($seleccionado->id);
+        $seleccionado->load(['comentarios']);
+        $sessionKey = 'foro_visto_'.$seleccionado->id;
 
-        $sessionKey = 'foro_visto_' . $seleccionado->id;
-
-        if (!Session::has($sessionKey)) {
+        if (! Session::has($sessionKey)) {
             $seleccionado->increment('visitas_count');
-            
+
             Session::put($sessionKey, true);
         }
 
-
-        
-       
         return view('foro.index', [
             'ejemplo' => $seleccionado,
             'foros' => $foros,
-            'comentarios' => $comentarios
         ]);
-        
+
     }
 
     /**

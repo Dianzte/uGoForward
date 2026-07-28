@@ -15,7 +15,7 @@
           </ul>
           <div class="nav-actions">
               <a href="" class="btn-ghost">Registrarse</a>
-              <a href="{{ route('login')}}" class="btn-primary">Iniciar sesión</a>
+              <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
           </div>
           <button class="burger" id="burger" aria-label="Menú">
               <span></span><span></span><span></span>
