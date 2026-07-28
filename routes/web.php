@@ -42,7 +42,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 
     // Registro
-    Route::get('/registro', [AuthController::class, 'showRegister'])->name('Register');
+    Route::get('/registro', [AuthController::class, 'showRegister'])->name('registro');
     Route::post('/registro', [AuthController::class, 'register'])->name('registro.store');
 });
 

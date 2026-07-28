@@ -60,7 +60,7 @@
           Selecciona una opción para continuar
         </div>
 
-        <p class="login-link">¿Ya tienes cuenta?<a href="">Inicia sesión aquí</a></p>
+        <p class="login-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión aquí</a></p>
       </div>
     </div>
 
@@ -96,7 +96,7 @@
         <p>Completa el formulario para registrarte</p>
 
         {{-- 💡 Ruta corregida a /registro para coincidir con tu web.php --}}
-        <form id="formRegistro" action="{{ route('/registro') }}" method="POST">
+        <form id="formRegistro" action="{{ route('registro') }}" method="POST">
           @csrf
 
           @if ($errors->any())
@@ -161,7 +161,7 @@
         </form>
 
         <div class="divider"><span>o</span></div>
-        <p class="register-link">¿Ya tienes cuenta?<a href="">Inicia sesión</a></p>
+        <p class="register-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión</a></p>
       </div>
     </div>
 
