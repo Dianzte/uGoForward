@@ -57,7 +57,7 @@ Route::get('/becas-calendario', function () {
 
 
 Route::get('/foro',  [ForoController::class, 'index'])->name('foro.index');
-Route::get('/foro/crear',  [ForoController::class, 'create']);
+Route::get('/foro/crear',  [ForoController::class, 'create'])->name('foro.crear');
 Route::post('/foro/crear',  [ForoController::class, 'store'])->name('foro.store');
 Route::get('/foro/{foro:slug}', [ForoController::class, 'show'])->name('foro.show');
 Route::post('/foro/{ejemplo:slug}', [ComentarioController::class, 'store'])->name('comentario.store');

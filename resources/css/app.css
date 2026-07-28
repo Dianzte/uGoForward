@@ -1,6 +1,7 @@
 :root {
     /*-------------------Becas-------------------*/
     --cielo: #092631d7;
+    --cieloListaBecas: #00C8FF;
     --tarjeta: #00C8FF;
     --tarjetaPortada: #028CF6;
     --informacionTarjeta: #fff;
@@ -77,7 +78,7 @@
 
 
 body {
-    background-color: var(--cielo);
+    background-color: var(--cieloListaBecas);
     font-family: "SplineSans";
     
 }

@@ -26,7 +26,7 @@ form input,
 form select,
 form button,
 form textarea,
-a {
+form + button  + a{
     border-radius: 20px;
     background-color: var(--fondoTarjeta);
     padding: 7px;
@@ -37,6 +37,8 @@ a {
     font-family: var(--fuenteBeca);
     font-weight: 700;
 }
+
+
 
 #imagenes {
     display: none;
