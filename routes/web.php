@@ -7,6 +7,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Auth\Authcontroller;
 use App\Http\Controllers\BecaCalendarioController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

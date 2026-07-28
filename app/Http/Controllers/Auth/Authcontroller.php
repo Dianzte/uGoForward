@@ -86,7 +86,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('home')->with('status', '¡Cuenta creada con éxito!');
+        return redirect()->route('index')->with('status', '¡Cuenta creada con éxito!');
     }
 
     /**
