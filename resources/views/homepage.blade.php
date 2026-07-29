@@ -715,38 +715,7 @@
 
    
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a class="nav-logo" href="#"> UGF</a>
-        <p>Plataforma de Becas El Salvador</p>
-      </div>
-      <div class="footer-links">
-        <div>
-          <h5>Plataforma</h5>
-          <a href="#">Test Socioemocional</a>
-          <a href="#universidades">Mapa de Universidades</a>
-          <a href="{{ route('becas.calendario') }}">Calendario de Becas</a>
-        </div>
-        <div>
-          <h5>Comunidad</h5>
-          <a href="#hub-social">Hub Social</a>
-          <a href="#">Padrinos</a>
-          <a href="#testimonios">Testimonios</a>
-        </div>
-        <div>
-          <h5>Empresa</h5>
-          <a href="#nosotros">Sobre nosotros</a>
-          <a href="#">Contacto</a>
-          <a href="#">Privacidad</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 UGF. Navegando hacia tu futuro.</p>
-    </div>
-  </footer>
+  @include('navegacion.footer')
   
   <dialog id="departmentModal" class="hidden backdrop:bg-black/80 p-6 rounded-2xl max-w-2xl w-full bg-[#071f35] border border-blue-500/30 text-white flex-col outline-none fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]">
     <div class="flex justify-between items-center border-b border-blue-500/20 pb-4 mb-4">

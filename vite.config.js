@@ -14,6 +14,8 @@ export default defineConfig({
                 'resources/css/navbar.css',
                 'resources/js/navbar.js',
 
+                'resources/css/footer.css',
+
                 'resources/css/settings.css',
                 'resources/js/settings.js',
                 

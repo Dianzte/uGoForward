@@ -18,9 +18,7 @@
 <body>
     @include('navegacion.navbar')
     {{ $slot }}
-    <footer class="foro-footer">
-        
-    </footer>
+    @include('navegacion.footer')
 
 </body>
 

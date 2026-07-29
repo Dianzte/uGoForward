@@ -41,9 +41,7 @@
         </section>
     </main>
 
-    <footer>
-        El footer
-    </footer>
+    @include('navegacion.footer')
 </body>
 @stack('script')
 
