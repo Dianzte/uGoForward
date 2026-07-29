@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['correo' => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('home'))->with('status', '¡Bienvenido de nuevo!');
+            return redirect()->intended(route('index'))->with('status', '¡Bienvenido de nuevo!');
         }
 
         throw ValidationException::withMessages([
@@ -129,6 +129,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home');
+        return redirect()->route('index');
     }
 }
