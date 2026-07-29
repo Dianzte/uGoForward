@@ -27,4 +27,8 @@ class Foro extends Model
     {
         return $this->hasMany(Comentario::class)->whereNull('padre_id')->latest();
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

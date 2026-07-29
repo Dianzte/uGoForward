@@ -32,4 +32,8 @@ class User extends Authenticatable
     {
         return $this->contrasena;
     }
+
+    public function foros(){
+        return $this->hasMany(Foro::class);
+    }
 }

@@ -52,8 +52,15 @@ class ForoController extends Controller
             'carrera_id' => 'nullable|exists:carreras,id',
             'categoriaforo_id' => 'required|exists:categoriasForo,id',
         ]);
+        
 
-        Foro::create($data);
+        Auth()->user()->foros()->create([
+            'titulo' => $request->titulo,
+            'contenido' => $request->contenido,
+            'universidad_id' => $request->universidad_id,
+            'carrera_id' => $request->carrera_id,
+            'categoriaforo_id' => $request->categoriaforo_id,
+        ]);
 
         return redirect()->route('foro.index')->with('success', 'Foro creado con éxito.');
 
