@@ -187,3 +187,111 @@ a {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(232,200,71,0.35);
 }
+
+/* === USER MENU (antes tuerca) === */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-btn {
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.user-menu-btn:hover,
+.user-menu.open .user-menu-btn {
+  background: rgba(232,200,71,0.15);
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 190px;
+  background: var(--deep-2);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 0.4rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  z-index: 200;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-menu.open .user-dropdown {
+  display: flex;
+}
+
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.user-dropdown-item:hover {
+  background: rgba(232,200,71,0.1);
+  color: var(--gold);
+}
+
+.user-dropdown-item svg { flex-shrink: 0; color: var(--gold); }
+
+.user-dropdown-item-form { width: 100%; }
+
+.user-dropdown-logout:hover {
+  background: rgba(255,90,90,0.1);
+  color: #ff6b6b;
+}
+.user-dropdown-logout:hover svg { color: #ff6b6b; }
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+}
+
+.burger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--white);
+  transition: 0.3s ease;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 1rem 2rem 1.5rem;
+  gap: 0.75rem;
+  border-top: 1px solid rgba(100,200,255,0.06);
+  background: rgba(4,21,37,0.98);
+}
+
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: var(--text-2); font-size: 1rem; font-weight: 500; padding: 0.4rem 0; }
+.mobile-menu .btn-primary { width: fit-content; margin-top: 0.5rem; }
