@@ -14,7 +14,7 @@
               <li><a href="{{ route('foro.index') }}">Foro estudiantil</a></li>
           </ul>
           <div class="nav-actions">
-              <a href="" class="btn-ghost">Registrarse</a>
+              <a href="{{ route('registro') }}" class="btn-ghost">Registrarse</a>
               <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
           </div>
           <button class="burger" id="burger" aria-label="Menú">

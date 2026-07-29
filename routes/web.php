@@ -8,13 +8,7 @@ use App\Http\Controllers\Auth\Authcontroller;
 use App\Http\Controllers\BecaCalendarioController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
 
-// --- HOMEPAGE ---
 Route::get('/', function () {
     return view('homepage');
 })->name('index');
@@ -24,10 +18,8 @@ Route::get('/homepage' , function () {
 });
 
 
-Route::get('/registro', [Authcontroller::class, 'showRegister'])->name('registro');
 
 
-Route::post('/registrar', [Authcontroller::class, 'register'])->name('registro.store');
 
 // --- BECAS ---
 Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
