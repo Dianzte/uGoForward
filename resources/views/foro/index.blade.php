@@ -147,7 +147,7 @@
                     @endforelse
 
                     <a href="{{ route('foro.crear') }}" class="thread-link-card active">
-                        <span class="thread-card-title">Aun no hay foros. ¡Crea uno!</span>
+                        <span class="thread-card-title">Crear un foro</span>
                     </a>
 
                 </div>
