@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/becas/index.js', 'resources/css/calendario.css', 'resources/js/calendario.js',
                 
                 'resources/css/navbar.css',
+                'resources/css/settings.css',
                 
                 'resources/css/foro/index.css',
                 'resources/css/foro/create.css',
