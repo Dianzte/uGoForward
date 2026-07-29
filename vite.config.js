@@ -14,7 +14,10 @@ export default defineConfig({
                 'resources/css/navbar.css',
                 
                 'resources/css/foro/index.css',
-                'resources/css/foro/create.css'
+                'resources/css/foro/create.css',
+
+                'resources/css/indexpage.css', 
+                'resources/js/indexpage.js'
             ],
             refresh: true,
             fonts: [

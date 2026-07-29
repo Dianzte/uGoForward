@@ -55,7 +55,7 @@
         </div>
       @else
         <!-- Invitado -->
-        <a href="{{ route('Register') }}" class="btn-ghost">Registrarse</a>
+        <a href="{{ route('registro') }}" class="btn-ghost">Registrarse</a>
         <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
       @endauth
     </div>
@@ -82,7 +82,7 @@
         </button>
       </form>
     @else
-      <a href="{{ route('Register') }}" class="btn-ghost" style="display: block; margin-bottom: 8px;">Registrarse</a>
+      <a href="{{ route('registro') }}" class="btn-ghost" style="display: block; margin-bottom: 8px;">Registrarse</a>
       <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
     @endauth
   </div>

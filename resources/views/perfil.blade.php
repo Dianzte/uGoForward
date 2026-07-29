@@ -8,16 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  @vite(['resources/css/homepage.css', 'resources/js/homepage.js'])
+  @vite(['resources/css/indexpage.css', 'resources/js/indexpage.js'])
 </head>
 <body>
 
-<!-- NAV (igual que homepage) -->
+<!-- NAV (igual que indexpage) -->
 <nav id="navbar" class="scrolled">
   <div class="nav-inner">
-    <a class="nav-logo" href="{{ route('home') }}"><span>UGF</span></a>
+    <a class="nav-logo" href="{{ route('index') }}"><span>UGF</span></a>
     <ul class="nav-links">
-      <li><a href="{{ route('home') }}">Inicio</a></li>
+      <li><a href="{{ route('index') }}">Inicio</a></li>
     </ul>
 
     <div class="nav-actions">

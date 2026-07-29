@@ -72,3 +72,15 @@ Route::delete('/api/calendario/tareas/{id}', [BecaCalendarioController::class, '
 
 
 
+Route::middleware('auth')->group(function () {
+    // Vistas de Ajustes / Perfil
+    Route::get('/ajustes', [AuthController::class, 'showSettings'])->name('settings');
+    Route::get('/perfil', [AuthController::class, 'showSettings'])->name('perfil');
+
+    // Procesar actualización de perfil (soportando PUT/POST y ambos nombres de ruta)
+    Route::match(['post', 'put'], '/perfil', [AuthController::class, 'updateProfile'])->name('perfil.update');
+    Route::match(['post', 'put'], '/ajustes', [AuthController::class, 'updateProfile'])->name('settings.update');
+
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
