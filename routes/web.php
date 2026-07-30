@@ -15,12 +15,6 @@ Route::get('/homepage', function () {
     return view('homepage');
 });
 
-// --- BECAS ---
-Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
-Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
-Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
-Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
-
 
 // --- RUTAS PARA INVITADOS (NO LOGUEADOS) ---
 Route::middleware('guest')->group(function () {
