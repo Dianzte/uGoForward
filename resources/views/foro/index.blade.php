@@ -1,4 +1,7 @@
 <x-foro-layout>
+    @push('estilo')
+    @vite(['resources/css/foro/index.css'])
+    @endpush
     <header class="foro-header">
 
 

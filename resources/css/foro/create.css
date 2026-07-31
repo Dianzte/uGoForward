@@ -160,7 +160,7 @@ body {
 
 /* Main Layout Grid & Spacing */
 .foro-main {
-    margin-top: -60px;
+    margin-top: 90px;
     position: relative;
     z-index: 3;
     flex: 1;
