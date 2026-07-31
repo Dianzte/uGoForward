@@ -16,7 +16,6 @@ Route::get('/homepage', function () {
 });
 
 
-
 // --- RUTAS PARA INVITADOS (NO LOGUEADOS) ---
 Route::middleware('guest')->group(function () {
     // Login
