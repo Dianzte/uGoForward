@@ -76,7 +76,7 @@ class AuthController extends Controller
             'usuario' => $validated['usuario'],
             'nombre' => $validated['nombre'],
             'correo' => $validated['correo'],
-            'contrasena' => $validated['contrasena'],
+            'contrasena' => Hash::make($validated['contrasena']),
             'fechaNac' => $validated['fechaNac'],
             'departamento' => $validated['departamento'],
             'nie' => $request->input('nie'),
