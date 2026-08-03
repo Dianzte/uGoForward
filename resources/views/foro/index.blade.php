@@ -17,7 +17,7 @@
                 <div class="thread-card">
                     @if (isset($ejemplo))
                         <div class="thread-header">
-                            <span class="thread-meta">Publicado por ESTOQUEDAPENDIENTE •
+                            <span class="thread-meta">Publicado por  • {{ auth()->user()->usuario }}
                                 {{ $ejemplo->created_at->diffForHumans() ?? '' }}</span>
                             <h2 class="thread-title">{{ $ejemplo->titulo }}</h2>
                         </div>
@@ -59,7 +59,7 @@
                                 @csrf
 
                                 <div class="comment-form-wrapper">
-                                    <div class="comment-avatar user-avatar">U</div>
+                                    <div class="comment-avatar user-avatar" style="{{ auth()->user()->avatarImg ? 'background-image: url(' . asset('storage/' . auth()->user()->avatarImg->ruta) . ')' : '' }}"></div>
                                     <div class="comment-input-group">
                                         <textarea name="contenido" class="comment-textarea" placeholder="Escribe un comentario o respuesta..." rows="3"
                                             required></textarea>
@@ -79,10 +79,10 @@
                                 @forelse ($ejemplo->comentarios as $comentario)
                                     @if ($comentario->padre_id == null)
                                         <div class="comment-item">
-                                            <div class="comment-avatar">!!!</div>
+                                            <div class="comment-avatar" style="{{ $comentario->comentarista?->avatarImg ? 'background-image: url(' . asset('storage/' . $comentario->comentarista?->avatarImg->ruta) . ')' : '' }}"></div>
                                             <div class="comment-content">
                                                 <div class="comment-meta">
-                                                    <strong class="comment-author">hay que arreglar esto!!!</strong>
+                                                    <strong class="comment-author">{{ $comentario->comentarista?->nombre ?? $comentario->comentarista?->usuario ?? 'Anónimo' }}</strong>
                                                     <span
                                                         class="comment-date">{{ $comentario->created_at ? $comentario->created_at->diffForHumans() : 'Hace unas horas' }}</span>
                                                 </div>
@@ -114,7 +114,7 @@
                                                         style="margin-left: 30px; border-left: 3px solid #e5e7eb; padding-left: 15px; margin-top: 15px;">
                                                         @foreach ($comentario->respuestas as $respuesta)
                                                             <div class="respuesta-item" style="margin-bottom: 10px;">
-                                                                <strong> nombre usuario</strong>
+                                                                <strong>{{ $respuesta->comentarista?->nombre ?? $respuesta->comentarista?->usuario ?? 'Anónimo' }}</strong>
                                                                 <small>{{ $respuesta->created_at->diffForHumans() }}</small>
                                                                 <p style="margin: 3px 0;">{{ $respuesta->contenido }}
                                                                 </p>

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Imagen;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -17,7 +19,7 @@ class AuthController extends Controller
      */
     public function showLogin()
     {
-        return view('login');
+        return view('Login');
     }
 
     /**
@@ -48,6 +50,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['correo' => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
             $request->session()->regenerate();
+
             return redirect()->intended(route('index'))->with('status', '¡Bienvenido de nuevo!');
         }
 
@@ -76,7 +79,7 @@ class AuthController extends Controller
             'usuario' => $validated['usuario'],
             'nombre' => $validated['nombre'],
             'correo' => $validated['correo'],
-            'contrasena' => $validated['contrasena'],
+            'contrasena' => Hash::make($validated['contrasena']),
             'fechaNac' => $validated['fechaNac'],
             'departamento' => $validated['departamento'],
             'nie' => $request->input('nie'),
@@ -94,10 +97,10 @@ class AuthController extends Controller
      */
     public function updateProfile(Request $request): RedirectResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
@@ -105,7 +108,49 @@ class AuthController extends Controller
             'nombre' => ['required', 'string', 'max:255'],
             'departamento' => ['required', 'string', 'max:255'],
             'contrasena' => ['nullable', 'string', 'min:8'],
+            'avatar' => ['nullable', 'image', 'max:2048'],
+            'banner' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $avatarAntiguo = $user->avatarImg;
+        $bannerAntiguo = $user->bannerImg;
+
+        if ($request->hasFile('avatar')) {
+            $rutaArchivo = $request->file('avatar')->store('imagenes', 'public');
+
+            $imagenCreada = Imagen::create([
+                'ruta' => $rutaArchivo,
+            ]);
+
+            $avatar = $imagenCreada->id;
+            $user->avatar = $avatar;
+
+            if ($avatarAntiguo) {
+                Storage::disk('public')->delete('imagenes/'.$avatarAntiguo->ruta);
+                $avatarAntiguo->delete();
+            }
+        } else {
+
+            $user->avatar = $user->avatar;
+        }
+
+        if ($request->hasFile('banner')) {
+            $rutaArchivo = $request->file('banner')->store('imagenes', 'public');
+
+            $imagenCreada = Imagen::create([
+                'ruta' => $rutaArchivo,
+            ]);
+
+            $banner = $imagenCreada->id;
+            $user->banner = $banner;
+
+            if ($bannerAntiguo) {
+                Storage::disk('public')->delete('imagenes/'.$bannerAntiguo->ruta);
+                $bannerAntiguo->delete();
+            }
+        } else {
+            $user->banner = $user->banner;
+        }
 
         $user->nombre = $validated['nombre'];
         $user->departamento = $validated['departamento'];

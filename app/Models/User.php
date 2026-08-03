@@ -3,14 +3,15 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class User extends Authenticatable
 {
     use Notifiable;
 
  protected $fillable = [
-    'nombre',       // o 'name' según tu BD
-    'usuario',      // o 'username'
+    'nombre',       
     'correo',
     'contrasena',
     'fechaNac',
@@ -27,7 +28,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Indicar a Laravel que la contraseña es el campo 'contrasena'
     public function getAuthPassword()
     {
         return $this->contrasena;
@@ -36,4 +36,15 @@ class User extends Authenticatable
     public function foros(){
         return $this->hasMany(Foro::class);
     }
+
+       public function avatarImg(): BelongsTo
+    {
+        return $this->belongsTo(Imagen::class, 'avatar', 'id');
+    }
+
+    public function bannerImg(): BelongsTo
+    {
+        return $this->belongsTo(Imagen::class, 'banner', 'id');
+    }
+
 }

@@ -18,6 +18,7 @@ class CategoriasForoSeeder extends Seeder
             ['categorias' => 'experiencia' ],
             ['categorias' => 'opinion' ],
             ['categorias' => 'metodos_estudio' ],
+            ['categorias' => 'variado' ],
             
         ];
 

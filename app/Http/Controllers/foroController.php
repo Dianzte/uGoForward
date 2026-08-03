@@ -17,13 +17,12 @@ class ForoController extends Controller
     public function index()
     {
 
-        $foros = Foro::with('comentarios')->get();
+        $foros = Foro::with(['comentarios.comentarista', 'comentarios.respuestas.comentarista'])->get();
 
-        $mostrar = Foro::find(1);
 
         return view('foro.index', [
             'foros' => $foros,
-            'ejemplo' => $mostrar,
+           
         ]);
 
     }
@@ -71,11 +70,11 @@ class ForoController extends Controller
      */
     public function show($slug)
     {
-        $foros = Foro::with('comentarios')->get();
+        $foros = Foro::with(['comentarios.comentarista', 'comentarios.respuestas.comentarista'])->get();
         /* $foros->load(['comentariosPrincipales.user', 'comentariosPrincipales.respuestas.user']); */
 
         $seleccionado = Foro::where('slug', $slug)->firstOrFail();
-        $seleccionado->load(['comentarios']);
+        $seleccionado->load(['comentarios.comentarista', 'comentarios.respuestas.comentarista']);
         $sessionKey = 'foro_visto_'.$seleccionado->id;
 
         if (! Session::has($sessionKey)) {
