@@ -17,13 +17,12 @@ class ForoController extends Controller
     public function index()
     {
 
-        $foros = Foro::with('comentarios')->get();
+        $foros = Foro::with(['comentarios.comentarista', 'comentarios.respuestas.comentarista'])->get();
 
-        $mostrar = Foro::find(1);
 
         return view('foro.index', [
             'foros' => $foros,
-            'ejemplo' => $mostrar,
+           
         ]);
 
     }
@@ -52,8 +51,15 @@ class ForoController extends Controller
             'carrera_id' => 'nullable|exists:carreras,id',
             'categoriaforo_id' => 'required|exists:categoriasForo,id',
         ]);
+        
 
-        Foro::create($data);
+        Auth()->user()->foros()->create([
+            'titulo' => $request->titulo,
+            'contenido' => $request->contenido,
+            'universidad_id' => $request->universidad_id,
+            'carrera_id' => $request->carrera_id,
+            'categoriaforo_id' => $request->categoriaforo_id,
+        ]);
 
         return redirect()->route('foro.index')->with('success', 'Foro creado con éxito.');
 
@@ -64,11 +70,11 @@ class ForoController extends Controller
      */
     public function show($slug)
     {
-        $foros = Foro::with('comentarios')->get();
+        $foros = Foro::with(['comentarios.comentarista', 'comentarios.respuestas.comentarista'])->get();
         /* $foros->load(['comentariosPrincipales.user', 'comentariosPrincipales.respuestas.user']); */
 
         $seleccionado = Foro::where('slug', $slug)->firstOrFail();
-        $seleccionado->load(['comentarios']);
+        $seleccionado->load(['comentarios.comentarista', 'comentarios.respuestas.comentarista']);
         $sessionKey = 'foro_visto_'.$seleccionado->id;
 
         if (! Session::has($sessionKey)) {

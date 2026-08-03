@@ -37,7 +37,7 @@ class ComentarioController extends Controller
 
         $ejemplo->comentarios()->create([
             'contenido' => $request->contenido,
-            'user_id' => 1, // hay que arreglar esto !!!
+            'user_id' => auth()->id(),
             'padre_id' => $request->padre_id ?? null
         ]);
 

@@ -20,12 +20,12 @@ class Comentario extends Model
         return $this->belongsTo(Foro::class);
     }
 
-    /*
-    public function user()
+    
+    public function comentarista()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
-*/
+
     public function respuestas()
     {
         return $this->hasMany(Comentario::class, 'padre_id')->latest();
@@ -34,6 +34,6 @@ class Comentario extends Model
     
     public function padre()
     {
-        return $this->belongsTo(Comentario::class, 'parent_id');
+        return $this->belongsTo(Comentario::class, 'padre_id');
     }
 }

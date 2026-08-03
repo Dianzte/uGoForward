@@ -41,8 +41,7 @@
     @method('PUT')
 
     <!-- BANNER -->
-    <div class="profile-banner" id="profileBanner" style="{{ $bannerUrl ? 'background-image:url('.$bannerUrl.')' : '' }}">
-      <div class="profile-banner-overlay"></div>
+<div class="profile-banner" id="profileBanner" style="{{ auth()->user()->bannerImg ? 'background-image: url(' . asset('storage/' . auth()->user()->bannerImg->ruta) . ')' : '' }}">      <div class="profile-banner-overlay"></div>
       <label class="profile-banner-edit" title="Cambiar banner" for="bannerInput">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
@@ -55,7 +54,11 @@
     <!-- HEADER: AVATAR Y DATOS -->
     <div class="container profile-header">
       <div class="profile-avatar-wrap">
-        <img src="{{ $avatarUrl }}" alt="Avatar" class="profile-avatar" id="avatarPreview">
+        @if(auth()->user()->avatar)
+          <img src="{{ asset('storage/' . auth()->user()->avatarImg->ruta)  }}" alt="Avatar" class="profile-avatar" id="avatarPreview">
+        @else
+          <img src="#" alt="Avatar" class="profile-avatar" id="avatarPreview">
+        @endif
         <label class="profile-avatar-edit" title="Cambiar foto de perfil" for="avatarInput">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>

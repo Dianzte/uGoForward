@@ -432,6 +432,8 @@ body {
     font-size: 18px;
     flex-shrink: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background-position: center;
+    background-size: contain;
 }
 
 .avatar-accent {
