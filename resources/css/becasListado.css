@@ -1,0 +1,350 @@
+/* ||||||||||||||||||||||||index||||||||||||||||||||||||||||||||*/
+.indexGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 300px;
+    gap: 80px 30px;
+
+}
+
+.destacados {
+    display: flex;
+    gap: 1vw;
+    width: 100%;
+    height: 300px;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    color: var(--oro)
+}
+
+.destacados * {
+    Background-color: var(--blanco);
+    flex-grow: 1;
+    border-radius: 20px;
+}
+
+.destacados div.activo {
+    flex-grow: 8;
+    font-size: 10cqw;
+}
+
+.destacados div{
+display: flex;
+align-items: center;
+justify-content: center;
+transition: flex-grow 0.3s linear;
+}
+
+.destacado:hover {
+    transform: scale(0.95);
+}
+.destacado.activo p{
+    font-size: 100
+
+}
+
+.tarjeta {
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--tarjeta);
+    position: relative;
+    transition: height 0.3s linear;
+    overflow: hidden;
+}
+
+.tarjeta:hover {
+    border: 3px solid var(--blanco);
+
+}
+
+.tarjetaAbierta {
+    height: 150%;
+    z-index: 100;
+    border: 3px solid var(--blanco);
+
+}
+
+.tarjetaAbierta::before {
+    height: 20%;
+}
+
+
+
+
+.tarjetaPortada {
+    display: block;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tarjetaPortada);
+    z-index: 50;
+    pointer-events: none;
+    transition: height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tarjeta:hover .tarjetaPortada {
+    height: 65%;
+} 
+
+.tarjetaAbierta:hover .tarjetaPortada {
+    height: 30%;
+} 
+
+.tarjetaAbierta .tarjetaPortada {
+    height: 30%;
+}
+
+
+.tarjeta .texto {
+    z-index: 80;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#resumen {
+    display: none;
+}
+
+.tarjetaAbierta .texto #descripcion {
+    display: inline-block;
+}
+
+p  {
+    font-family: var(--fuenteBeca);
+    color: var(--informacionTarjeta);
+    text-align: center;
+}
+
+h2 + p {
+    text-align: left;
+}
+
+.texto :first-child {
+    font-size: var(--tituloTarjeta);
+}
+
+
+
+
+
+.onda.ondaTarjeta {
+    fill: var(--tarjetaPortada);
+
+}
+
+.oceanTarjeta {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    height: 130%;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+}
+
+
+/* ||||||||||||||||||||||||crear||||||||||||||||||||||||||||||||*/
+.centrador {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+}
+
+.btn-outline.amarillo {
+    background-color: var(--oro);
+    color: var(--blanco);
+}
+.btn-outline.amarillo:hover {
+    background-color: var(--gold-2);
+}
+
+.angosto {
+    min-width: 50px;
+    max-width: 600px;
+}
+
+
+
+form label {
+    font-family: "SplineSans";
+    font-weight: 500;
+    color: #fff;
+}
+
+form input,
+form select,
+form button,
+form textarea,
+form + button  + a{
+	padding: 0.7rem 1rem;
+	border-radius: 8px;
+	background: var(--fondoInputs);
+	border: 1px solid var(--card-border);
+	color: var(--white);
+	font-family: 'DM Sans', sans-serif;
+	resize: vertical;
+
+}
+
+form textarea {
+    resize: none;
+    width: 100%;
+    padding: 0;
+    height: 100px;
+}
+
+
+
+#imagenes {
+    display: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.grupoCampo {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    width: 100%;
+    gap: 10px;
+}
+
+
+.inputInterior {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.grupoCampo.completo .inputInterior, .completo{
+    width: 100%;
+}
+
+/* ||||||||||||||||||||||||detalle||||||||||||||||||||||||||||||||*/
+
+h2 {
+    font-family: "SplineSans";
+    font-weight: 500;
+    color: var(--oro);
+    margin-top: 0;
+}
+
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--difuminado);
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 100px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: 0.3s var(--ease);
+}
+
+.btn-outline:hover {
+	border-color: rgba(255,255,255,0.45);
+	background: rgba(255,255,255,0.06);
+}
+
+/*|||||||||||||||||||||||||||||||||||animacion olas |||||||||||||||||||||||||||||||||*/
+
+body {
+    background-color: var(--cieloListaBecas);
+    font-family: "SplineSans";
+    
+}
+
+.difuminado {
+    width: 80vw;
+    height: 100%;
+    margin: 80px auto;
+    background-color: var(--difuminado);
+    border-radius: 20px;
+    padding: 60px;
+    backdrop-filter: blur(40px);
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.subtitulo {
+    display: block;
+    color: var(--oro);
+    font-size: var(--subtitulo);
+    font-weight: 700;
+}
+
+.importante {
+    display: block;
+    color: var(--oro);
+    font-weight: 300;
+     margin-top: 0;
+    font-size: var(--tamanoh1);
+}
+
+.ocean {
+    width: 100%;
+    height: 80%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mar {
+
+    background-color: var(--mar);
+    flex-grow: 12;
+}
+
+.ola {
+
+    flex-grow: 1;
+    display: flex;
+}
+
+.onda {
+    animation: animacionOnda 3s linear infinite;
+    fill: var(--mar);
+}
+
+@keyframes animacionOnda {
+    from {
+        transform: translate(0, 2%);
+    }
+
+    to {
+        transform: translate(50%, 2%);
+    }
+}

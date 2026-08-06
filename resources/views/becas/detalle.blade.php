@@ -1,15 +1,18 @@
 <x-layout>
-    @push('estilo')
-        @vite(['resources/css/becas/detalle.css'])
-    @endpush
+    
 
     <x-slot:titulo>
-        Buenos días
+        Información de la beca
     </x-slot:titulo>
-    
-    <h2 class="importante"> Beca {{ $beca->titulo }}</h2>
-    <h2>Descripción</h2>
-    <p>{{ $beca->descripcion }}</p>
+    <x-slot:angosto>
+        angosto
+    </x-slot:angosto>
+
+    <div class="centrador">
+
+        <h2 class="importante"> Beca {{ $beca->titulo }}</h2>
+        <h2>Descripción</h2>
+        <p>{{ $beca->descripcion }}</p>
 
     <h2> Institución</h2>
     <p> {{ $beca->universidad->nombre_completo }}</p>
@@ -24,10 +27,13 @@
     <p> {{ $beca->ayuda->nombre }}</p>
 
     @if (isset($beca->imagen->ruta))
-        <div style="width: 300px; height: 200px; ">
-            <img src="{{ asset('storage/' . $beca->imagen->ruta) }}" alt="Imagen de la beca"
-                style=" width: 100%; height: 100%;">
-        </div>
+    <div style="width: 300px; height: 200px; ">
+        <img src="{{ asset('storage/' . $beca->imagen->ruta) }}" alt="Imagen de la beca"
+        style=" width: 100%; height: 100%;">
+    </div>
     @endif
-    <a href="{{ route('becas.index') }}">Volver</a>
+    <br>
+    <a href="{{ route('becas.index') }}" class="btn-outline">Volver</a>
+</div>
+
 </x-layout>
