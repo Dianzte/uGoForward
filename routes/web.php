@@ -48,8 +48,8 @@ Route::post('/foro/{ejemplo:slug}', [ComentarioController::class, 'store'])->nam
 
 
 Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
+Route::get('/becas/index', [BecaController::class, 'filtrar'])->name('becas.filtrar');
 Route::middleware('auth')->group(function(){
-
     Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
     Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
     });

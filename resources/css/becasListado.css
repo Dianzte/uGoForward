@@ -7,6 +7,21 @@
 
 }
 
+
+.filtros{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.col{
+    display: flex;
+    margin:  2px 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
 .destacados {
     display: flex;
     gap: 1vw;
@@ -119,8 +134,20 @@ p  {
     font-family: var(--fuenteBeca);
     color: var(--informacionTarjeta);
     text-align: center;
+    font-weight: 300;
+
+}
+li {
+    font-family: var(--fuenteBeca);
+    color: var(--informacionTarjeta);
+    font-weight: 300;
 }
 
+.visitar {
+    color: var(--gold2);
+    font-weight: 500;
+    text-decoration: underline;
+}
 h2 + p {
     text-align: left;
 }
@@ -154,6 +181,48 @@ body {
     margin: 0;
 }
 
+
+.floating-compass-widget {
+  position: fixed;
+  right: 25px;
+  bottom: 85px;
+  z-index: 90;
+  width: 58px;
+  height: 58px;
+  background: rgba(7, 31, 53, 0.88);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(232, 200, 71, 0.35), 0 4px 15px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+.floating-compass-widget:hover {
+  transform: scale(1.12) rotate(15deg);
+  box-shadow: 0 0 30px rgba(232, 200, 71, 0.65);
+}
+
+.compass-needle {
+  width: 4px;
+  height: 32px;
+  background: linear-gradient(to bottom, #ef4444 50%, #e2e8f0 50%);
+  border-radius: 2px;
+  transition: transform 0.3s ease-out;
+}
+
+.floating-compass-widget:hover {
+	transform: scale(1.12) rotate(15deg);
+	box-shadow: 0 0 30px rgba(232, 200, 71, 0.65);
+}
+
+.ancla{
+    width: 60px;
+    height: 60px;
+}
 
 /* ||||||||||||||||||||||||crear||||||||||||||||||||||||||||||||*/
 .centrador {
@@ -196,6 +265,15 @@ form + button  + a{
 	font-family: 'DM Sans', sans-serif;
 	resize: vertical;
 
+}
+
+option {
+    padding: 0.7rem 1rem;
+	border-radius: 8px;
+	background: var(--tarjeta);
+	border:none;
+	color: var(--white);
+	font-family: 'DM Sans', sans-serif;
 }
 
 form textarea {

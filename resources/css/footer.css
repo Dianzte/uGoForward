@@ -1,6 +1,6 @@
 /* === FOOTER === */
 .footer {
-  background: #00000065;
+  background: #000000a7;
   border-top: 1px solid rgba(100,200,255,0.06);
   padding: 4rem 0 0;
   position: relative;
@@ -46,3 +46,10 @@
 }
 
 .footer-bottom p { font-size: 0.78rem; color: var(--text-3); }
+
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+}

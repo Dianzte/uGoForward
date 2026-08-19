@@ -129,36 +129,13 @@
 
         </form>
 
-        <button onclick="testValores()">valores de prueba</button>
+       
 
         <a href="{{ route('becas.index') }}" class="btn-outline ">Volver a la lista de becas</a>
     </div>
 
 
-    <script>
-        let numeroTest = 1;
-
-        function testValores() {
-            let fechaAleatoria = intervalo(2028, 2030) + "-" + 0 + intervalo(1, 9) + "-" + intervalo(1, 2) + intervalo(1, 7)
-
-            document.getElementById("titulo").value = "Titulo de prueba" + numeroTest
-
-            document.getElementById("universidad_id").value = intervalo(1, 6)
-            document.getElementById("carrera_id").value = intervalo(1, 5)
-            document.getElementById("ayuda_id").value = intervalo(1, 5)
-            document.getElementById("condicion_id").value = intervalo(1, 5)
-            document.getElementById("vencimiento").value = fechaAleatoria
-            document.getElementById("descripcion").value = "descripción de prueba número" + numeroTest
-
-            numeroTest++
-
-
-        }
-
-        function intervalo(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-    </script>
+   
 
 
 </x-layout>
