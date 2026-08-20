@@ -3,11 +3,13 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Services\GeminiBecaExtractorService; 
 use App\Models\Universidad;
+use App\Models\Beca;
 use Carbon\Carbon;
 
 class BuscarBecasDirecto extends Command
@@ -15,7 +17,10 @@ class BuscarBecasDirecto extends Command
     /**
      * Firma del comando en la terminal.
      */
-    protected $signature = 'becas:buscar-directo';
+    protected $signature = 'becas:buscar-directo
+                            {--objetivo=20 : Cantidad de becas nuevas que se intentara guardar}
+                            {--profundidad=2 : Profundidad maxima de enlaces internos a explorar}
+                            {--lote=5 : Cantidad de becas nuevas por lote informativo}';
 
     /**
      * Descripción del comando.
@@ -26,18 +31,10 @@ class BuscarBecasDirecto extends Command
      * Fuentes directas de El Salvador a rastrear.
      */
     protected array $fuentes = [
+
         
+
         
-       [
-            'nombre' => 'UCA (Universidad Centroamericana José Simeón Cañas)',
-            'url'    => 'https://www.uca.edu.sv/becas',
-            'selector_base' => 'a',
-        ],
-        [
-            'nombre' => 'universidadesSV',
-            'url'    => 'https://universidades.sv/',
-            'selector_base' => 'a',
-        ],
         [
             'nombre' => 'Programa Oportunidades  Fundación Gloria de Kriete',
             'url'    => 'https://www.oportunidades.org.sv/',
@@ -58,6 +55,61 @@ class BuscarBecasDirecto extends Command
             'url'    => 'https://www.udb.edu.sv/udb/pagina/proyeccion_social_becas',
             'selector_base' => 'a',
         ],
+    [
+        'nombre'        => 'Universidad Centroamericana José Simeón Cañas (UCA)',
+        'url'           => 'https://uca.edu.sv/becas/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Universidad Tecnológica de El Salvador (UTEC)',
+        'url'           => 'https://www.utec.edu.sv/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Universidad Francisco Gavidia (UFG)',
+        'url'           => 'https://www.ufg.edu.sv/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Universidad Evangélica de El Salvador (UEES)',
+        'url'           => 'https://uees.edu.sv/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Universidad Católica de El Salvador (UNICAES)',
+        'url'           => 'https://www.catolica.edu.sv/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Escuela Agrícola Panamericana Zamorano',
+        'url'           => 'https://www.zamorano.edu/admisiones/asistencia-financiera/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Escuela de Comunicación Mónica Herrera (ECMH)',
+        'url'           => 'https://monicaherrera.edu.sv/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'FANTEL / Ministerio de Educación (MINED)',
+        'url'           => 'https://www.mined.gob.sv/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'FEPADE - Becas Edubecas',
+        'url'           => 'https://fepade.org.sv/edubecas/',
+        'selector_base' => 'a',
+    ],
+    [
+        'nombre'        => 'Organización de los Estados Americanos (OEA - Becas)',
+        'url'           => 'https://www.oas.org/es/becas/',
+        'selector_base' => 'a',
+    ],
+    [
+            'nombre' => 'universidadesSV',
+            'url'    => 'https://universidades.sv/',
+            'selector_base' => 'a',
+        ]
     ];
 
     /**
@@ -66,7 +118,9 @@ class BuscarBecasDirecto extends Command
     protected array $palabrasClave = [
         'beca', 'becas', 'convocatoria', 'estudio', 'posgrado', 'pregrado',
         'maestria', 'maestría', 'doctorado', 'financiamiento', 'fantel',
-        'ayuda economica', 'ayuda económica', 'educacion superior', 'educación superior'
+        'ayuda economica', 'ayuda económica', 'educacion superior', 'educación superior',
+        'scholarship', 'fellowship', 'financial aid', 'admission', 'admisiones',
+        'postulacion', 'postulación', 'apply', 'oportunidad', 'programa'
     ];
 
     /**
@@ -74,6 +128,8 @@ class BuscarBecasDirecto extends Command
      */
     public function handle(GeminiBecaExtractorService $geminiService): int
     {
+        return $this->handleExpanded($geminiService);
+
         $this->info("Iniciando rastreo directo en sitios oficiales de El Salvador...");
         $this->newLine();
 
@@ -205,6 +261,211 @@ class BuscarBecasDirecto extends Command
         return Command::SUCCESS;
     }
 
+    private function handleExpanded(GeminiBecaExtractorService $geminiService): int
+    {
+        $objetivo = max(1, (int) $this->option('objetivo'));
+        $profundidadMaxima = max(0, (int) $this->option('profundidad'));
+        $tamanoLote = max(1, (int) $this->option('lote'));
+        $totalNuevas = 0;
+        $nuevasEnLote = 0;
+
+        $this->info("Iniciando rastreo profundo con objetivo de {$objetivo} becas nuevas y lotes de {$tamanoLote}...");
+
+        foreach ($this->fuentes as $fuente) {
+            if ($totalNuevas >= $objetivo) {
+                break;
+            }
+
+            $this->warn("Rastreando: {$fuente['nombre']} ({$fuente['url']})...");
+            $cola = [[$fuente['url'], 0]];
+            $visitadas = [];
+            $candidatas = [];
+
+            while ($cola && $totalNuevas < $objetivo) {
+                [$paginaUrl, $nivel] = array_shift($cola);
+                $paginaUrl = $this->normalizarUrl($paginaUrl);
+                if (isset($visitadas[$paginaUrl])) {
+                    continue;
+                }
+                $visitadas[$paginaUrl] = true;
+
+                $html = $this->obtenerHtml($paginaUrl);
+                if ($html === null) {
+                    continue;
+                }
+
+                $crawler = new Crawler($html, $paginaUrl);
+                $crawler->filter($fuente['selector_base'])->each(function (Crawler $node) use (&$candidatas, &$cola, $paginaUrl, $nivel, $fuente, $profundidadMaxima) {
+                    $href = trim((string) $node->attr('href'));
+                    if ($href === '') {
+                        return;
+                    }
+
+                    $url = $this->normalizarUrl($this->resolverUrl($href, $paginaUrl));
+                    if (!$this->esMismoDominio($url, $fuente['url']) || !$this->esUrlNavegable($url)) {
+                        return;
+                    }
+
+                    $texto = trim($node->text(''));
+                    $contexto = $node->ancestors()->count() > 0
+                        ? trim($node->ancestors()->first()->text(''))
+                        : $texto;
+                    $evidencia = $texto . ' ' . $contexto . ' ' . $url;
+
+                    if ($this->esEnlaceDeBeca($evidencia, $url) || $this->esDocumento($url)) {
+                        $candidatas[$url] = trim($texto . "\n" . $contexto);
+                    }
+
+                    if ($nivel < $profundidadMaxima && !isset($candidatas[$url])) {
+                        $cola[] = [$url, $nivel + 1];
+                    }
+                });
+
+                $this->line("  Explorando nivel {$nivel}: {$paginaUrl}");
+                foreach ($candidatas as $url => $contexto) {
+                    if ($totalNuevas >= $objetivo) {
+                        break 2;
+                    }
+                    unset($candidatas[$url]);
+                    if (Beca::where('url_oficial', $url)->exists()) {
+                        continue;
+                    }
+                    if ($this->procesarCandidata($url, $contexto, $geminiService)) {
+                        $totalNuevas++;
+                        $nuevasEnLote++;
+
+                        if ($nuevasEnLote >= $tamanoLote) {
+                            $this->info("Lote completado: {$nuevasEnLote} becas nuevas guardadas. Continuando búsqueda...");
+                            $nuevasEnLote = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->info("Rastreo finalizado. Total de becas nuevas guardadas: {$totalNuevas}");
+        return Command::SUCCESS;
+    }
+
+    private function obtenerHtml(string $url): ?string
+    {
+        try {
+            $response = Http::withoutVerifying()
+                ->retry(3, 2000)
+                ->timeout(60)
+                ->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (compatible; UGF-Becas/1.0)',
+                ])
+                ->get($url);
+            return $response->successful() ? $response->body() : null;
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo rastrear la pagina', ['url' => $url, 'error' => $exception->getMessage()]);
+            return null;
+        }
+    }
+
+    private function procesarCandidata(string $url, string $contexto, GeminiBecaExtractorService $geminiService): bool
+    {
+        $this->line("  <comment>[+] Candidata:</comment> {$url}");
+        $datos = $geminiService->extraerDatosDeTexto($this->obtenerTextoDePagina($url, $contexto), $url);
+
+        if (!$datos || (($datos['es_beca_nacional'] ?? false) !== true)) {
+            return false;
+        }
+
+        $titulo = trim((string) ($datos['titulo_convocatoria'] ?? ''));
+        $oferente = trim((string) ($datos['institucion_oferente'] ?? ''));
+        if ($titulo === '' || $oferente === '' || $titulo === 'No especificado') {
+            return false;
+        }
+
+        $universidad = $this->obtenerUniversidad($oferente);
+        if (!$universidad) {
+            return false;
+        }
+
+        $duplicada = Beca::where('url_oficial', $url)
+            ->orWhere(function ($consulta) use ($titulo, $universidad) {
+                $consulta->where('universidad_id', $universidad->id)
+                    ->whereRaw('LOWER(titulo) = ?', [mb_strtolower($titulo)]);
+            })
+            ->exists();
+
+        if ($duplicada) {
+            $this->line("      [-] Beca repetida ignorada: {$titulo}");
+            return false;
+        }
+
+        try {
+            Beca::create([
+            'url_oficial' => $url,
+            'titulo' => $titulo,
+            'universidad_id' => $universidad->id,
+            'pais_destino' => $datos['pais_destino'] ?? null,
+            'nivel_academico' => $datos['nivel_academico'] ?? 'Grado/Técnico',
+            'modalidad' => $datos['modalidad'] ?? 'Presencial',
+            'cobertura_resumen' => $datos['cobertura'] ?? null,
+            'requisitos' => $datos['requisitos_clave'] ?? [],
+            'carreras_cobertura' => $datos['carreras_o_areas'] ?? [],
+            'cum_promedio_minimo' => !empty($datos['cum_promedio_minimo']) ? trim($datos['cum_promedio_minimo']) : null,
+            'vencimiento' => $this->normalizarFecha($datos['fecha_cierre_postulacion'] ?? null),
+            'descripcion' => $datos['cobertura'] ?? 'Sin descripción detallada',
+            'estado' => 'Activa',
+            ]);
+        } catch (UniqueConstraintViolationException $exception) {
+            Log::notice('Beca duplicada durante el rastreo; se omite', [
+                'url' => $url,
+                'titulo' => $titulo,
+                'error' => $exception->getMessage(),
+            ]);
+            $this->line("      [-] Beca repetida ignorada: {$titulo}");
+            return false;
+        }
+
+        $this->info("      [✓] Beca nueva guardada: {$titulo}");
+        sleep(2);
+        return true;
+    }
+
+    private function obtenerUniversidad(string $nombre): ?Universidad
+    {
+        $nombre = trim(preg_replace('/\s+/', ' ', $nombre));
+        $universidad = Universidad::whereRaw('LOWER(nombre_completo) = ?', [mb_strtolower($nombre)])->first();
+        if ($universidad) {
+            return $universidad;
+        }
+
+        $base = $this->generarSiglas($nombre);
+        $siglas = $base;
+        $contador = 2;
+        while (Universidad::where('siglas', $siglas)->exists()) {
+            $siglas = $base . $contador++;
+        }
+
+        try {
+            return Universidad::create([
+                'nombre_completo' => $nombre,
+                'siglas' => $siglas,
+            ]);
+        } catch (UniqueConstraintViolationException $exception) {
+            return Universidad::whereRaw('LOWER(nombre_completo) = ?', [mb_strtolower($nombre)])->first();
+        }
+    }
+
+    private function generarSiglas(string $nombre): string
+    {
+        $palabras = preg_split('/\s+/', trim($nombre)) ?: [];
+        $ignoradas = ['de', 'del', 'la', 'las', 'el', 'los', 'y', 'e'];
+        $siglas = '';
+        foreach ($palabras as $palabra) {
+            if (!in_array(mb_strtolower($palabra), $ignoradas, true)) {
+                $siglas .= mb_strtoupper(mb_substr($palabra, 0, 1));
+            }
+        }
+
+        return $siglas !== '' ? mb_substr($siglas, 0, 10) : 'INST';
+    }
+
     /**
      * Evalúa si un texto o enlace contiene términos relacionados con becas.
      */
@@ -221,12 +482,52 @@ class BuscarBecasDirecto extends Command
         return false;
     }
 
+    private function esMismoDominio(string $url, string $fuente): bool
+    {
+        $dominio = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $dominioFuente = strtolower((string) parse_url($fuente, PHP_URL_HOST));
+        return preg_replace('/^www\./', '', $dominio) === preg_replace('/^www\./', '', $dominioFuente);
+    }
+
+    private function esUrlNavegable(string $url): bool
+    {
+        $esquema = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        return in_array($esquema, ['http', 'https'], true) && !str_contains($url, '#');
+    }
+
+    private function esDocumento(string $url): bool
+    {
+        return (bool) preg_match('/\.(pdf|docx?|xlsx?)($|[?#])/i', $url);
+    }
+
+    private function normalizarUrl(string $url): string
+    {
+        $partes = parse_url($url);
+        if (!$partes || empty($partes['host'])) {
+            return $url;
+        }
+
+        $ruta = $partes['path'] ?? '/';
+        $ruta = preg_replace('#/+#', '/', $ruta);
+        $ruta = preg_replace('#/\.?/#', '/', $ruta);
+        $ruta = preg_replace('#/[^/]+/\.\./#', '/', $ruta);
+        $resultado = ($partes['scheme'] ?? 'https') . '://' . strtolower($partes['host']) . $ruta;
+        if (!empty($partes['query'])) {
+            $resultado .= '?' . $partes['query'];
+        }
+        return rtrim($resultado, '/') ?: $resultado;
+    }
+
     private function obtenerTextoDePagina(string $url, string $textoEnlace): string
     {
         try {
-            $response = Http::withoutVerifying()->withHeaders([
+            $response = Http::withoutVerifying()
+                ->retry(3, 2000)
+                ->timeout(60)
+                ->withHeaders([
                 'User-Agent' => 'Mozilla/5.0 (compatible; UGF-Becas/1.0)',
-            ])->timeout(15)->get($url);
+                ])
+                ->get($url);
 
             if ($response->successful()) {
                 $pagina = new Crawler($response->body(), $url);

@@ -22,10 +22,13 @@ class GeminiBecaExtractorService
      */
     public function extraerDatosDeTexto(string $textoFuente, string $urlFuente): ?array
     {
-    if (empty($this->apiKey)) {
-        Log::error('GEMINI_API_KEY no está configurada.');
-        return null;
-    }
+        if (empty($this->apiKey)) {
+            Log::error('GEMINI_API_KEY no está configurada.');
+            return null;
+        }
+
+        $textoFuente = $this->sanitizarUtf8($textoFuente);
+        $urlFuente = $this->sanitizarUtf8($urlFuente);
 
     $prompt = <<<PROMPT
         Eres un asistente especializado en identificar oportunidades de becas relevantes para estudiantes de El Salvador.
@@ -38,13 +41,11 @@ class GeminiBecaExtractorService
         4. Normaliza el nombre de la institución u oferente (Ejemplos: "Universidad de El Salvador", "MINED", "ESCO", "FANTEL", "Universidad Don Bosco").
 PROMPT;
 
-    $response = Http::withoutVerifying()->withHeaders([
-        'Content-Type' => 'application/json',
-    ])->post("{$this->apiUrl}?key={$this->apiKey}", [
+    $payload = [
         'contents' => [
             [
                 'parts' => [
-                    ['text' => $prompt . "\n\nTexto de la fuente:\n" . substr($textoFuente, 0, 12000)]
+                    ['text' => $prompt . "\n\nTexto de la fuente:\n" . $this->limitarTexto($textoFuente)]
                 ]
             ]
         ],
@@ -53,7 +54,15 @@ PROMPT;
             'responseSchema'   => $this->obtenerEsquemaJson(),
             'temperature'      => 0.2,
         ]
-    ]);
+    ];
+
+    $response = Http::withoutVerifying()
+        ->retry(3, 2000)
+        ->timeout(60)
+        ->withHeaders([
+        'Content-Type' => 'application/json',
+        ])
+        ->post("{$this->apiUrl}?key={$this->apiKey}", $this->sanitizarUtf8($payload));
 
     // SI LA PETICIÓN FALLA, IMPRIMIR EL MOTIVO EXACTO
     if ($response->failed()) {
@@ -72,6 +81,30 @@ PROMPT;
 
     return json_decode($jsonRaw, true);
 }
+
+    private function limitarTexto(string $texto): string
+    {
+        return function_exists('mb_substr')
+            ? mb_substr($texto, 0, 12000, 'UTF-8')
+            : substr($texto, 0, 12000);
+    }
+
+    private function sanitizarUtf8(mixed $valor): mixed
+    {
+        if (is_array($valor)) {
+            foreach ($valor as $clave => $elemento) {
+                $valor[$clave] = $this->sanitizarUtf8($elemento);
+            }
+            return $valor;
+        }
+
+        if (!is_string($valor) || !function_exists('mb_check_encoding') || mb_check_encoding($valor, 'UTF-8')) {
+            return $valor;
+        }
+
+        $limpio = function_exists('iconv') ? iconv('UTF-8', 'UTF-8//IGNORE', $valor) : false;
+        return $limpio === false ? preg_replace('/[^\x09\x0A\x0D\x20-\x7E\x80-\xFF]/', '', $valor) : $limpio;
+    }
 
     /**
      * Define el esquema JSON que Gemini DEBE respetar obligatoriamente.

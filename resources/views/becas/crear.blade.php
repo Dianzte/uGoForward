@@ -115,6 +115,16 @@
             </div>
 
             <div class="grupoCampo">
+                <div class="inputInterior completo ">
+                    <label for="url_oficial">Enlace oficial:</label>
+                    <input id="url_oficial" type="url" name="url_oficial" value="{{ old('url_oficial') }}" class="corto" pattern="https://.*"  ><br><br>
+                    @error('url_oficial')
+                        <div> {{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="grupoCampo">
                 <label for="imagenes" class="btn-outline">Imagen </label>
                 <input type="file" id="imagenes" name="imagenes" accept="image/*">
 

@@ -17,7 +17,7 @@ class BecaController extends Controller
      */
     public function index()
     {
-       $becas = Beca::get();
+       $becas = Beca::latest()->paginate(12);
        $universidades =  Universidad::get();
 
        return view('becas.index', compact('becas', 'universidades'));
@@ -87,6 +87,7 @@ class BecaController extends Controller
             'vencimiento' => 'required|date|after_or_equal:today|date_format:Y-m-d',
             'ayuda_id' => 'required|exists:ayuda,id',
             'imagenes' => 'mimes:jpg,jpeg,png|max:2048',
+            'url_oficial' => 'nullable|url'
         ]);
 
         $imagenId = null;

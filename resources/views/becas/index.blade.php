@@ -115,7 +115,10 @@
 
     <br>
     <a href="{{ route('becas.create') }}" class="btn-outline">Sugerir beca</a>
-    </div>
+<div class="mt-4">
+    {{ $becas->links('pagination::bootstrap-4') }}
+</div>
+    
     <a href="#destacados" class="ancla">
 
         <div class="floating-compass-widget" id="floatingCompass" title="Brújula de Navegación">

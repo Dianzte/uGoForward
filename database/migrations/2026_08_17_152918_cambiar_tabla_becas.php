@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('becas', function (Blueprint $table) {
-            $table->string('url_oficial')->unique()->after('titulo');
+            $table->string('url_oficial')->unique()->after('titulo')->nullable();
 
             $table->string('nivel_academico')->nullable()->after('descripcion');
             $table->string('modalidad')->default('Presencial')->after('nivel_academico');

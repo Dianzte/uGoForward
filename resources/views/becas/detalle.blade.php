@@ -29,9 +29,12 @@
             <p> {{ $beca->ayuda->nombre }}</p>
         @else
             <h2> Carrera</h2>
-            @foreach ($beca->carreras_cobertura as $carrera)
-                <p> {{ $carrera }}</p>
-            @endforeach
+            <ul>
+
+                @foreach ($beca->carreras_cobertura as $carrera)
+                <li> {{ $carrera }}</li>
+                @endforeach
+            </ul>
             
 
             <h2> Nivel académico</h2>
