@@ -31,7 +31,8 @@ class BecaFactory extends Factory
             'condicion_id' => Condicion::inRandomOrder()->value('id'),
             'ayuda_id' => Ayuda::inRandomOrder()->value('id'),
             'vencimiento' => fake()->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
-            'imagen_id' => Imagen::inRandomOrder()->value('id'),
+            'imagen_id' => null,
+            'url_oficial' => fake()->sentence(),
         ];
     }
 }

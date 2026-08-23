@@ -17,9 +17,46 @@ class BecaController extends Controller
      */
     public function index()
     {
-        $becas = Beca::get();
+       $becas = Beca::latest()->paginate(12);
+       $universidades =  Universidad::get();
 
-        return view('becas.index', compact('becas'));
+       return view('becas.index', compact('becas', 'universidades'));
+
+        
+    }
+
+    public function filtrar(Request $request)
+    {
+        // 1. Obtener los datos para los desplegables/selects
+        $universidades = Universidad::orderBy('nombre_completo')->get();
+
+        // 2. Construir la consulta dinámica
+        $becas = Beca::with('universidad')
+            // Filtro por palabra clave (Título o Descripción)
+            ->when($request->filled('buscar'), function ($query) use ($request) {
+                $query->where('titulo', 'LIKE', '%' . $request->buscar . '%')
+                      ->orWhere('cobertura_resumen', 'LIKE', '%' . $request->buscar . '%');
+            })
+            // Filtro por Universidad
+            ->when($request->filled('universidad_id'), function ($query) use ($request) {
+                $query->where('universidad_id', $request->universidad_id);
+            })
+            // Filtro por Nivel Académico
+            ->when($request->filled('nivel_academico'), function ($query) use ($request) {
+                $query->where('nivel_academico', $request->nivel_academico);
+            })
+            // Filtro por Modalidad
+            ->when($request->filled('modalidad'), function ($query) use ($request) {
+                $query->where('modalidad', $request->modalidad);
+            })
+            // Solo mostrar becas activas
+            ->where('estado', 'Activa')
+            ->orderBy('created_at', 'desc')
+            // Conservar los parámetros de búsqueda en la paginación
+            ->paginate(9)
+            ->appends($request->all());
+
+        return view('becas.index', compact('becas', 'universidades'));
     }
 
     /**
@@ -50,6 +87,7 @@ class BecaController extends Controller
             'vencimiento' => 'required|date|after_or_equal:today|date_format:Y-m-d',
             'ayuda_id' => 'required|exists:ayuda,id',
             'imagenes' => 'mimes:jpg,jpeg,png|max:2048',
+            'url_oficial' => 'nullable|url'
         ]);
 
         $imagenId = null;

@@ -5,17 +5,17 @@
     --tarjeta: #00C8FF;
     --tarjetaPortada: #028CF6;
     --informacionTarjeta: #fff;
-    --difuminado: #002b7c4d;
+    --difuminado: #002b7c61;
     --mar: #0059FF;
 
     --bordesFormulario: #000;
     --oro: #FFD014;
     --blanco: #fff;
-    --fondoInputs: #000422;
+    --fondoInputs: #f2f3fb1a;
 
     --tituloTarjeta: 35px;
     --subtitulo: 2.5vw;
-    --tamanoh1: 5vw;
+    --tamanoh1: 40px;
     --tamanoBotones: 30px;
     --fuenteBeca: "SplineSans";
 
@@ -73,83 +73,3 @@
     font-display: swap;
 }
 
-
-
-
-
-body {
-    background-color: var(--cieloListaBecas);
-    font-family: "SplineSans";
-    
-}
-
-.difuminado {
-    width: 80vw;
-    height: 100%;
-    margin: 80px auto;
-    background-color: var(--difuminado);
-    border-radius: 20px;
-    padding: 60px;
-    backdrop-filter: blur(40px);
-}
-
-section {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.subtitulo {
-    display: block;
-    color: var(--oro);
-    font-size: var(--subtitulo);
-    font-weight: 700;
-}
-
-.importante {
-    display: block;
-    color: var(--oro);
-    font-size: var(--tamanoh1);
-    font-weight: 300;
-}
-
-.ocean {
-    width: 100%;
-    height: 80%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    z-index: -1;
-    display: flex;
-    flex-direction: column;
-}
-
-.mar {
-
-    background-color: var(--mar);
-    flex-grow: 12;
-}
-
-.ola {
-
-    flex-grow: 1;
-    display: flex;
-}
-
-.onda {
-    animation: animacionOnda 3s linear infinite;
-    fill: var(--mar);
-}
-
-@keyframes animacionOnda {
-    from {
-        transform: translate(0, 2%);
-    }
-
-    to {
-        transform: translate(50%, 2%);
-    }
-}
