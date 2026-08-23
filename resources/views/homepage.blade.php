@@ -779,6 +779,7 @@
     <a href="{{ route('becas.calendario') }}" class="dock-item">📅 Calendario</a>
   </nav>
 
+  @include('components.chatbot')
 </body>
 
 </html>

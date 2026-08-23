@@ -41,9 +41,9 @@
         </section>
     </main>
 
-    <footer>
-        El footer
     </footer>
+    
+    @include('components.chatbot')
 </body>
 @stack('script')
 

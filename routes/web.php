@@ -6,7 +6,7 @@ use App\Http\Controllers\ForoController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Auth\Authcontroller;
 use App\Http\Controllers\BecaCalendarioController;
-
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,5 +78,5 @@ Route::post('/api/calendario/tareas', [BecaCalendarioController::class, 'guardar
 Route::put('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'actualizarTarea']);
 Route::delete('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'eliminarTarea']);
 
-
-
+// --- CHATBOT ---
+Route::post('/api/chatbot', [ChatbotController::class, 'chat']);
