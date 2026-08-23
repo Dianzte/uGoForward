@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureRoleIsSelected;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             guests: 'login', 
             users: 'index' 
         );
+
+        $middleware->alias([
+            'rol.seleccionado' => EnsureRoleIsSelected::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

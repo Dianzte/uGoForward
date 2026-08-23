@@ -6,6 +6,7 @@ use App\Http\Controllers\BecaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ForoController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\TestSocioemocionalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,26 +38,23 @@ Route::get('/becas-calendario', function () {
 })->name('becas.calendario');
 
 Route::middleware('auth')->group(function(){
-
     Route::post('/foro/crear', [ForoController::class, 'store'])->name('foro.store');
     Route::get('/foro/crear', [ForoController::class, 'create'])->name('foro.crear');
-    });
+});
 
 Route::get('/foro', [ForoController::class, 'index'])->name('foro.index');
 Route::get('/foro/{foro:slug}', [ForoController::class, 'show'])->name('foro.show');
 Route::post('/foro/{ejemplo:slug}', [ComentarioController::class, 'store'])->name('comentario.store');
 
-
-
 Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
 Route::get('/becas/index', [BecaController::class, 'filtrar'])->name('becas.filtrar');
+
 Route::middleware('auth')->group(function(){
     Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
     Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
-    });
+});
 
 Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
-
 
 Route::get('/api/becas-calendario/eventos', [BecaCalendarioController::class, 'obtenerEventos']);
 
@@ -72,12 +70,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/seleccionar-rol', [RolController::class, 'guardar'])->name('rol.guardar');
 
     // Destinos según el rol elegido
-    Route::get('/test-socioemocional', function () {
-        return view('estudiante.test-socioemocional');
-    })->name('test.socioemocional');
+    Route::get('/test-socioemocional', [TestSocioemocionalController::class, 'index'])->name('test.socioemocional');
+    Route::post('/test-socioemocional', [TestSocioemocionalController::class, 'guardar'])->name('test.socioemocional.guardar');
 
+    // Corrección aquí: Se asigna 'padrino.tutorial' como nombre de ruta
     Route::get('/tutorial-padrino', function () {
-        return view('padrino.tutorial');
+        return view('padrinotutorial');
     })->name('padrino.tutorial');
 
     // Logout (fuera del middleware rol.seleccionado para evitar loops)

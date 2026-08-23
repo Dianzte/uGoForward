@@ -5,23 +5,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 class User extends Authenticatable
 {
     use Notifiable;
 
- protected $fillable = [
-    'nombre',       
-    'correo',
-    'contrasena',
-    'fechaNac',
-    'departamento',
-    'nie',
-    'dui',
-    'bio',
-    'avatar',
-    'banner',
-];
+    protected $fillable = [
+        'usuario', // <-- AGREGADO AQUÍ
+        'nombre',       
+        'correo',
+        'contrasena',
+        'fechaNac',
+        'departamento',
+        'nie',
+        'dui',
+        'bio',
+        'avatar',
+        'banner',
+    ];
 
     protected $hidden = [
         'contrasena',
@@ -37,7 +37,7 @@ class User extends Authenticatable
         return $this->hasMany(Foro::class);
     }
 
-       public function avatarImg(): BelongsTo
+    public function avatarImg(): BelongsTo
     {
         return $this->belongsTo(Imagen::class, 'avatar', 'id');
     }
@@ -46,5 +46,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Imagen::class, 'banner', 'id');
     }
-
 }
