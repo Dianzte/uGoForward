@@ -5,6 +5,7 @@ use App\Http\Controllers\BecaCalendarioController;
 use App\Http\Controllers\BecaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ForoController;
+use App\Http\Controllers\RolController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -65,7 +66,26 @@ Route::post('/api/calendario/tareas', [BecaCalendarioController::class, 'guardar
 Route::put('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'actualizarTarea']);
 Route::delete('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'eliminarTarea']);
 
+// --- SELECCIÓN DE ROL (una sola vez por usuario) ---
 Route::middleware('auth')->group(function () {
+    Route::get('/seleccionar-rol', [RolController::class, 'seleccionar'])->name('rol.seleccionar');
+    Route::post('/seleccionar-rol', [RolController::class, 'guardar'])->name('rol.guardar');
+
+    // Destinos según el rol elegido
+    Route::get('/test-socioemocional', function () {
+        return view('estudiante.test-socioemocional');
+    })->name('test.socioemocional');
+
+    Route::get('/tutorial-padrino', function () {
+        return view('padrino.tutorial');
+    })->name('padrino.tutorial');
+
+    // Logout (fuera del middleware rol.seleccionado para evitar loops)
+    Route::post('/logout', [Authcontroller::class, 'logout'])->name('logout');
+});
+
+// --- RUTAS QUE REQUIEREN ROL YA SELECCIONADO ---
+Route::middleware(['auth', 'rol.seleccionado'])->group(function () {
     // Vistas de Ajustes / Perfil
     Route::get('/ajustes', [Authcontroller::class, 'showSettings'])->name('settings');
     Route::get('/perfil', [Authcontroller::class, 'showSettings'])->name('perfil');
@@ -73,7 +93,4 @@ Route::middleware('auth')->group(function () {
     // Procesar actualización de perfil (soportando PUT/POST y ambos nombres de ruta)
     Route::match(['post', 'put'], '/perfil', [Authcontroller::class, 'updateProfile'])->name('perfil.update');
     Route::match(['post', 'put'], '/ajustes', [Authcontroller::class, 'updateProfile'])->name('settings.update');
-
-    // Logout
-    Route::post('/logout', [Authcontroller::class, 'logout'])->name('logout');
 });
