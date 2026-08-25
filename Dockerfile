@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --force
 COPY . .
+RUN chmod -R 777 /app/storage /app/bootstrap/cache
 RUN npm run build
 
 # 2. Etapa de PHP 8.4
