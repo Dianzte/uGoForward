@@ -9,6 +9,15 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\TestSocioemocionalController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ChatbotController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+// --- HOMEPAGE ---
 Route::get('/', function () {
     return view('homepage');
 })->name('index');
@@ -92,3 +101,5 @@ Route::middleware(['auth', 'rol.seleccionado'])->group(function () {
     Route::match(['post', 'put'], '/perfil', [Authcontroller::class, 'updateProfile'])->name('perfil.update');
     Route::match(['post', 'put'], '/ajustes', [Authcontroller::class, 'updateProfile'])->name('settings.update');
 });
+// --- CHATBOT ---
+Route::post('/api/chatbot', [ChatbotController::class, 'chat']);

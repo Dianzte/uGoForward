@@ -42,6 +42,9 @@
     </main>
 
     @include('navegacion.footer')
+    </footer>
+    
+    @include('components.chatbot')
 </body>
 @vite(['resources/js/becasListado.js'])
 

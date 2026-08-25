@@ -532,30 +532,81 @@
   </section>
 
   <!-- TICKER CONTINUO DE ALIADOS & INSTITUCIONES -->
+  <style>
+    .aliados-ticker-wrapper {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
+      padding: 2.5rem 0;
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
+    
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 3rem; /* uniform spacing between logos */
+      animation: tickerScroll 35s linear infinite;
+      width: max-content;
+    }
+    
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+    
+    .ticker-logo-box {
+      background: white;
+      border-radius: 16px;
+      padding: 0.75rem 1.25rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 110px;
+      width: 240px;
+      cursor: pointer;
+    }
+    
+    .ticker-logo-box:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(45, 212, 191, 0.4);
+    }
+    
+    .ticker-logo-box img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+  </style>
+
   <section class="section-aliados">
-    <div class="container" style="margin-bottom:1.5rem; text-align:center;" data-reveal>
+    <div class="container" style="margin-bottom:2rem; text-align:center;" data-reveal>
       <span class="section-tag">Nuestra Red de Aliados</span>
-      <h3 style="color:var(--text-2); font-weight:600; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em;">Universidades e Instituciones a Bordo</h3>
+      <h3 style="color:var(--text-2); font-weight:600; font-size:1.1rem; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.5rem;">Universidades e Instituciones a Bordo</h3>
     </div>
     <div class="aliados-ticker-wrapper">
       <div class="ticker-track">
-        <span class="aliado-chip">🏛️ Universidad de El Salvador (UES)</span>
-        <span class="aliado-chip">⛪ Universidad Centroamericana (UCA)</span>
-        <span class="aliado-chip">⚙️ Universidad Don Bosco (UDB)</span>
-        <span class="aliado-chip">💻 Universidad Tecnológica (UTEC)</span>
-        <span class="aliado-chip">📜 Universidad Gerardo Barrios (UGB)</span>
-        <span class="aliado-chip">🔬 Universidad Dr. José Matías Delgado</span>
-        <span class="aliado-chip">🌾 Universidad de Oriente (UNIVO)</span>
-        <span class="aliado-chip">🏥 Universidad Autónoma de Santa Ana (UNASA)</span>
-        <!-- Duplicados para animación continua infinita -->
-        <span class="aliado-chip">🏛️ Universidad de El Salvador (UES)</span>
-        <span class="aliado-chip">⛪ Universidad Centroamericana (UCA)</span>
-        <span class="aliado-chip">⚙️ Universidad Don Bosco (UDB)</span>
-        <span class="aliado-chip">💻 Universidad Tecnológica (UTEC)</span>
-        <span class="aliado-chip">📜 Universidad Gerardo Barrios (UGB)</span>
-        <span class="aliado-chip">🔬 Universidad Dr. José Matías Delgado</span>
-        <span class="aliado-chip">🌾 Universidad de Oriente (UNIVO)</span>
-        <span class="aliado-chip">🏥 Universidad Autónoma de Santa Ana (UNASA)</span>
+        <!-- Original set -->
+        <div class="ticker-logo-box"><img src="{{ asset('media/ues.png') }}" alt="UES"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/uca.jpg') }}" alt="UCA"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/udb.png') }}" alt="UDB"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/utec.jpg') }}" alt="UTEC"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/UGB.png') }}" alt="UGB"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/josematias.png') }}" alt="UJMD"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/univo.png') }}" alt="UNIVO"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/unasa.png') }}" alt="UNASA"></div>
+        
+        <!-- Duplicated set for infinite loop -->
+        <div class="ticker-logo-box"><img src="{{ asset('media/ues.png') }}" alt="UES"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/uca.jpg') }}" alt="UCA"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/udb.png') }}" alt="UDB"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/utec.jpg') }}" alt="UTEC"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/UGB.png') }}" alt="UGB"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/josematias.png') }}" alt="UJMD"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/univo.png') }}" alt="UNIVO"></div>
+        <div class="ticker-logo-box"><img src="{{ asset('media/unasa.png') }}" alt="UNASA"></div>
       </div>
     </div>
   </section>
@@ -715,7 +766,59 @@
 
    
 
-  @include('navegacion.footer')
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="nav-logo" href="#"> UGF</a>
+        <p>Plataforma de Becas El Salvador</p>
+        <style>
+          @keyframes pulseRed {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.9); }
+            50% { transform: scale(1.1); box-shadow: 0 0 10px 6px rgba(255, 0, 0, 0.6); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+          }
+          .blinking-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ff1c1c;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulseRed 1s infinite ease-in-out;
+            box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+          }
+        </style>
+        <p style="margin-top: 1rem; font-size: 0.75rem; color: rgba(255,255,255,0.5); line-height: 1.5; max-width: 350px; display: flex; align-items: flex-start;">
+          <span style="margin-top: 4px;"><span class="blinking-dot"></span></span>
+          <span><strong>Aviso:</strong> Este sitio web es un proyecto estudiantil desarrollado con fines estrictamente académicos. Las marcas, logotipos e imágenes universitarias utilizadas pertenecen a sus respectivos propietarios y se muestran únicamente con propósito ilustrativo e informativo, sin fines de lucro ni vinculación oficial.</span>
+        </p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h5>Plataforma</h5>
+          <a href="#">Test Socioemocional</a>
+          <a href="#universidades">Mapa de Universidades</a>
+          <a href="{{ route('becas.calendario') }}">Calendario de Becas</a>
+        </div>
+        <div>
+          <h5>Comunidad</h5>
+          <a href="#hub-social">Hub Social</a>
+          <a href="#">Padrinos</a>
+          <a href="#testimonios">Testimonios</a>
+        </div>
+        <div>
+          <h5>Empresa</h5>
+          <a href="#nosotros">Sobre nosotros</a>
+          <a href="#">Contacto</a>
+          <a href="#">Privacidad</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 UGF. Navegando hacia tu futuro.</p>
+    </div>
+  </footer>
   
   <dialog id="departmentModal" class="hidden backdrop:bg-black/80 p-6 rounded-2xl max-w-2xl w-full bg-[#071f35] border border-blue-500/30 text-white flex-col outline-none fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]">
     <div class="flex justify-between items-center border-b border-blue-500/20 pb-4 mb-4">
@@ -748,6 +851,7 @@
     <a href="{{ route('becas.calendario') }}" class="dock-item">📅 Calendario</a>
   </nav>
 
+  @include('components.chatbot')
 </body>
 
 </html>
