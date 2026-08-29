@@ -9,13 +9,9 @@
 
 
     <span class="subtitulo">Un mar de oportunidades</span>
-    <h1 class="importante">Busca por universidades</h1>
+    <h1 class="importante">Explora las becas disponibles</h1>
 
-    <div class="destacados" id="destacados">
-        <div class="destacado">UCA</div>
-        <div class="destacado activo">UDB</div>
-        <div class="destacado">UTEC</div>
-    </div>
+    
     <div class="filtros">
         <form action="{{ route('becas.filtrar') }}" method="GET" class="filtros">
 
@@ -119,11 +115,5 @@
     {{ $becas->links('pagination::bootstrap-4') }}
 </div>
     
-    <a href="#destacados" class="ancla">
-
-        <div class="floating-compass-widget" id="floatingCompass" title="Brújula de Navegación">
-
-            <div class="compass-needle" id="compassNeedle"></div>
-        </div>
-    </a>
+    
 </x-layout>

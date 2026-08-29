@@ -43,9 +43,7 @@
                                 <button class="btn-action">
                                     <span class="icon">👁️</span> {{ $ejemplo->visitas_count }}
                                 </button>
-                                <button class="btn-action" title="Denunciar">
-                                    <span class="icon">🏴</span> {{ $ejemplo->reportes_count }}
-                                </button>
+                                
                             </div>
                         </div>
 
@@ -62,7 +60,7 @@
                                 @csrf
 
                                 <div class="comment-form-wrapper">
-                                    <div class="comment-avatar user-avatar" style="{{ auth()->user()->avatarImg ? 'background-image: url(' . asset('storage/' . auth()->user()->avatarImg->ruta) . ')' : '' }}"></div>
+                                    <div class="comment-avatar user-avatar" style="{{ auth()->user()->avatarImg ? 'background-image: url(' . asset('storage/' . auth()->user()->avatarImg->ruta) . ')' : '' }}">U</div>
                                     <div class="comment-input-group">
                                         <textarea name="contenido" class="comment-textarea" placeholder="Escribe un comentario o respuesta..." rows="3"
                                             required></textarea>
@@ -82,7 +80,7 @@
                                 @forelse ($ejemplo->comentarios as $comentario)
                                     @if ($comentario->padre_id == null)
                                         <div class="comment-item">
-                                            <div class="comment-avatar" style="{{ $comentario->comentarista?->avatarImg ? 'background-image: url(' . asset('storage/' . $comentario->comentarista?->avatarImg->ruta) . ')' : '' }}"></div>
+                                            <div class="comment-avatar" style="{{ $comentario->comentarista?->avatarImg ? 'background-image: url(' . asset('storage/' . $comentario->comentarista?->avatarImg->ruta) . ')' : '' }}">U</div>
                                             <div class="comment-content">
                                                 <div class="comment-meta">
                                                     <strong class="comment-author">{{ $comentario->comentarista?->nombre ?? $comentario->comentarista?->usuario ?? 'Anónimo' }}</strong>
@@ -91,8 +89,7 @@
                                                 </div>
                                                 <p class="comment-text">{{ $comentario->contenido }}</p>
                                                 <div class="comment-actions">
-                                                    <button class="btn-comment-action"><span class="icon">♥</span>
-                                                        {{ $comentario->likes_count ?? 0 }}</button>
+                                                    
                                                     <button class="btn-comment-action"
                                                         onclick="toggleForm('form-respuesta-{{ $comentario->id }}')"><span
                                                             class="icon">↩</span>
@@ -121,6 +118,7 @@
                                                                 <small>{{ $respuesta->created_at->diffForHumans() }}</small>
                                                                 <p style="margin: 3px 0;">{{ $respuesta->contenido }}
                                                                 </p>
+                                                                
                                                             </div>
                                                         @endforeach
                                                     </div>
