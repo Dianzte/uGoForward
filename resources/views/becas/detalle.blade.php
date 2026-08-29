@@ -1,82 +1,122 @@
 <x-layout>
-
-
     <x-slot:titulo>
-        Información de la beca
+        {{ __('Información de la beca') }} - {{ translate_db($beca->titulo) }}
     </x-slot:titulo>
     <x-slot:angosto>
         angosto
     </x-slot:angosto>
 
-    <div class="centrador">
+    <div class="detalle-container">
+        <div class="detalle-header">
+            <span class="subtitulo">{{ __('Información de la beca') }}</span>
+            <h1 class="detalle-title">{{ translate_db($beca->titulo) }}</h1>
+            <div class="detalle-univ-badge">
+                 {{ translate_db($beca->universidad->nombre_completo ?? 'El Salvador') }}
+            </div>
+        </div>
 
+        <div class="detalle-section">
+            <h3> {{ __('Descripción') }}</h3>
+            <p>{{ translate_db($beca->descripcion) }}</p>
+        </div>
 
-        <h2 class="importante"> Beca {{ $beca->titulo }}</h2>
-        <h2>Descripción</h2>
-        <p>{{ $beca->descripcion }}</p>
-
-        <h2> Institución</h2>
-        <p> {{ $beca->universidad->nombre_completo }}</p>
-
-        @if (isset($beca->carrera->nombre))
-            <h2> Carrera</h2>
-            <p> {{ $beca->carrera->nombre }}</p>
-
-            <h2> Condiciones</h2>
-            <p> {{ $beca->condicion->nombre }}</p>
-
-            <h2> Ayuda</h2>
-            <p> {{ $beca->ayuda->nombre }}</p>
-        @else
-            <h2> Carrera</h2>
-            <ul>
-
-                @foreach ($beca->carreras_cobertura as $carrera)
-                <li> {{ $carrera }}</li>
-                @endforeach
-            </ul>
-            
-
-            <h2> Nivel académico</h2>
-            <p> {{ $beca->nivel_academico }}</p>
-
-            <h2> Modalidad</h2>
-            <p> {{ $beca->modalidad }}</p>
-
-            <h2> Cobertura</h2>
-            <p> {{ $beca->cobertura_resumen }}</p>
-
-            <h2> Requisitos</h2>
-            <ul>
-
-                @foreach ($beca->requisitos as $requisito)
-                <li> {{ $requisito }}</li>
-                @endforeach
-            </ul>
-
-            @if (isset($beca->cum_promedio_minimo))
-                <h2> CUM promedio</h2>
-                <p> {{ $beca->cum_promedio_minimo }}</p>
+        <!-- Specifications Grid -->
+        <div class="specs-grid">
+            @if (isset($beca->nivel_academico))
+                <div class="spec-item">
+                    <span class="spec-label">{{ __('Nivel académico') }}</span>
+                    <span class="spec-value">{{ translate_db($beca->nivel_academico) }}</span>
+                </div>
             @endif
 
-            <h2> <a href="{{ $beca->url_oficial }}" target="_blank" rel="noopener noreferrer" class="visitar">Visitar sitio oficial</a></h2>
-            
-        @endif
+            @if (isset($beca->modalidad))
+                <div class="spec-item">
+                    <span class="spec-label">{{ __('Modalidad') }}</span>
+                    <span class="spec-value">{{ translate_db($beca->modalidad) }}</span>
+                </div>
+            @endif
 
+            @if (isset($beca->vencimiento))
+                <div class="spec-item">
+                    <span class="spec-label">{{ __('Vencimiento') }}</span>
+                    <span class="spec-value" style="color: var(--gold, #e8c847);">
+                        {{ is_string($beca->vencimiento) ? $beca->vencimiento : $beca->vencimiento->format('d/m/Y') }}
+                    </span>
+                </div>
+            @endif
 
+            @if (isset($beca->cum_promedio_minimo))
+                <div class="spec-item">
+                    <span class="spec-label">{{ __('CUM promedio') }}</span>
+                    <span class="spec-value">{{ $beca->cum_promedio_minimo }}</span>
+                </div>
+            @endif
+        </div>
 
-
-
-
-
-        @if (isset($beca->imagen->ruta))
-            <div style="width: 300px; height: 200px; ">
-                <img src="{{ asset('storage/' . $beca->imagen->ruta) }}" alt=""
-                    style=" width: 100%; height: 100%;">
+        @if (isset($beca->carrera->nombre))
+            <div class="detalle-section">
+                <h3>{{ __('Carrera') }}</h3>
+                <p>{{ translate_db($beca->carrera->nombre) }}</p>
+            </div>
+        @elseif (!empty($beca->carreras_cobertura))
+            <div class="detalle-section">
+                <h3> {{ __('Carrera') }}</h3>
+                <ul>
+                    @foreach (translate_array($beca->carreras_cobertura) as $carrera)
+                        <li>{{ $carrera }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
-        <br>
-        <a href="{{ route('becas.index') }}" class="btn-outline">Volver</a>
-    </div>
 
+        @if (isset($beca->condicion->nombre))
+            <div class="detalle-section">
+                <h3> {{ __('Condiciones') }}</h3>
+                <p>{{ translate_db($beca->condicion->nombre) }}</p>
+            </div>
+        @endif
+
+        @if (isset($beca->ayuda->nombre))
+            <div class="detalle-section">
+                <h3> {{ __('Ayuda') }}</h3>
+                <p>{{ translate_db($beca->ayuda->nombre) }}</p>
+            </div>
+        @endif
+
+        @if (!empty($beca->cobertura_resumen))
+            <div class="detalle-section">
+                <h3> {{ __('Cobertura') }}</h3>
+                <p>{{ translate_db($beca->cobertura_resumen) }}</p>
+            </div>
+        @endif
+
+        @if (!empty($beca->requisitos))
+            <div class="detalle-section">
+                <h3> {{ __('Requisitos') }}</h3>
+                <ul>
+                    @foreach (translate_array($beca->requisitos) as $requisito)
+                        <li>{{ $requisito }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (isset($beca->imagen->ruta))
+            <div class="detalle-section" style="text-align: center;">
+                <img src="{{ asset('storage/' . $beca->imagen->ruta) }}" alt="{{ translate_db($beca->titulo) }}"
+                    style="max-width: 100%; max-height: 350px; border-radius: 12px; object-fit: cover;">
+            </div>
+        @endif
+
+        <div class="detalle-actions">
+            @if (!empty($beca->url_oficial))
+                <a href="{{ $beca->url_oficial }}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                     {{ __('Visitar sitio oficial') }} →
+                </a>
+            @endif
+            <a href="{{ route('becas.index') }}" class="btn-outline">
+                ← {{ __('Volver a la lista de becas') }}
+            </a>
+        </div>
+    </div>
 </x-layout>

@@ -11,7 +11,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if (file_exists(app_path('helpers.php'))) {
+            require_once app_path('helpers.php');
+        }
+
+        $this->app->singleton(\App\Services\TranslationService::class, function () {
+            return new \App\Services\TranslationService();
+        });
     }
 
     /**

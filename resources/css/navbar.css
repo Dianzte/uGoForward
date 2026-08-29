@@ -295,3 +295,40 @@ a {
 .mobile-menu.open { display: flex; }
 .mobile-menu a { color: var(--text-2); font-size: 1rem; font-weight: 500; padding: 0.4rem 0; }
 .mobile-menu .btn-primary { width: fit-content; margin-top: 0.5rem; }
+
+/* === LANGUAGE SWITCHER === */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 200, 255, 0.15);
+  border-radius: 100px;
+  padding: 4px 10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.lang-btn {
+  color: var(--text-2);
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.lang-btn:hover {
+  color: var(--white);
+}
+
+.lang-btn.active {
+  color: var(--gold);
+  background: rgba(232, 200, 71, 0.15);
+}
+
+.lang-divider {
+  color: rgba(100, 200, 255, 0.25);
+  font-size: 0.75rem;
+}

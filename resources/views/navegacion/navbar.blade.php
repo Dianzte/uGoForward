@@ -11,21 +11,28 @@
           </a>
 
           <ul class="nav-links">
-              <li><a href="{{ route('index') }}">Home</a></li>
-              <li><a href="{{ route('becas.index') }}">Lista de becas</a></li>
-              <li><a href="{{ route('foro.index') }}">Foro estudiantil</a></li>
+              <li><a href="{{ route('index') }}">{{ __('Home') }}</a></li>
+              <li><a href="{{ route('becas.index') }}">{{ __('Lista de becas') }}</a></li>
+              <li><a href="{{ route('foro.index') }}">{{ __('Foro estudiantil') }}</a></li>
           </ul>
 
           <div class="nav-actions">
+              <!-- Selector de Idioma -->
+              <div class="lang-switcher">
+                  <a href="{{ route('lang.switch', 'es') }}" class="lang-btn {{ app()->getLocale() === 'es' ? 'active' : '' }}" title="Español">ES</a>
+                  <span class="lang-divider">/</span>
+                  <a href="{{ route('lang.switch', 'en') }}" class="lang-btn {{ app()->getLocale() === 'en' ? 'active' : '' }}" title="English">EN</a>
+              </div>
+
               @auth
                   <!-- Nombre de Usuario -->
                   <span class="user-name" style="color: #fff; font-weight: 600; font-size: 0.95rem; margin-right: 8px;">
-                      Hola, {{ Auth::user()->usuario }}
+                      {{ __('Hola') }}, {{ Auth::user()->usuario }}
                   </span>
 
                   <!-- Menú desplegable -->
                   <div class="user-menu" id="userMenu">
-                      <button type="button" class="user-menu-btn" id="userMenuBtn" title="Menú de cuenta"
+                      <button type="button" class="user-menu-btn" id="userMenuBtn" title="{{ __('Menú de cuenta') }}"
                           aria-haspopup="true" aria-expanded="false">
                           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -42,7 +49,7 @@
                                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                                   <circle cx="12" cy="7" r="4" />
                               </svg>
-                              Perfil
+                              {{ __('Perfil') }}
                           </a>
                           <form action="{{ route('logout') }}" method="POST" class="user-dropdown-item-form">
                               @csrf
@@ -53,15 +60,15 @@
                                       <polyline points="16 17 21 12 16 7" />
                                       <line x1="21" y1="12" x2="9" y2="12" />
                                   </svg>
-                                  Cerrar sesión
+                                  {{ __('Cerrar sesión') }}
                               </button>
                           </form>
                       </div>
                   </div>
               @else
                   <!-- Invitado -->
-                  <a href="{{ route('registro') }}" class="btn-ghost">Registrarse</a>
-                  <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
+                  <a href="{{ route('registro') }}" class="btn-ghost">{{ __('Registrarse') }}</a>
+                  <a href="{{ route('login') }}" class="btn-primary">{{ __('Iniciar sesión') }}</a>
               @endauth
           </div>
 
@@ -70,27 +77,33 @@
           </button>
       </div>
 
-      <!-- Menú móvil (Estructura corregida) -->
+      <!-- Menú móvil -->
       <div class="mobile-menu" id="mobileMenu">
-          <a href="#servicios">Servicios</a>
-          <a href="#universidades">Universidades</a>
-          <a href="#nosotros">Nosotros</a>
+          <div class="lang-switcher mobile-lang" style="display: inline-flex; margin-bottom: 12px;">
+              <a href="{{ route('lang.switch', 'es') }}" class="lang-btn {{ app()->getLocale() === 'es' ? 'active' : '' }}">ES</a>
+              <span class="lang-divider">/</span>
+              <a href="{{ route('lang.switch', 'en') }}" class="lang-btn {{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+          </div>
+          <a href="{{ route('index') }}#servicios">{{ __('Servicios') }}</a>
+          <a href="{{ route('index') }}#universidades">{{ __('Universidades') }}</a>
+          <a href="{{ route('becas.index') }}">{{ __('Lista de becas') }}</a>
+          <a href="{{ route('foro.index') }}">{{ __('Foro estudiantil') }}</a>
           @auth
               <span style="color: var(--gold, #e8c847); padding: 0.4rem 0; font-weight: 600;">
-                  Hola, {{ Auth::user()->usuario }}
+                  {{ __('Hola') }}, {{ Auth::user()->usuario }}
               </span>
-              <a href="{{ route('perfil') }}" class="user-dropdown-item">Perfil</a>
+              <a href="{{ route('perfil') }}" class="user-dropdown-item">{{ __('Perfil') }}</a>
               <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                   @csrf
                   <button type="submit"
                       style="color:red; background:none; border:none; padding: 0.4rem 0; cursor: pointer; font-weight: 600;">
-                      Cerrar sesión
+                      {{ __('Cerrar sesión') }}
                   </button>
               </form>
           @else
               <a href="{{ route('registro') }}" class="btn-ghost"
-                  style="display: block; margin-bottom: 8px;">Registrarse</a>
-              <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
+                  style="display: block; margin-bottom: 8px;">{{ __('Registrarse') }}</a>
+              <a href="{{ route('login') }}" class="btn-primary">{{ __('Iniciar sesión') }}</a>
           @endauth
       </div>
   </nav>

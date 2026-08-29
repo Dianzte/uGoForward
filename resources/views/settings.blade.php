@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil de {{ Auth::user()->usuario }} — UGF</title>
+  <title>{{ __('Profile of') }} {{ Auth::user()->usuario }} — UGF</title>
   <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,11 +42,11 @@
 
     <!-- BANNER -->
 <div class="profile-banner" id="profileBanner" style="{{ auth()->user()->bannerImg ? 'background-image: url(' . asset('storage/' . auth()->user()->bannerImg->ruta) . ')' : '' }}">      <div class="profile-banner-overlay"></div>
-      <label class="profile-banner-edit" title="Cambiar banner" for="bannerInput">
+      <label class="profile-banner-edit" title="{{ __('Change banner') }}" for="bannerInput">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
         </svg>
-        Cambiar banner
+        {{ __('Change banner') }}
         <input type="file" name="banner" id="bannerInput" accept="image/*" style="display: none;">
       </label>
     </div>
@@ -59,7 +59,7 @@
         @else
           <img src="#" alt="Avatar" class="profile-avatar" id="avatarPreview">
         @endif
-        <label class="profile-avatar-edit" title="Cambiar foto de perfil" for="avatarInput">
+        <label class="profile-avatar-edit" title="{{ __('Change profile picture') }}" for="avatarInput">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
           </svg>
@@ -70,10 +70,10 @@
       <div class="profile-identity">
         <h1>{{ Auth::user()->nombre ?: Auth::user()->usuario }}</h1>
         <p class="profile-handle"><span>@</span>{{ Auth::user()->usuario }}</p>
-        <p class="profile-bio" id="bioDisplay">{{ Auth::user()->bio ?: 'Aún no has escrito una biografía.' }}</p>
+        <p class="profile-bio" id="bioDisplay">{{ Auth::user()->bio ?: __('You have not written a biography yet.') }}</p>
       </div>
 
-      <button type="button" class="btn-outline profile-edit-toggle" id="editProfileBtn">Editar perfil</button>
+      <button type="button" class="btn-outline profile-edit-toggle" id="editProfileBtn">{{ __('Edit profile') }}</button>
     </div>
 
     <!-- CONTENIDO PRINCIPAL -->
@@ -85,8 +85,8 @@
           <div class="profile-level">
             <span class="profile-level-badge">{{ $porcentaje }}%</span>
             <div>
-              <h4>Perfil de becario</h4>
-              <span class="profile-level-sub">Completa tu perfil para destacar</span>
+              <h4>{{ __('Scholarship Profile') }}</h4>
+              <span class="profile-level-sub">{{ __('Complete your profile to stand out') }}</span>
             </div>
           </div>
           <div class="profile-progress">
@@ -95,11 +95,11 @@
         </div>
 
         <div class="profile-card">
-          <h4 class="profile-card-title">Información</h4>
+          <h4 class="profile-card-title">{{ __('Information') }}</h4>
           <ul class="profile-info-list">
-            <li><span>Departamento</span><strong>{{ Auth::user()->departamento ?: '—' }}</strong></li>
-            <li><span>Correo</span><strong>{{ Auth::user()->correo ?? Auth::user()->email }}</strong></li>
-            <li><span>Miembro desde</span><strong>{{ Auth::user()->created_at?->format('M Y') ?? '—' }}</strong></li>
+            <li><span>{{ __('Department') }}</span><strong>{{ Auth::user()->departamento ?: '—' }}</strong></li>
+            <li><span>{{ __('Email') }}</span><strong>{{ Auth::user()->correo ?? Auth::user()->email }}</strong></li>
+            <li><span>{{ __('Member since') }}</span><strong>{{ Auth::user()->created_at?->format('M Y') ?? '—' }}</strong></li>
           </ul>
         </div>
       </aside>
@@ -110,42 +110,42 @@
         <!-- VISTA MODO LECTURA -->
         <div id="profileView">
           <div class="profile-section">
-            <h3>Universidades de interés</h3>
-            <div class="profile-empty">Aún no has guardado universidades. Explóralas desde el mapa de inicio.</div>
+            <h3>{{ __('Universities of Interest') }}</h3>
+            <div class="profile-empty">{{ __('You have not saved any universities yet. Explore them from the home map.') }}</div>
           </div>
           <div class="profile-section">
-            <h3>Becas guardadas</h3>
-            <div class="profile-empty">No tienes becas guardadas todavía.</div>
+            <h3>{{ __('Saved Scholarships') }}</h3>
+            <div class="profile-empty">{{ __('You do not have any saved scholarships yet.') }}</div>
           </div>
           <div class="profile-section">
-            <h3>Actividad reciente</h3>
-            <div class="profile-empty">Tu actividad reciente aparecerá aquí.</div>
+            <h3>{{ __('Recent Activity') }}</h3>
+            <div class="profile-empty">{{ __('Your recent activity will appear here.') }}</div>
           </div>
         </div>
 
         <!-- VISTA MODO EDICIÓN -->
         <div id="profileEdit" class="profile-section" style="display:none;">
-          <h3>Editar perfil</h3>
+          <h3>{{ __('Edit profile') }}</h3>
 
           <div class="profile-field">
-            <label>Usuario</label>
+            <label>{{ __('Username') }}</label>
             <input type="text" value="{{ Auth::user()->usuario }}" disabled>
           </div>
 
           <div class="profile-field">
-            <label>Correo electrónico</label>
+            <label>{{ __('Email') }}</label>
             <input type="email" value="{{ Auth::user()->correo ?? Auth::user()->email }}" disabled>
           </div>
 
           <div class="profile-field">
-            <label>Nombre completo</label>
+            <label>{{ __('Full Name') }}</label>
             <input type="text" name="nombre" value="{{ old('nombre', Auth::user()->nombre) }}" required>
           </div>
 
           <div class="profile-field">
-            <label>Departamento</label>
+            <label>{{ __('Department') }}</label>
             <select name="departamento" required>
-              <option value="" disabled {{ !Auth::user()->departamento ? 'selected' : '' }}>Selecciona tu departamento</option>
+              <option value="" disabled {{ !Auth::user()->departamento ? 'selected' : '' }}>{{ __('Select your department') }}</option>
               @foreach($deptos as $d)
                 <option value="{{ $d }}" {{ old('departamento', Auth::user()->departamento) == $d ? 'selected' : '' }}>{{ $d }}</option>
               @endforeach
@@ -153,18 +153,18 @@
           </div>
 
           <div class="profile-field">
-            <label>Biografía</label>
-            <textarea name="bio" rows="3" maxlength="160" placeholder="Cuéntanos algo sobre ti...">{{ old('bio', Auth::user()->bio) }}</textarea>
+            <label>{{ __('Biography') }}</label>
+            <textarea name="bio" rows="3" maxlength="160" placeholder="{{ __('Tell us about yourself...') }}">{{ old('bio', Auth::user()->bio) }}</textarea>
           </div>
 
           <div class="profile-field">
-            <label>Nueva contraseña <span class="profile-field-hint">(opcional)</span></label>
+            <label>{{ __('New Password') }} <span class="profile-field-hint">{{ __('(optional)') }}</span></label>
             <input type="password" name="contrasena" placeholder="••••••••">
           </div>
 
           <div class="profile-form-actions">
-            <button type="submit" class="btn-primary">Guardar cambios</button>
-            <button type="button" class="btn-ghost" id="cancelEditBtn">Cancelar</button>
+            <button type="submit" class="btn-primary">{{ __('Save changes') }}</button>
+            <button type="button" class="btn-ghost" id="cancelEditBtn">{{ __('Cancel') }}</button>
           </div>
         </div>
 
@@ -179,17 +179,22 @@
   const viewBlock  = document.getElementById('profileView');
   const editBlock  = document.getElementById('profileEdit');
 
+  const editBtnTexts = {
+    view: '{{ __('Edit profile') }}',
+    edit: '{{ __('Viewing profile') }}'
+  };
+
   function openEdit() {
     viewBlock.style.display = 'none';
     editBlock.style.display = 'block';
-    editBtn.textContent = 'Viendo perfil';
+    editBtn.textContent = editBtnTexts.edit;
     editBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function closeEdit() {
     viewBlock.style.display = 'block';
     editBlock.style.display = 'none';
-    editBtn.textContent = 'Editar perfil';
+    editBtn.textContent = editBtnTexts.view;
   }
 
   editBtn.addEventListener('click', () => {

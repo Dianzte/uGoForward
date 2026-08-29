@@ -105,11 +105,8 @@ class AuthController extends Controller
         }
 
         $validated = $request->validate([
-            'usuario' => ['required', 'string', 'max:255', 'unique:users,usuario'], // <-- AGREGAR ESTA LÍNEA
             'nombre' => ['required', 'string', 'max:255'],
-             'correo' => ['required', 'string', 'email', 'max:255', 'unique:users,correo'],
             'departamento' => ['required', 'string', 'max:255'],
-              'fechaNac' => ['required', 'date'],
             'contrasena' => ['nullable', 'string', 'min:8'],
              'nie' => ['nullable', 'string', 'max:20'],
             'dui' => ['nullable', 'string', 'max:20'],

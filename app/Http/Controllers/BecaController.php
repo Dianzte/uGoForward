@@ -9,6 +9,7 @@ use App\Models\Condicion;
 use App\Models\Imagen;
 use App\Models\Universidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class BecaController extends Controller
 {
@@ -17,7 +18,7 @@ class BecaController extends Controller
      */
     public function index()
     {
-       $becas = Beca::latest()->paginate(12);
+       $becas = Beca::whereDate('vencimiento', '>=', Carbon::today())->latest()->paginate(12);
        $universidades =  Universidad::get();
 
        return view('becas.index', compact('becas', 'universidades'));
@@ -113,6 +114,7 @@ class BecaController extends Controller
             'vencimiento' => $data['vencimiento'],
             'ayuda_id' => $data['ayuda_id'],
             'imagen_id' => $imagenId,
+            'url_oficial' => $data['url_oficial'] ?? null,
         ]);
 
         return redirect()->route('becas.index')->with('success', 'Beca e imágenes guardadas.');
