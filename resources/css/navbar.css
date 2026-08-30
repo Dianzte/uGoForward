@@ -187,3 +187,129 @@ a {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(232,200,71,0.35);
 }
+
+/* ======================================================
+   DARK MODE OVERRIDES — Navbar
+   ====================================================== */
+.dark #navbar {
+  background: rgba(2, 6, 23, 0.92);
+  border-bottom-color: rgba(99, 102, 241, 0.12);
+}
+
+.dark #navbar.scrolled {
+  background: rgba(2, 6, 23, 0.97);
+  border-bottom-color: rgba(99, 102, 241, 0.15);
+}
+
+.dark .nav-links a {
+  color: #94a3b8;
+}
+
+.dark .nav-links a:hover {
+  color: #f1f5f9;
+}
+
+.dark .btn-ghost {
+  color: #94a3b8;
+}
+
+.dark .btn-ghost:hover {
+  color: #f1f5f9;
+}
+
+.dark .mobile-menu {
+  background: rgba(2, 6, 23, 0.98);
+  border-top-color: rgba(99, 102, 241, 0.08);
+}
+
+.dark .mobile-menu a {
+  color: #94a3b8;
+}
+
+/* ======================================================
+   BOTÓN TOGGLE DARK/LIGHT — Sol & Luna
+   ====================================================== */
+.theme-toggle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(100, 200, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(232, 200, 71, 0.4);
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(232, 200, 71, 0.25);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+  position: absolute;
+}
+
+/* Ícono Sol */
+.theme-toggle .icon-sun {
+  color: #e8c847;
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Ícono Luna */
+.theme-toggle .icon-moon {
+  color: #94a3b8;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+/* En modo oscuro: mostrar luna, ocultar sol */
+.dark .theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+.dark .theme-toggle .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  color: #c7d2fe;
+}
+
+.dark .theme-toggle {
+  border-color: rgba(99, 102, 241, 0.3);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.dark .theme-toggle:hover {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Responsive — mostrar toggle también en mobile */
+@media (max-width: 768px) {
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+}

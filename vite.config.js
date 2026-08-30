@@ -14,7 +14,11 @@ export default defineConfig({
                 'resources/css/navbar.css',
                 
                 'resources/css/foro/index.css',
-                'resources/css/foro/create.css'
+                'resources/css/foro/create.css',
+
+                // ── Student Hub ──
+                'resources/css/hub/hub.css',
+                'resources/js/hub-chat.js',
             ],
             refresh: true,
             fonts: [
