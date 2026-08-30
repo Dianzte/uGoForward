@@ -1,41 +1,41 @@
 /* ================================================================
    STUDENT HUB — Design System
-   Paleta: Oscuro profundo + violeta/índigo + acentos cian
+   Paleta: Azules, Dorados, Verdes (Tema Moderno y Amigable)
    ================================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 /* ── Variables de diseño ─────────────────────────────────────── */
 :root {
-  /* Colores base */
-  --hub-bg:           #080B14;
-  --hub-surface:      #0D1117;
-  --hub-surface-2:    #111827;
-  --hub-surface-3:    #1a2234;
-  --hub-border:       rgba(139, 92, 246, 0.15);
-  --hub-border-hover: rgba(139, 92, 246, 0.4);
+  /* Colores base - Tonos azul marino/grisáceo para amabilidad y modernidad */
+  --hub-bg:           #0B1120;
+  --hub-surface:      #111827;
+  --hub-surface-2:    #1E293B;
+  --hub-surface-3:    #334155;
+  --hub-border:       rgba(59, 130, 246, 0.2);
+  --hub-border-hover: rgba(59, 130, 246, 0.5);
 
-  /* Acentos */
-  --hub-violet:       #7C3AED;
-  --hub-violet-light: #8B5CF6;
-  --hub-violet-glow:  rgba(124, 58, 237, 0.25);
-  --hub-indigo:       #4F46E5;
-  --hub-cyan:         #06B6D4;
-  --hub-cyan-glow:    rgba(6, 182, 212, 0.2);
-  --hub-pink:         #EC4899;
+  /* Acentos (Se mantienen los nombres originales por compatibilidad) */
+  --hub-violet:       #3B82F6; /* Azul primario */
+  --hub-violet-light: #60A5FA; /* Azul claro */
+  --hub-violet-glow:  rgba(59, 130, 246, 0.25);
+  --hub-indigo:       #F59E0B; /* Dorado/Ámbar */
+  --hub-cyan:         #10B981; /* Verde esmeralda */
+  --hub-cyan-glow:    rgba(16, 185, 129, 0.2);
+  --hub-pink:         #0EA5E9; /* Cyan/Sky Blue secundario */
 
   /* Texto */
-  --hub-text:         #E2E8F0;
-  --hub-text-muted:   #64748B;
-  --hub-text-sub:     #94A3B8;
+  --hub-text:         #F8FAFC;
+  --hub-text-muted:   #94A3B8;
+  --hub-text-sub:     #CBD5E1;
 
   /* Sidebar */
   --hub-sidebar-w:    260px;
   --hub-header-h:     64px;
 
   /* Sombras y efectos */
-  --hub-shadow-card:  0 4px 24px rgba(0,0,0,0.5);
-  --hub-shadow-glow:  0 0 20px rgba(124, 58, 237, 0.3);
+  --hub-shadow-card:  0 4px 24px rgba(0,0,0,0.4);
+  --hub-shadow-glow:  0 0 20px rgba(59, 130, 246, 0.3);
   --hub-radius:       14px;
   --hub-radius-sm:    8px;
 }
