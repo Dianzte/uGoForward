@@ -19,6 +19,8 @@ class CondicionSeeder extends Seeder
             ['nombre' => 'Buena conducta'],
             ['nombre' => 'Participación en actividades extracurriculares'],
             ['nombre' => 'Asistencia regular a clases'],
+            ['nombre' => 'Sin restricciones'],
+            ['nombre' => 'Otro']
         ];
 
         foreach ($condiciones as $Condicion) {

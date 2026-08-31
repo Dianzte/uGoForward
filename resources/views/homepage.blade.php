@@ -9,6 +9,35 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <script>
+    window.mapLocale = '{{ app()->getLocale() }}';
+    window.mapTranslations = {
+      /* --- modal chrome --- */
+      university:          '{{ __("university") }}',
+      universities:        '{{ __("universities") }}',
+      withScholarships:    '{{ __("con becas") }}',
+      department:          '{{ __("Departamento") }}',
+      elSalvador:          '{{ __("El Salvador") }}',
+      constructionInfo:    '{{ __("Información en construcción") }}',
+      incomingUniversities:'{{ __("Próximamente agregaremos las universidades de") }}',
+      workingOnIt:         '{{ __("¡Estamos trabajando en ello!") }}',
+      universitiesLoaded:  '{{ __("universidades cargadas") }}',
+      /* --- card tabs --- */
+      tabCareers:   '{{ __("Carreras") }}',
+      tabSchedule:  '{{ __("Horarios") }}',
+      tabServices:  '{{ __("Servicios") }}',
+      tabScholarship: '{{ __("Beca Info") }}',
+      /* --- schedule table headers --- */
+      thDays:    '{{ __("Días") }}',
+      thShift:   '{{ __("Turno") }}',
+      thHours:   '{{ __("Horario") }}',
+      /* --- card footer --- */
+      officialSite:       '{{ __("Sitio oficial") }}',
+      scholarshipCalendar:'{{ __("Ver Calendario de Becas") }}',
+      photoLabel: '{{ __("Foto") }}',
+      videoLabel: '{{ __("Video") }}',
+    };
+  </script>
   @vite(['resources/css/homepage.css', 'resources/js/homepage.js' ,'resources/css/app.css'])
 
 </head>
@@ -35,7 +64,7 @@
 
   <!-- SHIP ELEMENT (DOM, rides on waves) -->
   <div id="shipWrapper">
-    <div class="ship-speech-bubble">⛵ ¡Navega hacia tu futuro!</div>
+    <div class="ship-speech-bubble">⛵ {{ __('¡Navega hacia tu futuro!') }}</div>
     <div id="ship">
       <div class="ship-sail sail-main"></div>
       <div class="ship-sail sail-small"></div>
@@ -202,15 +231,15 @@
           <div class="beca-card-3d" data-category="urgentes pregrado stem">
             <div>
               <div class="beca-header-row">
-                <span class="beca-tag beca-tag-urgente">{{ __('Imminent Closure') }}</span>
-                <span class="beca-days-badge">🔥 {{ __('5 days remaining') }}</span>
+                <span class="beca-tag beca-tag-urgente">{{ __('Cierre Inminente') }}</span>
+                <span class="beca-days-badge">🔥 {{ __('5 días restantes') }}</span>
               </div>
-              <h3 class="beca-card-title">Beca Excelencia UCA 2026</h3>
-              <p class="beca-card-desc">{{ __('Comprehensive financial support program for outstanding youth in engineering and social sciences careers.') }}</p>
+              <h3 class="beca-card-title">{{ __('Beca Excelencia UCA 2026') }}</h3>
+              <p class="beca-card-desc">{{ __('Programa integral de apoyo financiero para jóvenes destacados en carreras de ingeniería y ciencias sociales.') }}</p>
             </div>
             <div class="beca-card-footer">
-              <span class="beca-univ-name">🏫 Universidad Centroamericana (UCA)</span>
-              <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.4rem 0.9rem; font-size:0.8rem;">Ver Fecha →</a>
+              <span class="beca-univ-name">🏫 {{ __('Universidad Centroamericana (UCA)') }}</span>
+              <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.4rem 0.9rem; font-size:0.8rem;">{{ __('Ver Fecha →') }}</a>
             </div>
           </div>
 
@@ -321,24 +350,24 @@
 
           <div class="social-post-card">
             <div class="social-post-user">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="User">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="{{ __('Usuario') }}">
               <div>
                 <strong style="color:#fff; font-size:0.85rem; block;">Sofía Martínez</strong>
-                <span style="font-size:0.72rem; color:var(--teal);">Aspirante a Ing. Química — UCA</span>
+                <span style="font-size:0.72rem; color:var(--teal);">{{ __('Aspirante a Ing. Química — UCA') }}</span>
               </div>
             </div>
-            <p class="social-post-text">"¿Alguien más aplicando a la Beca Excelencia UCA 2026? Organicemos un grupo de estudio virtual este fin de semana. 📚✨"</p>
+            <p class="social-post-text">"{{ __('¿Alguien más aplicando a la Beca Excelencia UCA 2026? Organicemos un grupo de estudio virtual este fin de semana. 📚✨') }}"</p>
           </div>
 
           <div class="social-post-card">
             <div class="social-post-user">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="User">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="{{ __('Usuario') }}">
               <div>
                 <strong style="color:#fff; font-size:0.85rem; block;">Mateo Hernández</strong>
-                <span style="font-size:0.72rem; color:var(--gold);">Estudiante UES — San Miguel</span>
+                <span style="font-size:0.72rem; color:var(--gold);">{{ __('Estudiante UES — San Miguel') }}</span>
               </div>
             </div>
-            <p class="social-post-text">"¡Les confirmo que ya abrieron la recepción de documentos para las becas en la sede oriental de la UES! Revisen el calendario. 🎉"</p>
+            <p class="social-post-text">"{{ __('¡Les confirmo que ya abrieron la recepción de documentos para las becas en la sede oriental de la UES! Revisen el calendario. 🎉') }}"</p>
           </div>
         </div>
       </div>
@@ -358,9 +387,9 @@
       <div class="map-wrapper" data-reveal>
         <!-- Hover Tooltip -->
         <div class="map-tooltip" id="mapTooltip">
-          <strong id="tooltipName">Departamento</strong>
+          <strong id="tooltipName">{{ __('Departamento') }}</strong>
           <span class="tooltip-unis" id="tooltipUnis">
-            <span>🎓</span><span id="tooltipUnisText">— universidades</span>
+            <span>🎓</span><span id="tooltipUnisText">— {{ __('universidades') }}</span>
           </span>
           <span class="tooltip-click-hint">{{ __('👆 Haz clic para ver detalles') }}</span>
         </div>
@@ -407,25 +436,70 @@
   </section>
 
   <!-- ====== MODAL PREMIUM DE UNIVERSIDADES POR DEPARTAMENTO ====== -->
-  <div class="map-modal-overlay" id="mapModalOverlay">
-    <div class="map-modal" id="mapModal">
-      <!-- Header del departamento -->
-      <div class="modal-dept-header">
-        <div>
-          <h2 class="modal-dept-name" id="modalDeptName">Departamento</h2>
-          <div class="modal-dept-meta">
-            <span class="modal-dept-tag" id="modalDeptUniCount">0 universidades</span>
-            <span class="modal-dept-tag" style="background:rgba(232,200,71,0.12); border-color:rgba(232,200,71,0.3); color:var(--gold);" id="modalDeptRegion">El Salvador</span>
-          </div>
+<div class="map-modal-overlay" id="mapModalOverlay">
+  <div class="map-modal" id="mapModal">
+    <!-- Header del departamento -->
+    <div class="modal-dept-header">
+      <div>
+        <h2 class="modal-dept-name" id="modalDeptName">{{ __('Departamento') }}</h2>
+        <div class="modal-dept-meta">
+          <span class="modal-dept-tag" id="modalDeptUniCount">0 {{ __('universidades') }}</span>
+          <span class="modal-dept-tag" style="background:rgba(232,200,71,0.12); border-color:rgba(232,200,71,0.3); color:var(--gold);" id="modalDeptRegion">El Salvador</span>
         </div>
-        <button class="modal-close-btn" id="mapModalClose" aria-label="Cerrar">✕</button>
       </div>
-      <!-- Cards de universidades (generadas por JS) -->
-      <div class="modal-body" id="mapModalBody">
-        <!-- se llena dinámicamente -->
-      </div>
+      <button class="modal-close-btn" id="mapModalClose" aria-label="{{ __('Cerrar') }}">✕</button>
+    </div>
+    <!-- Cards de universidades (generadas por JS) -->
+    <div class="modal-body" id="mapModalBody">
+      <!-- Se llena dinámicamente -->
     </div>
   </div>
+</div>
+
+<!-- SVGs con traducciones en los Data Attributes -->
+<g id="features">
+  <path class="dept cursor-pointer" 
+        data-name="{{ __('Santa Ana') }}" 
+        data-unis="4" 
+        data-desc="UNASA, UNICO, Galileo, UCO" 
+        data-universities='[
+          {
+            "name": "UNASA",
+            "image": "https://campussostenible.unasa.edu.sv/images/UNASA2024/UNASA_SUR_2024.jpg",
+            "description": "{{ __('Universidad Autónoma de Santa Ana.') }}",
+            "careers": "{{ __('Medicina, Enfermería, Laboratorio Clínico.') }}",
+            "website": "https://www.unasa.edu.sv"
+          },
+          {
+            "name": "Universidad Católica de Occidente",
+            "image": "https://i.ytimg.com/vi/28XYWdg6QJw/hq720.jpg",
+            "description": "{{ __('Universidad privada.') }}",
+            "careers": "{{ __('Derecho, Ingeniería, Arquitectura.') }}",
+            "website": "https://www.uco.edu.sv"
+          }
+        ]' 
+        d="M194.1 232.6l7.5-25.9..." id="SVSA" name="Santa Ana"></path>
+</g>
+
+<!-- Pasar variables traducidas directamente a JS -->
+<script>
+  window.mapTranslations = {
+    careersLabel: "{{ __('Carreras disponibles:') }}",
+    visitWebsite: "{{ __('Visitar sitio web →') }}",
+    noUniversities: "{{ __('No hay información de universidades disponible para este departamento.') }}",
+    unisSuffix: "{{ __('universidades') }}",
+    constructionInfo: "{{ __('Construction Information') }}",
+    incomingUniversities: "{{ __('Incoming Universities') }}",
+    workingOnIt: "{{ __('We are working on it') }}",
+    universitiesLoaded: "{{ __('Universities Loaded') }}",
+    withActiveScholarships: "{{ __('with active scholarships') }}",
+    university: "{{ __('university') }}",
+    universities: "{{ __('universities') }}",
+    withScholarships: "{{ __('with scholarships') }}",
+    elSalvador: "{{ __('El Salvador') }}",
+    department: "{{ __('Department') }}"
+  };
+</script>
 
        
  <g id="features">
@@ -562,60 +636,60 @@
 
   <!-- BITÁCORA DE NAVEGANTES (Testimonios Slider) -->
   <section class="section-testimonios" id="testimonios">
-    <div class="container">
-      <div class="section-header" data-reveal>
-        <span class="section-tag">{{ __('Navigator Log') }}</span>
-        <h2>{{ __('Students who have reached the shore') }}</h2>
-        <p>{{ __('Real stories of Salvadoran youth who transformed their future with a university scholarship.') }}</p>
-      </div>
-
-      <div class="testimonios-grid">
-        
-        <div class="bitacora-card" data-reveal>
-          <div class="captain-info">
-            <div class="captain-avatar-box">
-              <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.30-PM-1024x682.jpeg" alt="Jose Alejandro Hernández Grijalva" class="captain-avatar">
-            </div>
-            <div>
-              <h4 class="captain-name">José Alejandro Hernández Grijalva</h4>
-              <span class="captain-univ">Becario del Programa Agrobecas (Universidad Zamorano)</span>
-            </div>
-          </div>
-          <p class="bitacora-quote">""Estoy profundamente agradecido con el Ministerio de Relaciones Exteriores y la Universidad Zamorano por esta oportunidad. Mi mayor motivación para estudiar agricultura es poder contribuir al desarrollo de mi familia y de mi país a través de la innovación, aprovechando la tierra para obtener los mejores frutos. Trabajar en el campo es un privilegio porque se trata con vida; los agrónomos y agricultores somos quienes alimentamos a la nación.""</p>
-          <span class="bitacora-badge">⭐ Becado 100% — Ahuachapán</span>
-        </div>
-
-        <div class="bitacora-card" data-reveal>
-          <div class="captain-info">
-            <div class="captain-avatar-box">
-              <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.31-PM-1023x1536.jpeg" alt="Emeris Adilene Castillo Guevara" class="captain-avatar">
-            </div>
-            <div>
-              <h4 class="captain-name">Emeris Adilene Castillo Guevara</h4>
-              <span class="captain-univ">Becaria del Programa Agrobecas (Universidad Zamorano)</span>
-            </div>
-          </div>
-          <p class="bitacora-quote">""Formar parte del Programa Agrobecas representa un paso decisivo hacia mi futuro profesional en el sector agrícola. Agradezco las gestiones para hacer posible que los jóvenes salvadoreños accedamos a una educación superior de excelencia en la Universidad Zamorano, comprometiéndome a aplicar cada conocimiento adquirido en favor del desarrollo y la seguridad alimentaria de nuestro país."</p>
-          <span class="bitacora-badge">⭐ Becaria Nacional — San Salvador</span>
-        </div>
-
-        <div class="bitacora-card" data-reveal>
-          <div class="captain-info">
-            <div class="captain-avatar-box">
-              <img src="https://rree.gob.sv/wp-content/uploads/2025/07/WhatsApp-Image-2025-07-30-at-1.25.47-PM-1024x628.jpeg" alt="Jovenes" class="captain-avatar">
-            </div>
-            <div>
-              <h4 class="captain-name">Programa de Agrobecas – Jóvenes Salvadoreños</h4>
-              <span class="captain-univ">Programa Agrobecas (Cancillería / ESCO / SETEFE)</span>
-            </div>
-          </div>
-          <p class="bitacora-quote">""Ser parte de esta iniciativa educativa nos compromete a dar nuestro máximo esfuerzo en la Universidad Zamorano. Este programa no solo abre las puertas a una formación profesional de excelencia, sino que nos motiva a regresar capacitados para responder a los desafíos agrícolas del país y transformar el desarrollo territorial de nuestras comunidades."</p>
-          <span class="bitacora-badge">⭐ (Cancillería / ESCO / SETEFE) — El Salvador</span>
-        </div>
-
-      </div>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-tag">{{ __('Navigator Log') }}</span>
+      <h2>{{ __('Students who have reached the shore') }}</h2>
+      <p>{{ __('Real stories of Salvadoran youth who transformed their future with a university scholarship.') }}</p>
     </div>
-  </section>
+
+    <div class="testimonios-grid">
+      
+      <div class="bitacora-card" data-reveal>
+        <div class="captain-info">
+          <div class="captain-avatar-box">
+            <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.30-PM-1024x682.jpeg" alt="{{ __('José Alejandro Hernández Grijalva') }}" class="captain-avatar">
+          </div>
+          <div>
+            <h4 class="captain-name">{{ __('José Alejandro Hernández Grijalva') }}</h4>
+            <span class="captain-univ">{{ __('Becario del Programa Agrobecas (Universidad Zamorano)') }}</span>
+          </div>
+        </div>
+        <p class="bitacora-quote">"{{ __('Estoy profundamente agradecido con el Ministerio de Relaciones Exteriores y la Universidad Zamorano por esta oportunidad. Mi mayor motivación para estudiar agricultura es poder contribuir al desarrollo de mi familia y de mi país a través de la innovación, aprovechando la tierra para obtener los mejores frutos. Trabajar en el campo es un privilegio porque se trata con vida; los agrónomos y agricultores somos quienes alimentamos a la nación.') }}"</p>
+        <span class="bitacora-badge">{{ __('⭐ Becado 100% — Ahuachapán') }}</span>
+      </div>
+
+      <div class="bitacora-card" data-reveal>
+        <div class="captain-info">
+          <div class="captain-avatar-box">
+            <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.31-PM-1023x1536.jpeg" alt="{{ __('Emeris Adilene Castillo Guevara') }}" class="captain-avatar">
+          </div>
+          <div>
+            <h4 class="captain-name">{{ __('Emeris Adilene Castillo Guevara') }}</h4>
+            <span class="captain-univ">{{ __('Becaria del Programa Agrobecas (Universidad Zamorano)') }}</span>
+          </div>
+        </div>
+        <p class="bitacora-quote">"{{ __('Formar parte del Programa Agrobecas representa un paso decisivo hacia mi futuro profesional en el sector agrícola. Agradezco las gestiones para hacer posible que los jóvenes salvadoreños accedamos a una educación superior de excelencia en la Universidad Zamorano, comprometiéndome a aplicar cada conocimiento adquirido en favor del desarrollo y la seguridad alimentaria de nuestro país.') }}"</p>
+        <span class="bitacora-badge">{{ __('⭐ Becaria Nacional — San Salvador') }}</span>
+      </div>
+
+      <div class="bitacora-card" data-reveal>
+        <div class="captain-info">
+          <div class="captain-avatar-box">
+            <img src="https://rree.gob.sv/wp-content/uploads/2025/07/WhatsApp-Image-2025-07-30-at-1.25.47-PM-1024x628.jpeg" alt="{{ __('Programa de Agrobecas – Jóvenes Salvadoreños') }}" class="captain-avatar">
+          </div>
+          <div>
+            <h4 class="captain-name">{{ __('Programa de Agrobecas – Jóvenes Salvadoreños') }}</h4>
+            <span class="captain-univ">{{ __('Programa Agrobecas (Cancillería / ESCO / SETEFE)') }}</span>
+          </div>
+        </div>
+        <p class="bitacora-quote">"{{ __('Ser parte de esta iniciativa educativa nos compromete a dar nuestro máximo esfuerzo en la Universidad Zamorano. Este programa no solo abre las puertas a una formación profesional de excelencia, sino que nos motiva a regresar capacitados para responder a los desafíos agrícolas del país y transformar el desarrollo territorial de nuestras comunidades.') }}"</p>
+        <span class="bitacora-badge">{{ __('⭐ (Cancillería / ESCO / SETEFE) — El Salvador') }}</span>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   <!-- MODAL MAPA -->
   <div id="uniModal" class="modal">

@@ -17,7 +17,7 @@ class CategoriasForoSeeder extends Seeder
          $categorias = [
             ['categorias' => 'experiencia' ],
             ['categorias' => 'opinion' ],
-            ['categorias' => 'metodos_estudio' ],
+            ['categorias' => 'estudio' ],
             ['categorias' => 'variado' ],
             
         ];

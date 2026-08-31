@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - UGF</title>
+    <title>{{ __('Registro') }} - UGF</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     @vite(['resources/css/Register.css', 'resources/js/script.js'])
@@ -12,7 +12,7 @@
   @include('navegacion.navbar')
 
 <canvas id="ocean"></canvas>
-<div id="hint">Haz clic en la luna para cambiar el día</div>
+<div id="hint">{{ __('Haz clic en la luna para cambiar el día') }}</div>
 
 <div class="scene">
   <div class="card-flipper" id="flipper">
@@ -20,15 +20,15 @@
     <div class="face face-front">
       <div class="panel-left">
         <div class="left-top">
-          <p class="eyebrow">Bienvenido a UGF</p>
-          <h1>Gracias por<br>visitar<br><em>UGF</em></h1>
+          <p class="eyebrow">{{ __('Bienvenido a UGF') }}</p>
+          <h1>{{ __('Gracias por') }}<br>{{ __('visitar') }}<br><em>UGF</em></h1>
           <div class="gold-bar"></div>
-          <p>Crea tu cuenta y accede a crear tu propia historia de éxito académico.</p>
+          <p>{{ __('Crea tu cuenta y accede a crear tu propia historia de éxito académico.') }}</p>
         </div>
         <div class="left-bottom">
           <div class="badge">
             <span class="badge-dot"></span>
-            Plataforma de preparación para becas
+            {{ __('Plataforma de preparación para becas') }}
           </div>
         </div>
         <div class="blob"></div>
@@ -36,8 +36,8 @@
 
       <div class="panel-right">
         <div class="form-head">
-          <h2>Registro</h2>
-          <p>¿Cómo deseas participar en UGF?</p>
+          <h2>{{ __('Registro') }}</h2>
+          <p>{{ __('¿Cómo deseas participar en UGF?') }}</p>
         </div>
 
         <div class="choice-grid">
@@ -50,32 +50,32 @@
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
             </div>
-            <h3>Registrarse</h3>
-            <p>Sumergete en esta experiencia, donde la esperanza y esfuerzo sobran</p>
+            <h3>{{ __('Registrarse') }}</h3>
+            <p>{{ __('Sumergete en esta experiencia, donde la esperanza y esfuerzo sobran') }}</p>
           </div>
         </div>
 
         <div class="arrow-hint">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          Selecciona una opción para continuar
+          {{ __('Selecciona una opción para continuar') }}
         </div>
 
-        <p class="login-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión aquí</a></p>
+        <p class="login-link">{{ __('¿Ya tienes cuenta?') }}<a href="{{ route('login') }}">{{ __('Inicia sesión aquí') }}</a></p>
       </div>
     </div>
 
     <div class="face face-back-right">
       <div class="panel-left">
         <div class="left-top">
-          <p class="eyebrow">Registro Usuario</p>
-          <h1>Sé parte<br>del<br><em>cambio</em></h1>
+          <p class="eyebrow">{{ __('Registro Usuario') }}</p>
+          <h1>{{ __('Sé parte') }}<br>{{ __('del') }}<br><em>{{ __('cambio') }}</em></h1>
           <div class="gold-bar"></div>
-          <p>Tu apoyo transforma vidas. Conecta con estudiantes con talento y abre puertas a su futuro.</p>
+          <p>{{ __('Tu apoyo transforma vidas. Conecta con estudiantes con talento y abre puertas a su futuro.') }}</p>
         </div>
         <div class="left-bottom">
           <div class="badge">
             <span class="badge-dot"></span>
-            Apoya el talento estudiantil
+            {{ __('Apoya el talento estudiantil') }}
           </div>
         </div>
         <div class="blob"></div>
@@ -84,18 +84,17 @@
       <div class="panel-form">
         <button type="button" class="btn-back" onclick="ocultarFormulario()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          Volver
+          {{ __('Volver') }}
         </button>
 
         <div class="tipo-badge">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-          Registrar cuenta
+          {{ __('Registrar cuenta') }}
         </div>
 
-        <h2>Crear cuenta</h2>
-        <p>Completa el formulario para registrarte</p>
+        <h2>{{ __('Crear cuenta') }}</h2>
+        <p>{{ __('Completa el formulario para registrarte') }}</p>
 
-       
         <form id="formRegistro" action="{{ route('registro.store') }}" method="POST">
           @csrf
 
@@ -110,39 +109,39 @@
           @endif
 
           <div class="field">
-            <label>Usuario</label>
-            <input type="text" name="usuario" placeholder="Ingresar usuario" value="{{ old('usuario') }}" required>
+            <label>{{ __('Usuario') }}</label>
+            <input type="text" name="usuario" placeholder="{{ __('Ingresar usuario') }}" value="{{ old('usuario') }}" required>
             @error('usuario')<span class="error-message">{{ $message }}</span>@enderror
           </div>
 
           <div class="field">
-            <label>Nombre completo</label>
-            <input type="text" name="nombre" placeholder="Ingrese su nombre" value="{{ old('nombre') }}" required>
+            <label>{{ __('Nombre completo') }}</label>
+            <input type="text" name="nombre" placeholder="{{ __('Ingrese su nombre') }}" value="{{ old('nombre') }}" required>
             @error('nombre')<span class="error-message">{{ $message }}</span>@enderror
           </div>
 
           <div class="field">
-            <label>Correo electrónico</label>
-            <input type="email" name="correo" placeholder="Ingrese su correo electrónico" value="{{ old('correo') }}" required>
+            <label>{{ __('Correo electrónico') }}</label>
+            <input type="email" name="correo" placeholder="{{ __('Ingrese su correo electrónico') }}" value="{{ old('correo') }}" required>
             @error('correo')<span class="error-message">{{ $message }}</span>@enderror
           </div>
 
           <div class="field">
-            <label>Contraseña</label>
-            <input type="password" name="contrasena" placeholder="Registrar su contraseña" required>
+            <label>{{ __('Contraseña') }}</label>
+            <input type="password" name="contrasena" placeholder="{{ __('Registrar su contraseña') }}" required>
             @error('contrasena')<span class="error-message">{{ $message }}</span>@enderror
           </div>
 
           <div class="field">
-            <label>Fecha de nacimiento</label>
+            <label>{{ __('Fecha de nacimiento') }}</label>
             <input type="date" id="fechaNac" name="fechaNac" value="{{ old('fechaNac') }}" required>
             @error('fechaNac')<span class="error-message">{{ $message }}</span>@enderror
           </div>
 
           <div class="field">
-            <label>Departamento</label>
+            <label>{{ __('Departamento') }}</label>
             <select name="departamento" required class="input-select">
-              <option value="">Seleccione su departamento</option>
+              <option value="">{{ __('Seleccione su departamento') }}</option>
               @php
                 $departamentos = ['Ahuachapán', 'Santa Ana', 'Sonsonate', 'Chalatenango', 'La Libertad', 'San Salvador', 'Cuscatlán', 'La Paz', 'Cabañas', 'San Vicente', 'Usulután', 'San Miguel', 'Morazán', 'La Unión'];
               @endphp
@@ -154,14 +153,13 @@
           </div>
 
           <div class="field" id="campoDocumento">
-            {{-- Se autocompleta mediante JavaScript con el evento change/DOMContentLoaded --}}
           </div>
 
-          <button type="submit" class="btn-login">Registrarse</button>
+          <button type="submit" class="btn-login">{{ __('Registrarse') }}</button>
         </form>
 
-        <div class="divider"><span>o</span></div>
-        <p class="register-link">¿Ya tienes cuenta?<a href="{{ route('login') }}">Inicia sesión</a></p>
+        <div class="divider"><span>{{ __('o') }}</span></div>
+        <p class="register-link">{{ __('¿Ya tienes cuenta?') }}<a href="{{ route('login') }}">{{ __('Inicia sesión') }}</a></p>
       </div>
     </div>
 
@@ -180,15 +178,13 @@
     document.addEventListener('DOMContentLoaded', mostrarFormulario);
   @endif
 
-  // Función corregida para calcular la edad exacta sin problemas de zona horaria
   function evaluarEdad() {
       let inputFecha = document.getElementById("fechaNac").value;
       if (!inputFecha) return;
 
-      // Dividimos el string "YYYY-MM-DD" directamente para evitar fallos de zona horaria UTC
       let partes = inputFecha.split('-');
       let anoNac = parseInt(partes[0], 10);
-      let mesNac = parseInt(partes[1], 10) - 1; // Los meses en JS van de 0 a 11
+      let mesNac = parseInt(partes[1], 10) - 1;
       let diaNac = parseInt(partes[2], 10);
 
       let fechaNacimiento = new Date(anoNac, mesNac, diaNac);
@@ -197,7 +193,6 @@
       let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
       let mesDiferencia = hoy.getMonth() - fechaNacimiento.getMonth();
 
-      // Ajuste si aún no ha cumplido años en el año actual
       if (mesDiferencia < 0 || (mesDiferencia === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
           edad--;
       }
@@ -205,28 +200,26 @@
       let campo = document.getElementById("campoDocumento");
 
       if (edad < 16) {
-          campo.innerHTML = "<p style='color:red; font-size:.85rem; font-weight:600; margin-top:.3rem;'>Debes tener al menos 16 años para registrarte.</p>";
+          campo.innerHTML = "<p style='color:red; font-size:.85rem; font-weight:600; margin-top:.3rem;'>{{ __('Debes tener al menos 16 años para registrarte.') }}</p>";
       }
       else if (edad >= 16 && edad < 18) {
           let oldNie = "{{ old('nie') }}";
           campo.innerHTML = `
-            <label>NIE</label>
-            <input type="text" name="nie" placeholder="Ingrese su NIE" value="${oldNie}" required>
+            <label>{{ __('NIE') }}</label>
+            <input type="text" name="nie" placeholder="{{ __('Ingrese su NIE') }}" value="${oldNie}" required>
           `;
       }
       else {
           let oldDui = "{{ old('dui') }}";
           campo.innerHTML = `
-            <label>DUI</label>
-            <input type="text" name="dui" placeholder="Ingrese su DUI" value="${oldDui}" required>
+            <label>{{ __('DUI') }}</label>
+            <input type="text" name="dui" placeholder="{{ __('Ingrese su DUI') }}" value="${oldDui}" required>
           `;
       }
   }
 
-  // Escuchar el evento de cambio de fecha
   document.getElementById("fechaNac").addEventListener("change", evaluarEdad);
 
-  // Evaluar automáticamente si la página se recarga o si viene un valor previo
   document.addEventListener('DOMContentLoaded', function() {
       evaluarEdad();
   });

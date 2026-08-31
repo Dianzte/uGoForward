@@ -114,8 +114,8 @@
             </div>
 
             <div class="form-group full">
-                <label for="imagenes">{{ __('Imagen') }}:</label>
-                <input type="file" id="imagenes" name="imagenes" accept="image/*" style="padding: 0.5rem;">
+                <label for="imagenes" class="btn-outline">{{ __('Imagen') }}:</label>
+                <input type="file" id="imagenes" name="imagenes" accept="image/*" style="padding: 0.5rem; display:none;" >
                 @error('imagen_id')
                     <span class="error-text">{{ $message }}</span>
                 @enderror
