@@ -91,11 +91,10 @@
         @endforelse
     </div>
 
-    @if (Auth::user() && Auth::user()->rol == 'padrino')
+   
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 30px;">
         <a href="{{ route('becas.create') }}" class="btn-outline"> {{ __('Sugerir beca') }}</a>
     </div>
-    @endif
 
     <div class="mt-4">
         {{ $becas->links('pagination::bootstrap-4') }}

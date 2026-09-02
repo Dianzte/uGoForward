@@ -11,14 +11,16 @@ class Beca extends Model
     use HasFactory;
     
     protected $fillable = [
-        'titulo', 'descripcion', 'universidad_id', 'carrera_id', 'condicion_id', 'vencimiento', 'imagen_id', 'ayuda_id',
-        'url_oficial', 'pais_destino', 'nivel_academico', 'modalidad', 'cobertura_resumen', 'requisitos', 'carreras_cobertura', 'cum_promedio_minimo', 'estado'
+        'titulo', 'titulo_en', 'descripcion', 'descripcion_en', 'universidad_id', 'carrera_id', 'condicion_id', 'vencimiento', 'imagen_id', 'ayuda_id',
+        'url_oficial', 'pais_destino', 'pais_destino_en', 'nivel_academico', 'nivel_academico_en', 'modalidad', 'modalidad_en', 'cobertura_resumen', 'cobertura_resumen_en', 'requisitos', 'requisitos_en', 'carreras_cobertura', 'carreras_cobertura_en', 'cum_promedio_minimo', 'estado'
     ];
 
     protected $casts = [
         'vencimiento' => 'date',
         'requisitos' => 'array',
+        'requisitos_en' => 'array',
         'carreras_cobertura' => 'array',
+        'carreras_cobertura_en' => 'array',
     ];
 
     public function universidad(): BelongsTo

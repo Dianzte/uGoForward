@@ -10,6 +10,7 @@ use App\Models\Imagen;
 use App\Models\Universidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class BecaController extends Controller
 {
@@ -105,9 +106,14 @@ class BecaController extends Controller
         }
 
 
+        $titulo_en = $this->translateText($data['titulo']);
+        $descripcion_en = $this->translateText($data['descripcion']);
+
         $beca = Beca::create([
             'titulo' => $data['titulo'],
+            'titulo_en' => $titulo_en,
             'descripcion' => $data['descripcion'],
+            'descripcion_en' => $descripcion_en,
             'universidad_id' => $data['universidad_id'],
             'carrera_id' => $data['carrera_id'],
             'condicion_id' => $data['condicion_id'],
@@ -115,9 +121,46 @@ class BecaController extends Controller
             'ayuda_id' => $data['ayuda_id'],
             'imagen_id' => $imagenId,
             'url_oficial' => $data['url_oficial'] ?? null,
+            // Translate other nullable fields if they were present in request
+            'pais_destino' => $request->pais_destino,
+            'pais_destino_en' => $request->pais_destino ? $this->translateText($request->pais_destino) : null,
+            'nivel_academico' => $request->nivel_academico,
+            'nivel_academico_en' => $request->nivel_academico ? $this->translateText($request->nivel_academico) : null,
+            'modalidad' => $request->modalidad ?? 'Presencial',
+            'modalidad_en' => $request->modalidad ? $this->translateText($request->modalidad) : 'In-person',
+            'cobertura_resumen' => $request->cobertura_resumen,
+            'cobertura_resumen_en' => $request->cobertura_resumen ? $this->translateText($request->cobertura_resumen) : null,
         ]);
 
-        return redirect()->route('becas.index')->with('success', 'Beca e imágenes guardadas.');
+        return redirect()->route('becas.index')->with('success', 'Beca e imágenes guardadas y traducidas exitosamente.');
+    }
+
+    private function translateText($text)
+    {
+        if (empty($text)) return null;
+        
+        try {
+            $response = Http::get('https://translate.googleapis.com/translate_a/single', [
+                'client' => 'gtx',
+                'sl' => 'es',
+                'tl' => 'en',
+                'dt' => 't',
+                'q' => $text
+            ]);
+            
+            $json = $response->json();
+            $translatedText = '';
+            if (isset($json[0]) && is_array($json[0])) {
+                foreach ($json[0] as $segment) {
+                    if (isset($segment[0])) {
+                        $translatedText .= $segment[0];
+                    }
+                }
+            }
+            return $translatedText ?: null;
+        } catch (\Exception $e) {
+            return null; // Fallback silently if translation fails
+        }
     }
 
     /**

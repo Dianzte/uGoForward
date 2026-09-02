@@ -1,31 +1,34 @@
 <?php
 
-use App\Services\TranslationService;
+use Illuminate\Support\Facades\Cache;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 if (!function_exists('translate_db')) {
-    /**
-     * Translates dynamic database text based on current locale.
-     */
-    function translate_db(?string $text, ?string $targetLocale = null, string $sourceLocale = 'es'): string
+    function translate_db($text)
     {
         if (empty($text)) {
-            return '';
+            return $text;
         }
 
-        return app(TranslationService::class)->translate($text, $targetLocale, $sourceLocale);
-    }
-}
+        $targetLocale = app()->getLocale();
 
-if (!function_exists('translate_array')) {
-    /**
-     * Translates an array of strings.
-     */
-    function translate_array(?array $items, ?string $targetLocale = null, string $sourceLocale = 'es'): array
-    {
-        if (empty($items)) {
-            return [];
-        }
+        // Si el locale es español (o default) por ejemplo, pero queremos asegurarnos
+        // de que se muestre en el idioma correcto, Stichoza puede detectar el origen
+        // automáticamente si pasamos 'null' como idioma de origen.
+        
+        $cacheKey = 'trans_' . md5($text) . '_' . $targetLocale;
 
-        return app(TranslationService::class)->translateArray($items, $targetLocale, $sourceLocale);
+        return Cache::rememberForever($cacheKey, function () use ($text, $targetLocale) {
+            try {
+                $tr = new GoogleTranslate();
+                // Origen detectado automáticamente, destino el locale actual
+                $tr->setSource(); 
+                $tr->setTarget($targetLocale);
+                return $tr->translate($text);
+            } catch (\Exception $e) {
+                // Si falla la traducción, retorna el texto original
+                return $text;
+            }
+        });
     }
 }
