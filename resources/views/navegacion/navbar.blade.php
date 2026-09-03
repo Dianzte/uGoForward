@@ -64,12 +64,7 @@
                       </div>
                   </div>
               @else
-                  <!-- Invitado -->
-                  <a href="{{ route('registro') }}" class="btn-ghost">Registrarse</a>
-                  <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
-              @endauth
-                  <a href="{{ route('hub.feed') }}" class="btn-ghost" style="display:inline-flex;align-items:center;gap:5px;">🎓 Mi Hub</a>
-              @else
+                  <!-- Enlaces visibles solo para invitados -->
                   <a href="{{ route('registro') }}" class="btn-ghost">Registrarse</a>
                   <a href="{{ route('login') }}" class="btn-primary">Iniciar sesión</a>
               @endauth
