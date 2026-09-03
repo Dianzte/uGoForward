@@ -48,6 +48,8 @@ class User extends Authenticatable
     public function bannerImg(): BelongsTo
     {
         return $this->belongsTo(Imagen::class, 'banner', 'id');
+    }
+
     // ── Relaciones del Student Hub ──────────────────────────────
     public function posts(): HasMany
     {
