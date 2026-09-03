@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,10 +15,10 @@
 <div class="rf-test-wrap">
 
   <div class="rf-test-header">
-    <h2>Test Socioemocional</h2>
-    <p>Responde con sinceridad. No hay respuestas correctas o incorrectas — solo queremos conocerte mejor.</p>
+    <h2>{{ __('Test Socioemocional') }}</h2>
+    <p>{{ __('Answer sincerely. There are no right or wrong answers — we just want to know you better.') }}</p>
     <div class="rf-test-progress-track"><div class="rf-test-progress-fill" id="rfProgressFill"></div></div>
-    <p class="rf-test-progress-label"><span id="rfProgressLabel">Pregunta 1 de 18</span></p>
+    <p class="rf-test-progress-label"><span id="rfProgressLabel">{{ __('Question 1 of 18') }}</span></p>
   </div>
 
   {{-- ============ FORMULARIO DEL TEST ============ --}}
@@ -27,33 +27,33 @@
 
     @php
       $preguntas = [
-        1 => '¿Disfrutas reparar o construir cosas con tus manos?',
-        2 => '¿Te interesa trabajar con herramientas, máquinas o vehículos?',
-        3 => '¿Prefieres actividades al aire libre en vez de estar en una oficina?',
-        4 => '¿Te gusta investigar por qué ocurren las cosas antes de actuar?',
-        5 => '¿Disfrutas resolver problemas lógicos o matemáticos?',
-        6 => '¿Te consideras una persona curiosa que hace muchas preguntas?',
-        7 => '¿Te gusta expresarte a través del arte, la música o la escritura?',
-        8 => '¿Prefieres tareas donde puedas ser original en lugar de seguir un manual?',
-        9 => '¿Disfrutas imaginar ideas o soluciones poco convencionales?',
-        10 => '¿Te motiva ayudar a otras personas a resolver sus problemas?',
-        11 => '¿Disfrutas enseñar, explicar o guiar a otros?',
-        12 => '¿Te consideras una persona empática que escucha bien a los demás?',
-        13 => '¿Te gusta convencer o influir en las decisiones de otras personas?',
-        14 => '¿Disfrutas liderar proyectos o tomar la iniciativa en grupo?',
-        15 => '¿Te sientes cómodo tomando decisiones bajo presión?',
-        16 => '¿Prefieres seguir procesos claros y ordenados?',
-        17 => '¿Te gusta organizar información, datos o archivos?',
-        18 => '¿Disfrutas revisar detalles para asegurarte de que todo esté correcto?',
+            1 => __('¿Disfrutas reparar o construir cosas con tus manos?'),
+            2 => __('¿Te interesa trabajar con herramientas, máquinas o vehículos?'),
+            3 => __('¿Prefieres actividades al aire libre en vez de estar en una oficina?'),
+            4 => __('¿Te gusta investigar por qué ocurren las cosas antes de actuar?'),
+            5 => __('¿Disfrutas resolver problemas lógicos o matemáticos?'),
+            6 => __('¿Te consideras una persona curiosa que hace muchas preguntas?'),
+            7 => __('¿Te gusta expresarte a través del arte, la música o la escritura?'),
+            8 => __('¿Prefieres tareas donde puedas ser original en lugar de seguir un manual?'),
+            9 => __('¿Disfrutas imaginar ideas o soluciones poco convencionales?'),
+            10 => __('¿Te motiva ayudar a otras personas a resolver sus problemas?'),
+            11 => __('¿Disfrutas enseñar, explicar o guiar a otros?'),
+            12 => __('¿Te consideras una persona empática que escucha bien a los demás?'),
+            13 => __('¿Te gusta convencer o influir en las decisiones de otras personas?'),
+            14 => __('¿Disfrutas liderar proyectos o tomar la iniciativa en grupo?'),
+            15 => __('¿Te sientes cómodo tomando decisiones bajo presión?'),
+            16 => __('¿Prefieres seguir procesos claros y ordenados?'),
+            17 => __('¿Te gusta organizar información, datos o archivos?'),
+            18 => __('¿Disfrutas revisar detalles para asegurarte de que todo esté correcto?'),
       ];
     @endphp
 
     @foreach ($preguntas as $id => $texto)
       <div class="rf-question" data-question="{{ $id }}" style="{{ $id === 1 ? '' : 'display:none;' }}">
-        <p class="rf-question-count">Pregunta {{ $id }} de 18</p>
+        <p class="rf-question-count">{{ __('Question') }} {{ $id }} {{ __('of') }} 18</p>
         <p class="rf-question-text">{{ $texto }}</p>
         <div class="rf-likert">
-          @foreach ([1 => 'Nunca', 2 => 'Casi nunca', 3 => 'A veces', 4 => 'Casi siempre', 5 => 'Siempre'] as $val => $label)
+          @foreach ([1 => __('Never'), 2 => __('Almost never'), 3 => __('Sometimes'), 4 => __('Almost always'), 5 => __('Always')] as $val => $label)
             <label class="rf-likert-opt">
               <input type="radio" name="answers[{{ $id }}]" value="{{ $val }}" required>
               <span class="rf-likert-dot">{{ $val }}</span>
@@ -66,22 +66,22 @@
 
     {{-- Reflexión final --}}
     <div class="rf-question rf-reflection" data-question="19" style="display:none;">
-      <p class="rf-question-count">Para terminar</p>
-      <p class="rf-question-text">¿Hay algo más que quieras contarnos sobre tus intereses o metas?</p>
-      <textarea name="reflection" maxlength="1000" placeholder="Opcional — cuéntanos lo que quieras (máx. 1000 caracteres)"></textarea>
+      <p class="rf-question-count">{{ __('To finish') }}</p>
+      <p class="rf-question-text">{{ __('Is there anything else you would like to tell us about your interests or goals?') }}</p>
+      <textarea name="reflection" maxlength="1000" placeholder="{{ __('Optional — tell us what you want (max 1000 characters)') }}"></textarea>
     </div>
 
     <div class="rf-test-nav">
-      <button type="button" class="rf-btn rf-btn-ghost" id="rfBtnPrev" disabled>Atrás</button>
-      <button type="button" class="rf-btn rf-btn-primary" id="rfBtnNext">Siguiente</button>
-      <button type="submit" class="rf-btn rf-btn-primary" id="rfBtnSubmit" style="display:none;">Ver mi resultado</button>
+      <button type="button" class="rf-btn rf-btn-ghost" id="rfBtnPrev" disabled>{{ __('Back') }}</button>
+      <button type="button" class="rf-btn rf-btn-primary" id="rfBtnNext">{{ __('Next') }}</button>
+      <button type="submit" class="rf-btn rf-btn-primary" id="rfBtnSubmit" style="display:none;">{{ __('View my result') }}</button>
     </div>
   </form>
 
   {{-- ============ RESULTADO (se rellena vía JS tras el envío) ============ --}}
   <div class="rf-card rf-result-card" id="rfResultCard" style="display:none;">
     <div class="rf-result-badge" id="rfResultAfinidad">--%</div>
-    <p class="rf-intro-eyebrow">Tu carrera sugerida</p>
+    <p class="rf-intro-eyebrow">{{ __('Your suggested career') }}</p>
     <h2 class="rf-result-career" id="rfResultCarrera"></h2>
     <p class="rf-result-reason" id="rfResultRazon"></p>
 
@@ -90,12 +90,12 @@
     <div class="rf-uni-list" id="rfResultUniversidades"></div>
 
     <ul class="rf-alt-careers" id="rfResultAlternativas">
-      <h4>También podrían interesarte</h4>
+      <h4>{{ __('You might also be interested in') }}</h4>
     </ul>
 
     <div class="rf-intro-actions" style="margin-top:1.5rem;">
-      <a href="{{ route('becas.index') }}" class="rf-btn rf-btn-primary">Explorar becas</a>
-      <a href="{{ route('perfil') }}" class="rf-btn rf-btn-outline">Ir a mi perfil</a>
+      <a href="{{ route('becas.index') }}" class="rf-btn rf-btn-primary">{{ __('Explore scholarships') }}</a>
+      <a href="{{ route('perfil') }}" class="rf-btn rf-btn-outline">{{ __('Go to my profile') }}</a>
     </div>
   </div>
 
@@ -105,6 +105,16 @@
 
 <script>
 (function () {
+  const translations = {
+    lastQuestion: '{{ __('Last question') }}',
+    questionOf: '{{ __('Question') }} %d {{ __('of') }} 18',
+    selectOption: '{{ __('Please select an option before continuing.') }}',
+    calculating: '{{ __('Calculating...') }}',
+    viewResult: '{{ __('View my result') }}',
+    apiError: '{{ __('Error processing the server response.') }}',
+    calcError: '{{ __('An error occurred while calculating your result. Try again.') }}'
+  };
+  
   const form          = document.getElementById('rfTestForm');
   const questions     = Array.from(form.querySelectorAll('.rf-question'));
   const total         = questions.length;
@@ -126,8 +136,8 @@
     const answeredQuestions = Math.min(index + 1, 18);
     progressFill.style.width = ((answeredQuestions) / 18 * 100) + '%';
     progressLabel.textContent = isLast
-      ? 'Última pregunta'
-      : `Pregunta ${index + 1} de 18`;
+      ? translations.lastQuestion
+      : translations.questionOf.replace('%d', (index + 1));
   }
 
   function currentQuestionValid() {
@@ -139,7 +149,7 @@
   btnNext.addEventListener('click', () => {
     if (!currentQuestionValid()) {
       errorBox.style.display = 'block';
-      errorBox.textContent = 'Por favor selecciona una opción antes de continuar.';
+      errorBox.textContent = translations.selectOption;
       return;
     }
     errorBox.style.display = 'none';
@@ -147,7 +157,6 @@
     render();
   });
 
-  btnPrev.disabled = true;
   btnPrev.addEventListener('click', () => {
     index = Math.max(index - 1, 0);
     render();
@@ -158,7 +167,7 @@
     if (!currentQuestionValid() && questions[index].dataset.question !== '19') return;
 
     btnSubmit.disabled = true;
-    btnSubmit.textContent = 'Calculando...';
+    btnSubmit.textContent = translations.calculating;
     errorBox.style.display = 'none';
 
     try {
@@ -175,15 +184,15 @@
       const json = await res.json();
 
       if (!res.ok || !json.success) {
-        throw new Error(json.message || 'Error al procesar la respuesta del servidor.');
+        throw new Error(json.message || translations.apiError);
       }
 
       mostrarResultado(json.data);
     } catch (err) {
       errorBox.style.display = 'block';
-      errorBox.textContent = err.message || 'Ocurrió un error al calcular tu resultado. Intenta de nuevo.';
+      errorBox.textContent = err.message || translations.calcError;
       btnSubmit.disabled = false;
-      btnSubmit.textContent = 'Ver mi resultado';
+      btnSubmit.textContent = translations.viewResult;
     }
   });
 
@@ -192,7 +201,7 @@
     document.querySelector('.rf-test-header').style.display = 'none';
 
     document.getElementById('rfResultAfinidad').textContent = (data.afinidad || 80) + '%';
-    document.getElementById('rfResultCarrera').textContent = data.carrera_principal || 'Carrera Sugerida';
+    document.getElementById('rfResultCarrera').textContent = data.carrera_principal || '{{ __('Suggested Career') }}';
     document.getElementById('rfResultRazon').textContent = data.razonamiento || '';
 
     const fortalezasBox = document.getElementById('rfResultFortalezas');

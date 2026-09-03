@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Selecciona tu rol — UGF</title>
+  <title>{{ __('Select your role') }} — UGF</title>
   <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,50 +18,49 @@
 
       {{-- PASO 1 --}}
       <div class="rf-intro-step is-active" data-step="1">
-        <p class="rf-intro-eyebrow">Bienvenido a UGF</p>
-        <h2 class="rf-intro-title">Selecciona tu rol</h2>
+        <p class="rf-intro-eyebrow">{{ __('Welcome to UGF') }}</p>
+        <h2 class="rf-intro-title">{{ __('Select your role') }}</h2>
         <p class="rf-intro-text">
-          Antes de continuar, queremos mostrarte por qué esta elección importa
-          para ti y para toda la comunidad UGF.
+          {{ __('Before continuing, we want to show you why this choice matters for you and the entire UGF community.') }}
         </p>
         <div class="rf-intro-actions">
-          <button type="button" class="rf-btn rf-btn-primary" data-rf-next>Continuar</button>
+          <button type="button" class="rf-btn rf-btn-primary" data-rf-next>{{ __('Continue') }}</button>
         </div>
       </div>
 
       {{-- PASO 2 --}}
       <div class="rf-intro-step" data-step="2">
-        <p class="rf-intro-eyebrow">Dos roles, una misma meta</p>
-        <h2 class="rf-intro-title">Ambos roles son fundamentales</h2>
+        <p class="rf-intro-eyebrow">{{ __('Two roles, one same goal') }}</p>
+        <h2 class="rf-intro-title">{{ __('Both roles are fundamental') }}</h2>
         <p class="rf-intro-text">
-          UGF conecta a quienes buscan crecer con quienes quieren impulsar ese crecimiento.
+          {{ __('UGF connects those seeking to grow with those who want to drive that growth.') }}
         </p>
         <div class="rf-roles-preview">
           <div class="rf-role-preview-item is-estudiante">
-            <span class="rf-role-tag">Estudiante</span>
-            <p>Representa el futuro, la superación y el talento que busca construir una carrera.</p>
+            <span class="rf-role-tag">{{ __('Student') }}</span>
+            <p>{{ __('Represents the future, growth and talent that seeks to build a career.') }}</p>
           </div>
           <div class="rf-role-preview-item is-padrino">
-            <span class="rf-role-tag">Padrino</span>
-            <p>Representa el impulso, la oportunidad y la guía para hacer realidad las metas del estudiante.</p>
+            <span class="rf-role-tag">{{ __('Sponsor') }}</span>
+            <p>{{ __('Represents the drive, opportunity and guidance to make student goals a reality.') }}</p>
           </div>
         </div>
         <div class="rf-intro-actions">
-          <button type="button" class="rf-btn rf-btn-ghost" data-rf-prev>Atrás</button>
-          <button type="button" class="rf-btn rf-btn-primary" data-rf-next>Continuar</button>
+          <button type="button" class="rf-btn rf-btn-ghost" data-rf-prev>{{ __('Back') }}</button>
+          <button type="button" class="rf-btn rf-btn-primary" data-rf-next>{{ __('Continue') }}</button>
         </div>
       </div>
 
       {{-- PASO 3 --}}
       <div class="rf-intro-step" data-step="3">
-        <p class="rf-intro-eyebrow">Último paso</p>
-        <h2 class="rf-intro-title">¿Estás listo para tomar este gran paso?</h2>
+        <p class="rf-intro-eyebrow">{{ __('Last step') }}</p>
+        <h2 class="rf-intro-title">{{ __('Are you ready to take this big step?') }}</h2>
         <p class="rf-intro-text">
-          Recuerda que una vez elijas tu rol, no podrás cambiarlo más adelante.
+          {{ __('Remember that once you choose your role, you will not be able to change it later.') }}
         </p>
         <div class="rf-intro-actions">
-          <button type="button" class="rf-btn rf-btn-ghost" data-rf-prev>Atrás</button>
-          <button type="button" class="rf-btn rf-btn-primary" id="rfIntroConfirm">Sí, continuar</button>
+          <button type="button" class="rf-btn rf-btn-ghost" data-rf-prev>{{ __('Back') }}</button>
+          <button type="button" class="rf-btn rf-btn-primary" id="rfIntroConfirm">{{ __('Yes, continue') }}</button>
         </div>
       </div>
 
@@ -74,8 +73,8 @@
   {{-- ============ INTERFAZ PRINCIPAL DE SELECCIÓN ============ --}}
   <div class="rf-container">
     <div class="rf-card rf-select-card">
-      <h2>¿Cómo quieres usar la plataforma?</h2>
-      <p>Esta elección no podrás cambiarla después, así que tómate un momento antes de decidir.</p>
+      <h2>{{ __('How do you want to use the platform?') }}</h2>
+      <p>{{ __('You will not be able to change this choice later, so take a moment before deciding.') }}</p>
 
       @if ($errors->any())
         <div class="rf-alert rf-alert-error">
@@ -89,8 +88,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
           </span>
           <span>
-            <strong>Soy Estudiante</strong>
-            <span>Quiero orientación de carrera y explorar becas</span>
+            <strong>{{ __('I am a Student') }}</strong>
+            <span>{{ __('I want career guidance and explore scholarships') }}</span>
           </span>
           <svg class="rf-role-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -100,8 +99,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5.5 5.5 5c2-.28 3.5 1 4.5 2 1-1 2.5-2.28 4.5-2C18 5.5 19.3 9 17.5 12.5 15 16.65 12 21 12 21z"/></svg>
           </span>
           <span>
-            <strong>Soy Padrino</strong>
-            <span>Quiero apoyar financieramente a estudiantes</span>
+            <strong>{{ __('I am a Sponsor') }}</strong>
+            <span>{{ __('I want to support students financially') }}</span>
           </span>
           <svg class="rf-role-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -119,16 +118,31 @@
   <div class="rf-modal-overlay" id="rolModalOverlay">
     <div class="rf-modal" role="dialog" aria-modal="true" aria-labelledby="rolModalTitle">
       <h3 id="rolModalTitle"></h3>
-      <p class="rf-modal-sub">Recuerda: no podrás cambiar esta elección más adelante.</p>
+      <p class="rf-modal-sub">{{ __('Remember: you will not be able to change this choice later.') }}</p>
       <ul id="rolModalVentajas"></ul>
       <div class="rf-modal-actions">
-        <button type="button" class="rf-btn rf-btn-ghost" onclick="cerrarModalRol()">Cancelar</button>
-        <button type="button" class="rf-btn rf-btn-primary" onclick="confirmarRol()">Confirmar y continuar</button>
-      </div>
-    </div>
-  </div>
+        <button type="button" class="rf-btn rf-btn-ghost" onclick="cerrarModalRol()">{{ __('Cancel') }}</button>
+        <button type="button" class="rf-btn rf-btn-primary" onclick="confirmarRol()">{{ __('Confirm and continue') }}</button>
 
 <script>
+  // Translations for JavaScript
+  const translations = {
+    studentTitle: '{{ __('You will register as a Student') }}',
+    studentList: [
+      '{{ __('You will receive a socioemotional test to discover which university degree best suits you.') }}',
+      '{{ __('You can explore available scholarships and save them to your profile.') }}',
+      '{{ __('Your profile will be visible to sponsors looking to support students in your area of interest.') }}',
+      '{{ __('Access to the forum to ask questions to other students and sponsors.') }}',
+    ],
+    sponsorTitle: '{{ __('You will register as a Sponsor') }}',
+    sponsorList: [
+      '{{ __('You will see a step-by-step tutorial on how to provide financial support to university students.') }}',
+      '{{ __('You can review student profiles and their areas of interest.') }}',
+      '{{ __('You will have visibility of active scholarships and support programs on the platform.') }}',
+      '{{ __('Access to the forum to connect directly with students and other organizations.') }}',
+    ],
+  };
+
   /* ================= INTRO OVERLAY (slide-down / pasos) ================= */
   (function () {
     const overlay  = document.getElementById('rfIntroOverlay');
@@ -158,22 +172,12 @@
   /* ================= MODAL DE CONFIRMACIÓN DE ROL ================= */
   const VENTAJAS = {
     estudiante: {
-      titulo: 'Vas a registrarte como Estudiante',
-      lista: [
-        'Recibirás un test socioemocional para descubrir qué carrera universitaria se ajusta mejor a ti.',
-        'Podrás explorar becas disponibles y guardarlas en tu perfil.',
-        'Tu perfil quedará visible para padrinos que buscan apoyar estudiantes con tu área de interés.',
-        'Acceso al foro para hacer preguntas a otros estudiantes y padrinos.',
-      ],
+      titulo: translations.studentTitle,
+      lista: translations.studentList,
     },
     padrino: {
-      titulo: 'Vas a registrarte como Padrino',
-      lista: [
-        'Verás un tutorial paso a paso sobre cómo brindar ayuda financiera a estudiantes universitarios.',
-        'Podrás revisar perfiles de estudiantes y sus áreas de interés.',
-        'Tendrás visibilidad de las becas y programas de apoyo activos en la plataforma.',
-        'Acceso al foro para conectar directamente con estudiantes y otras organizaciones.',
-      ],
+      titulo: translations.sponsorTitle,
+      lista: translations.sponsorList,
     },
   };
 
@@ -205,6 +209,9 @@
     modalOverlay.classList.remove('is-open');
     rolSeleccionado = null;
   }
+
+  // Set title tag for HTML
+  document.title = '{{ __('Select your role') }} — UGF';
 
   function confirmarRol() {
     if (!rolSeleccionado) return;

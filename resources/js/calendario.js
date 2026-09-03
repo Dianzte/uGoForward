@@ -6,19 +6,22 @@ document.addEventListener('DOMContentLoaded', function () {
     let allEvents = [];
     let currentFilter = '';
 
+    // Detectar idioma actual desde la etiqueta HTML
+    let currentLang = document.documentElement.lang || 'es';
+
     // Initialize FullCalendar
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'es',
+        locale: currentLang,
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek'
         },
         buttonText: {
-            today: 'Hoy',
-            month: 'Mes',
-            week: 'Semana'
+            today: currentLang === 'en' ? 'Today' : 'Hoy',
+            month: currentLang === 'en' ? 'Month' : 'Mes',
+            week: currentLang === 'en' ? 'Week' : 'Semana'
         },
         events: function (fetchInfo, successCallback, failureCallback) {
             fetch(`/api/becas-calendario/eventos?start=${fetchInfo.startStr}&end=${fetchInfo.endStr}`)
@@ -38,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
             abrirModal(info.event);
         },
         eventDidMount: function (info) {
-            // Add custom tooltip or styling attributes if needed
             let tipo = info.event.extendedProps.tipo;
             if (tipo === 'tarea') {
                 info.el.title = `Agenda: ${info.event.title}`;
@@ -60,16 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Helper: Filter events locally
     function applyFilter(events, filterVal) {
         if (!filterVal) return events;
         return events.filter(evt => {
-            // Tareas personales se muestran siempre
             if (evt.extendedProps && evt.extendedProps.tipo === 'tarea') return true;
             
             let cat = (evt.extendedProps && evt.extendedProps.categoria) ? evt.extendedProps.categoria.toLowerCase() : '';
             let title = (evt.title) ? evt.title.toLowerCase() : '';
-            let desc = (evt.extendedProps && evt.extendedProps.descripcion) ? evt.extendedProps.descripcion.toLowerCase() : '';
 
             if (filterVal === 'grado') {
                 return cat.includes('pregrado') || cat.includes('licenciatura') || cat.includes('grado') || title.includes('licenciatura');
@@ -82,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Update Banner Stat Counters
     function updateStatsCounters(events) {
         let becasCount = 0;
         let tareasCount = 0;
@@ -94,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tareasCount++;
             } else {
                 becasCount++;
-                if (e.color === '#EF4444') { // Urgent closing date (<= 5 days)
+                if (e.color === '#EF4444') {
                     urgentesCount++;
                 }
             }
@@ -108,10 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (elTareas) elTareas.innerText = tareasCount;
         if (elUrgentes) elUrgentes.innerText = urgentesCount;
     }
-
-    // ==========================================
-    // TAREA CRUD EVENT HANDLERS
-    // ==========================================
 
     // 1. Abrir Modal Crear Tarea
     let btnNuevaTarea = document.getElementById('btn-nueva-tarea');
@@ -151,15 +145,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         cerrarModalCrear();
                         formCrearTarea.reset();
                         calendar.refetchEvents();
-                        mostrarToast('✅ Tarea agregada exitosamente', 'success');
+                        mostrarToast(`✅ ${window.i18n.tareaAgregada}`, 'success');
                     } else {
-                        let errMsg = data.error || 'Error al guardar la tarea';
+                        let errMsg = data.error || window.i18n.errorGuardar;
                         mostrarToast(`❌ ${errMsg}`, 'error');
                     }
                 })
                 .catch(err => {
                     console.error('Error:', err);
-                    mostrarToast('❌ No se pudo guardar la tarea', 'error');
+                    mostrarToast(`❌ ${window.i18n.noGuardar}`, 'error');
                 });
         });
     }
@@ -174,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
             if (!titulo || !fecha) {
-                mostrarToast('⚠️ Completa todos los campos', 'warning');
+                mostrarToast(`⚠️ ${window.i18n.completarCampos}`, 'warning');
                 return;
             }
 
@@ -192,15 +186,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (res.ok && data.success) {
                         cerrarModal();
                         calendar.refetchEvents();
-                        mostrarToast('✅ Tarea actualizada exitosamente', 'success');
+                        mostrarToast(`✅ ${window.i18n.tareaActualizada}`, 'success');
                     } else {
-                        let errMsg = data.error || 'Error al actualizar tarea';
+                        let errMsg = data.error || window.i18n.errorActualizar;
                         mostrarToast(`❌ ${errMsg}`, 'error');
                     }
                 })
                 .catch(err => {
                     console.error('Error:', err);
-                    mostrarToast('❌ Error de comunicación con el servidor', 'error');
+                    mostrarToast(`❌ ${window.i18n.errorServidor}`, 'error');
                 });
         });
     }
@@ -212,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let id = document.getElementById('editar-tarea-id').value;
             let csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-            if (!confirm('¿Estás seguro de eliminar esta tarea de tu agenda?')) return;
+            if (!confirm(window.i18n.confirmEliminar)) return;
 
             fetch(`/api/calendario/tareas/${id}`, {
                 method: 'DELETE',
@@ -227,15 +221,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (res.ok && data.success) {
                         cerrarModal();
                         calendar.refetchEvents();
-                        mostrarToast('🗑️ Tarea eliminada', 'info');
+                        mostrarToast(`🗑️ ${window.i18n.tareaEliminada}`, 'info');
                     } else {
-                        let errMsg = data.error || 'Error al eliminar la tarea';
+                        let errMsg = data.error || window.i18n.errorEliminar;
                         mostrarToast(`❌ ${errMsg}`, 'error');
                     }
                 })
                 .catch(err => {
                     console.error('Error:', err);
-                    mostrarToast('❌ No se pudo eliminar la tarea', 'error');
+                    mostrarToast(`❌ ${window.i18n.noEliminar}`, 'error');
                 });
         });
     }
@@ -254,9 +248,8 @@ window.abrirModal = function (evento) {
     if (!modalBeca) return;
 
     if (tipo === 'tarea') {
-        // Modo Tarea Personal
-        document.getElementById('modal-categoria').innerHTML = '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">📌 Agenda Personal</span>';
-        document.getElementById('modal-titulo').innerText = 'Editar Tarea Personal';
+        document.getElementById('modal-categoria').innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">${window.i18n.agendaPersonal}</span>`;
+        document.getElementById('modal-titulo').innerText = window.i18n.editarTareaPersonal;
 
         if (contenedorBeca) contenedorBeca.classList.add('hidden');
         if (formEditarTarea) formEditarTarea.classList.remove('hidden');
@@ -274,11 +267,10 @@ window.abrirModal = function (evento) {
             document.getElementById('editar-tarea-fecha').value = `${year}-${month}-${day}`;
         }
     } else {
-        // Modo Beca
-        let catText = (evento.extendedProps && evento.extendedProps.categoria) ? evento.extendedProps.categoria : '🎓 Convocatoria de Beca';
+        let catText = (evento.extendedProps && evento.extendedProps.categoria) ? evento.extendedProps.categoria : '🎓 Convocatoria';
         document.getElementById('modal-categoria').innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">${catText}</span>`;
         document.getElementById('modal-titulo').innerText = evento.title.replace('🎓 ', '');
-        document.getElementById('modal-descripcion').innerText = (evento.extendedProps && evento.extendedProps.descripcion) ? evento.extendedProps.descripcion : 'Sin información disponible.';
+        document.getElementById('modal-descripcion').innerText = (evento.extendedProps && evento.extendedProps.descripcion) ? evento.extendedProps.descripcion : window.i18n.sinInformacion;
 
         if (contenedorBeca) contenedorBeca.classList.remove('hidden');
         if (formEditarTarea) formEditarTarea.classList.add('hidden');
@@ -291,7 +283,7 @@ window.abrirModal = function (evento) {
             let checklist = (evento.extendedProps && evento.extendedProps.checklist) ? evento.extendedProps.checklist : [];
 
             if (checklist.length === 0) {
-                checklistContainer.innerHTML = '<p class="text-xs text-slate-400 italic bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">No hay requisitos en la lista de verificación para esta convocatoria.</p>';
+                checklistContainer.innerHTML = `<p class="text-xs text-slate-400 italic bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">${window.i18n.noChecklist}</p>`;
             } else {
                 checklist.forEach(item => {
                     checklistContainer.innerHTML += `
@@ -318,7 +310,6 @@ window.cerrarModalCrear = function () {
     if (modal) modal.classList.add('hidden');
 };
 
-// Toast notification helper
 function mostrarToast(mensaje, tipo = 'info') {
     let toast = document.createElement('div');
     toast.className = `fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl shadow-xl text-sm font-semibold flex items-center gap-2 transform transition-all duration-300 translate-y-5 opacity-0 ${

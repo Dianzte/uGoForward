@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de sesión - UGF</title>
+    <title>{{ __('Inicio de sesión') }} - UGF</title>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Raleway:wght@300;400;500;600&display=swap"
@@ -18,20 +18,20 @@
     @include('navegacion.navbar')
 
     <canvas id="ocean"></canvas>
-    <div id="hint">Haz clic en la luna para cambiar el día</div>
+    <div id="hint">{{ __('Haz clic en la luna para cambiar el día') }}</div>
 
     <div class="card">
         <div class="panel-left">
             <div class="left-top">
-                <p class="eyebrow">Gracias Por Visitarnos</p>
-                <h1>Bienvenido<br>de <em>Nuevo a UGF</em></h1>
+                <p class="eyebrow">{{ __('Gracias Por Visitarnos') }}</p>
+                <h1>{{ __('Bienvenido') }}<br>{{ __('de') }} <em>{{ __('Nuevo a UGF') }}</em></h1>
                 <div class="gold-bar"></div>
-                <p>Accede a tu cuenta y continúa donde lo dejaste. Tu experiencia te está esperando.</p>
+                <p>{{ __('Accede a tu cuenta y continúa donde lo dejaste. Tu experiencia te está esperando.') }}</p>
             </div>
             <div class="left-bottom">
                 <div class="badge">
                     <span class="badge-dot"></span>
-                    Plataforma de preparación para becas segura &amp; confiable
+                    {{ __('Plataforma de preparación para becas segura & confiable') }}
                 </div>
             </div>
             <div class="blob"></div>
@@ -39,13 +39,12 @@
 
         <div class="panel-right">
             <div class="form-head">
-                <h2>Login</h2>
-                <p>Ingresa tus credenciales para acceder a tu cuenta</p>
+                <h2>{{ __('Iniciar sesión') }}</h2>
+                <p>{{ __('Ingresa tus credenciales para acceder a tu cuenta') }}</p>
             </div>
 
-            {{-- Formulario apuntando a la ruta de login de Laravel --}}
             <form action="{{ route('login') }}" method="POST">
-                @csrf {{-- Token de seguridad obligatorio en Laravel --}}
+                @csrf
 
                 @if (session('status'))
                     <p
@@ -54,16 +53,16 @@
                 @endif
 
                 <div class="field">
-                    <label for="email">Correo electrónico</label>
+                    <label for="email">{{ __('Correo electrónico') }}</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}"
-                        placeholder="ejemplo@correo.com" required autofocus>
+                        placeholder="{{ __('ejemplo@correo.com') }}" required autofocus>
                     @error('email')
                         <span class="error-message" style="color: red; font-size: 0.8rem;">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="field">
-                    <label for="password">Contraseña</label>
+                    <label for="password">{{ __('Contraseña') }}</label>
                     <input type="password" id="password" name="password" placeholder="••••••••" required>
                     @error('password')
                         <span class="error-message" style="color: red; font-size: 0.8rem;">{{ $message }}</span>
@@ -71,14 +70,14 @@
                 </div>
 
                 @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="forgot">¿Olvidaste tu contraseña?</a>
+                    <a href="{{ route('password.request') }}" class="forgot">{{ __('¿Olvidaste tu contraseña?') }}</a>
                 @endif
 
-                <button type="submit" class="btn-login">LOGIN</button>
+                <button type="submit" class="btn-login">{{ __('LOGIN') }}</button>
 
-                <div class="divider"><span>o</span></div>
+                <div class="divider"><span>{{ __('o') }}</span></div>
 
-                <p class="register-link">¿No tienes cuenta? <a href="{{ route('registro') }}">Regístrate aquí</a></p>
+                <p class="register-link">{{ __('¿No tienes cuenta?') }} <a href="{{ route('registro') }}">{{ __('Regístrate aquí') }}</a></p>
             </form>
         </div>
         

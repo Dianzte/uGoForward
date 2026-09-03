@@ -5,6 +5,7 @@ use App\Http\Controllers\BecaCalendarioController;
 use App\Http\Controllers\BecaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ForoController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TestSocioemocionalController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,8 @@ use App\Http\Controllers\PerfilHubController;
 */
 
 // --- HOMEPAGE ---
+Route::get('/lang/{locale}', [LocaleController::class, 'setLocale'])->name('lang.switch');
+
 Route::get('/', function () {
     return view('homepage');
 })->name('index');

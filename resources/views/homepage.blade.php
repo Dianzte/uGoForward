@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
   <meta charset="UTF-8" />
@@ -23,6 +23,35 @@
     })();
   </script>
 
+  <script>
+    window.mapLocale = '{{ app()->getLocale() }}';
+    window.mapTranslations = {
+      /* --- modal chrome --- */
+      university:          '{{ __("university") }}',
+      universities:        '{{ __("universities") }}',
+      withScholarships:    '{{ __("con becas") }}',
+      department:          '{{ __("Departamento") }}',
+      elSalvador:          '{{ __("El Salvador") }}',
+      constructionInfo:    '{{ __("Información en construcción") }}',
+      incomingUniversities:'{{ __("Próximamente agregaremos las universidades de") }}',
+      workingOnIt:         '{{ __("¡Estamos trabajando en ello!") }}',
+      universitiesLoaded:  '{{ __("universidades cargadas") }}',
+      /* --- card tabs --- */
+      tabCareers:   '{{ __("Carreras") }}',
+      tabSchedule:  '{{ __("Horarios") }}',
+      tabServices:  '{{ __("Servicios") }}',
+      tabScholarship: '{{ __("Beca Info") }}',
+      /* --- schedule table headers --- */
+      thDays:    '{{ __("Días") }}',
+      thShift:   '{{ __("Turno") }}',
+      thHours:   '{{ __("Horario") }}',
+      /* --- card footer --- */
+      officialSite:       '{{ __("Sitio oficial") }}',
+      scholarshipCalendar:'{{ __("Ver Calendario de Becas") }}',
+      photoLabel: '{{ __("Foto") }}',
+      videoLabel: '{{ __("Video") }}',
+    };
+  </script>
   @vite(['resources/css/homepage.css', 'resources/js/homepage.js' ,'resources/css/app.css'])
 
 </head>
@@ -50,7 +79,7 @@
 
   <!-- SHIP ELEMENT (DOM, rides on waves) -->
   <div id="shipWrapper">
-    <div class="ship-speech-bubble">⛵ ¡Navega hacia tu futuro!</div>
+    <div class="ship-speech-bubble">⛵ {{ __('¡Navega hacia tu futuro!') }}</div>
     <div id="ship">
       <div class="ship-sail sail-main"></div>
       <div class="ship-sail sail-small"></div>
@@ -71,44 +100,44 @@
     <div class="container hero-content">
       <div class="badge" data-reveal>
         <span class="badge-dot"></span>
-        Plataforma de Becas Nacionales — El Salvador
+        {{ __('Plataforma de Becas Nacionales — El Salvador') }}
       </div>
       <h1 data-reveal>
-        Tu futuro <br />
-        <em>No tiene límites</em>
+        {{ __('Tu futuro') }} <br />
+        <em>{{ __('No tiene límites') }}</em>
       </h1>
       <br /><br />
       <p class="hero-sub" data-reveal>
-        Conectamos estudiantes salvadoreños con oportunidades de beca universitaria,<br class="br-desktop" />
-        padrinos comprometidos e instituciones educativas de todo El Salvador.
+        {{ __('Conectamos estudiantes salvadoreños con oportunidades de beca universitaria,') }}<br class="br-desktop" />
+        {{ __('padrinos comprometidos e instituciones educativas de todo El Salvador.') }}
       </p>
       <br /><br />
       <div class="hero-cta" data-reveal>
         <a href="{{ route('becas.index') }}" class="btn-primary btn-lg">
-          Comenzar ahora
+          {{ __('Comenzar ahora') }}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#becas" class="btn-outline btn-lg">Explorar Becas</a>
+        <a href="#becas" class="btn-outline btn-lg">{{ __('Explorar Becas') }}</a>
       </div>
       <div class="hero-stats" data-reveal>
         <div class="stat">
           <span class="stat-num" data-count="24">0</span><span class="stat-plus">+</span>
-          <span class="stat-label">Universidades</span>
+          <span class="stat-label">{{ __('Universidades') }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num" data-count="14">0</span>
-          <span class="stat-label">Departamentos</span>
+          <span class="stat-label">{{ __('Departamentos') }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num" data-count="1200">0</span><span class="stat-plus">+</span>
-          <span class="stat-label">Estudiantes</span>
+          <span class="stat-label">{{ __('Estudiantes') }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num" data-count="340">0</span>
-          <span class="stat-label">Padrinos</span>
+          <span class="stat-label">{{ __('Padrinos') }}</span>
         </div>
       </div>
     </div>
@@ -116,7 +145,7 @@
 
   <!-- TRANSITION ZONE: surface to underwater -->
   <div class="dive-transition" id="diveTransition">
-    <div class="surface-label">SUPERFICIE</div>
+    <div class="surface-label">{{ __('SUPERFICIE') }}</div>
     <div class="depth-markers">
       <span>— 10m</span><span>— 20m</span><span>— 30m</span>
     </div>
@@ -126,8 +155,8 @@
   <section class="section section-underwater" id="servicios">
     <div class="container">
       <div class="section-header" data-reveal>
-        <span class="section-tag">¿Qué ofrecemos?</span>
-        <h2>Descubre lo que hay<br />en las profundidades</h2>
+        <span class="section-tag">{{ __('¿Qué ofrecemos?') }}</span>
+        <h2>{{ __('Descubre lo que hay') }}<br />{{ __('en las profundidades') }}</h2>
       </div>
       <div class="services-grid">
 
@@ -135,45 +164,45 @@
           <div class="service-icon" style="--icon-color:#7ec8e3;">
             <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="16" r="8" stroke="currentColor" stroke-width="2"/><path d="M8 32c0-5.523 5.373-10 12-10s12 4.477 12 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </div>
-          <h3>Test Socioemocional</h3>
-          <p>Un análisis profundo de tu perfil emocional e intelectual que te guía hacia la carrera ideal según tus fortalezas.</p>
-          <a href="#" class="card-link">Hacer el test →</a>
+          <h3>{{ __('Test Socioemocional') }}</h3>
+          <p>{{ __('Un análisis profundo de tu perfil emocional e intelectual que te guía hacia la carrera ideal según tus fortalezas.') }}</p>
+          <a href="{{ route('test.socioemocional') }}" class="card-link">{{ __('Hacer el test →') }}</a>
         </div>
 
         <div class="service-card featured" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#e8c847;">
             <svg viewBox="0 0 40 40" fill="none"><path d="M12 20l4 4 12-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2"/></svg>
           </div>
-          <h3>Sistema de Padrinos</h3>
-          <p>Conecta con personas dispuestas a financiar tu educación bajo acuerdos claros y justos con condiciones personalizadas.</p>
-          <a href="#" class="card-link">Conocer más →</a>
+          <h3>{{ __('Sistema de Padrinos') }}</h3>
+          <p>{{ __('Conecta con personas dispuestas a financiar tu educación bajo acuerdos claros y justos con condiciones personalizadas.') }}</p>
+          <a href="{{ route('padrino.tutorial') }}" class="card-link">{{ __('Conocer más →') }}</a>
         </div>
 
         <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#4fc3f7;">
             <svg viewBox="0 0 40 40" fill="none"><path d="M8 28L20 10l12 18H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="10" r="2" fill="currentColor"/></svg>
           </div>
-          <h3>Mapa de Universidades</h3>
-          <p>Explora todas las universidades de El Salvador que ofrecen becas, organizadas por departamento.</p>
-          <a href="#universidades" class="card-link">Ver mapa →</a>
+          <h3>{{ __('Mapa de Universidades') }}</h3>
+          <p>{{ __('Explora todas las universidades de El Salvador que ofrecen becas, organizadas por departamento.') }}</p>
+          <a href="#universidades" class="card-link">{{ __('Ver mapa →') }}</a>
         </div>
 
         <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#81c784;">
             <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="28" rx="2" stroke="currentColor" stroke-width="2"/><path d="M14 16h12M14 22h8M14 28h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
-          <h3>Tests de Práctica</h3>
-          <p>Prepárate con exámenes simulados por carrera y compara tus resultados con otros estudiantes.</p>
-          <a href="#" class="card-link">Practicar →</a>
+          <h3>{{ __('Tests de Práctica') }}</h3>
+          <p>{{ __('Prepárate con exámenes simulados por carrera y compara tus resultados con otros estudiantes.') }}</p>
+          <a href="#" class="card-link">{{ __('Practicar →') }}</a>
         </div>
 
         <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#f48fb1;">
             <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="26" rx="2" stroke="currentColor" stroke-width="2"/><path d="M14 8V6M26 8V6M6 18h28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 25h4v4h-4z" fill="currentColor" opacity=".4"/></svg>
           </div>
-          <h3>Calendario de Becas</h3>
-          <p>Nunca pierdas una convocatoria. Ve las fechas de aplicación de cada universidad en tiempo real.</p>
-          <a href="{{ route('becas.calendario') }}" class="card-link">Ver calendario →</a>
+          <h3>{{ __('Calendario de Becas') }}</h3>
+          <p>{{ __('Nunca pierdas una convocatoria. Ve las fechas de aplicación de cada universidad en tiempo real.') }}</p>
+          <a href="{{ route('becas.calendario') }}" class="card-link">{{ __('Ver calendario →') }}</a>
         </div>
 
         <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
@@ -193,17 +222,17 @@
   <section class="becas-carousel-section" id="becas">
     <div class="container">
       <div class="section-header" data-reveal>
-        <span class="section-tag">Becas Nacionales</span>
-        <h2>Convocatorias Universitarias en El Salvador</h2>
-        <p>Explora las becas ofrecidas por instituciones públicas y privadas de nuestro país.</p>
+        <span class="section-tag">{{ __('Becas Nacionales') }}</span>
+        <h2>{{ __('Convocatorias Universitarias en El Salvador') }}</h2>
+        <p>{{ __('Explora las becas ofrecidas por instituciones públicas y privadas de nuestro país.') }}</p>
       </div>
 
       <div class="carousel-controls-wrapper" data-reveal>
         <div class="carousel-filter-pills" id="becasFilterPills">
-          <button class="filter-pill active" data-filter="todos">Todas</button>
-          <button class="filter-pill" data-filter="urgentes">⚡ Cierre Próximo</button>
-          <button class="filter-pill" data-filter="pregrado">🎓 Pregrado / Licenciatura</button>
-          <button class="filter-pill" data-filter="stem">⚙️ STEM e Ingeniería</button>
+          <button class="filter-pill active" data-filter="todos">{{ __('Todas') }}</button>
+          <button class="filter-pill" data-filter="urgentes">{{ __('⚡ Cierre Próximo') }}</button>
+          <button class="filter-pill" data-filter="pregrado">{{ __('🎓 Pregrado / Licenciatura') }}</button>
+          <button class="filter-pill" data-filter="stem">{{ __('⚙️ STEM e Ingeniería') }}</button>
         </div>
         <div class="carousel-nav-btns">
           <button class="carousel-btn" id="prevBecaBtn" aria-label="Anterior">←</button>
@@ -217,26 +246,26 @@
           <div class="beca-card-3d" data-category="urgentes pregrado stem">
             <div>
               <div class="beca-header-row">
-                <span class="beca-tag beca-tag-urgente">Cierre Inminente</span>
-                <span class="beca-days-badge">🔥 5 días restantes</span>
+                <span class="beca-tag beca-tag-urgente">{{ __('Cierre Inminente') }}</span>
+                <span class="beca-days-badge">🔥 {{ __('5 días restantes') }}</span>
               </div>
-              <h3 class="beca-card-title">Beca Excelencia UCA 2026</h3>
-              <p class="beca-card-desc">Programa de apoyo económico integral para jóvenes sobresalientes en carreras de ingeniería y ciencias sociales.</p>
+              <h3 class="beca-card-title">{{ __('Beca Excelencia UCA 2026') }}</h3>
+              <p class="beca-card-desc">{{ __('Programa integral de apoyo financiero para jóvenes destacados en carreras de ingeniería y ciencias sociales.') }}</p>
             </div>
             <div class="beca-card-footer">
-              <span class="beca-univ-name">🏫 Universidad Centroamericana (UCA)</span>
-              <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.4rem 0.9rem; font-size:0.8rem;">Ver Fecha →</a>
+              <span class="beca-univ-name">🏫 {{ __('Universidad Centroamericana (UCA)') }}</span>
+              <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.4rem 0.9rem; font-size:0.8rem;">{{ __('Ver Fecha →') }}</a>
             </div>
           </div>
 
           <div class="beca-card-3d" data-category="pregrado stem">
             <div>
               <div class="beca-header-row">
-                <span class="beca-tag beca-tag-pregrado">Pregrado / Tecnología</span>
-                <span class="beca-days-badge">🟢 Convocatoria Abierta</span>
+                <span class="beca-tag beca-tag-pregrado">{{ __('Undergraduate / Technology') }}</span>
+                <span class="beca-days-badge">🟢 {{ __('Open Call') }}</span>
               </div>
               <h3 class="beca-card-title">Beca Talento UDB - Don Bosco</h3>
-              <p class="beca-card-desc">Becas dirigidas a estudiantes de alto rendimiento académico en áreas STEM, Mecatrónica e Innovación Tecnológica.</p>
+              <p class="beca-card-desc">{{ __('Scholarships aimed at high-achieving students in STEM areas, Mechatronics and Technological Innovation.') }}</p>
             </div>
             <div class="beca-card-footer">
               <span class="beca-univ-name">⚙️ Universidad Don Bosco (UDB)</span>
@@ -247,11 +276,11 @@
           <div class="beca-card-3d" data-category="pregrado urgentes">
             <div>
               <div class="beca-header-row">
-                <span class="beca-tag beca-tag-maestria">Universidad Nacional</span>
-                <span class="beca-days-badge">⏳ 12 días restantes</span>
+                <span class="beca-tag beca-tag-maestria">{{ __('National University') }}</span>
+                <span class="beca-days-badge">⏳ {{ __('12 days remaining') }}</span>
               </div>
               <h3 class="beca-card-title">Beca Remunerada UES 2026</h3>
-              <p class="beca-card-desc">Exoneración de escolaridad y estipendio de apoyo mensual para estudiantes con necesidad económica de la UES.</p>
+              <p class="beca-card-desc">{{ __('Tuition waiver and monthly support allowance for students with financial need at UES.') }}</p>
             </div>
             <div class="beca-card-footer">
               <span class="beca-univ-name">🏛️ Universidad de El Salvador (UES)</span>
@@ -262,11 +291,11 @@
           <div class="beca-card-3d" data-category="pregrado">
             <div>
               <div class="beca-header-row">
-                <span class="beca-tag beca-tag-pregrado">Pregrado Oriental</span>
-                <span class="beca-days-badge">🗓️ Cierra en Agosto</span>
+                <span class="beca-tag beca-tag-pregrado">{{ __('Undergraduate Eastern') }}</span>
+                <span class="beca-days-badge">🗓️ {{ __('Closes in August') }}</span>
               </div>
               <h3 class="beca-card-title">Beca Liderazgo UGB - Oriente</h3>
-              <p class="beca-card-desc">Becas académicas para bachilleres destacados en San Miguel, Usulután, Morazán y La Unión.</p>
+              <p class="beca-card-desc">{{ __('Academic scholarships for outstanding high school graduates in San Miguel, Usulután, Morazán and La Unión.') }}</p>
             </div>
             <div class="beca-card-footer">
               <span class="beca-univ-name">📜 Univ. Gerardo Barrios (UGB)</span>
@@ -277,11 +306,11 @@
           <div class="beca-card-3d" data-category="pregrado stem">
             <div>
               <div class="beca-header-row">
-                <span class="beca-tag beca-tag-pregrado">Licenciatura / Salud</span>
-                <span class="beca-days-badge">🟢 Abierta</span>
+                <span class="beca-tag beca-tag-pregrado">{{ __('Bachelor\'s / Health') }}</span>
+                <span class="beca-days-badge">🟢 {{ __('Open') }}</span>
               </div>
               <h3 class="beca-card-title">Beca Mérito UNASA - Santa Ana</h3>
-              <p class="beca-card-desc">Financiamiento parcial y total para estudiantes de la zona occidental en carreras de medicina y laboratorio.</p>
+              <p class="beca-card-desc">{{ __('Partial and full funding for students in the western region pursuing medicine and laboratory careers.') }}</p>
             </div>
             <div class="beca-card-footer">
               <span class="beca-univ-name">🏥 Univ. Autónoma de Santa Ana</span>
@@ -304,23 +333,23 @@
         <div data-reveal>
          
           <h2 style="font-size:clamp(2rem, 4vw, 3rem); font-family:'Syne', sans-serif; color:#fff; line-height:1.15;">
-            El Punto de Encuentro <br />
-            <em style="color:var(--teal); font-style:normal;">de los Estudiantes Salvadoreños</em>
+            {{ __('El Punto de Encuentro') }} <br />
+            <em style="color:var(--teal); font-style:normal;">{{ __('de los Estudiantes Salvadoreños') }}</em>
           </h2>
           <p style="color:var(--text-2); margin-top:1.25rem; font-size:1rem; line-height:1.6;">
-            Estamos construyendo un <strong>Hub Social exclusivo</strong> donde estudiantes de todos los departamentos de El Salvador podrán conectar, formar grupos de estudio, resolver guías académicas juntas y compartir consejos de postulación a becas.
+            {!! __('Estamos construyendo un <strong>Hub Social exclusivo</strong> donde estudiantes de todos los departamentos de El Salvador podrán conectar, formar grupos de estudio, resolver guías académicas juntas y compartir consejos de postulación a becas.') !!}
           </p>
 
           <div style="display:flex; gap:1.5rem; margin-top:2rem; flex-wrap:wrap;">
             <div style="background:rgba(14,58,92,0.6); padding:1rem 1.25rem; border-radius:16px; border:1px solid rgba(100,200,255,0.15); flex:1; min-width:140px;">
               <span style="font-size:1.5rem;">💬</span>
-              <h4 style="color:#fff; margin-top:0.4rem; font-size:0.95rem;">Salas por Carrera</h4>
-              <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.2rem;">Debates y resolución de guías comunitarias.</p>
+              <h4 style="color:#fff; margin-top:0.4rem; font-size:0.95rem;">{{ __('Salas por Carrera') }}</h4>
+              <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.2rem;">{{ __('Debates y resolución de guías comunitarias.') }}</p>
             </div>
             <div style="background:rgba(14,58,92,0.6); padding:1rem 1.25rem; border-radius:16px; border:1px solid rgba(100,200,255,0.15); flex:1; min-width:140px;">
               <span style="font-size:1.5rem;">🏆</span>
-              <h4 style="color:#fff; margin-top:0.4rem; font-size:0.95rem;">Muro de Logros</h4>
-              <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.2rem;">Celebrando a cada nuevo becado del país.</p>
+              <h4 style="color:#fff; margin-top:0.4rem; font-size:0.95rem;">{{ __('Muro de Logros') }}</h4>
+              <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.2rem;">{{ __('Celebrando a cada nuevo becado del país.') }}</p>
             </div>
           </div>
         </div>
@@ -330,30 +359,30 @@
           <div class="feed-header-bar">
             <span class="feed-live-indicator">
               <span class="feed-live-dot"></span>
-              <span>Hub Social UGF — (Vista Previa)</span>
+              <span>{{ __('Hub Social UGF — (Vista Previa)') }}</span>
             </span>
           </div>
 
           <div class="social-post-card">
             <div class="social-post-user">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="User">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="{{ __('Usuario') }}">
               <div>
                 <strong style="color:#fff; font-size:0.85rem; block;">Sofía Martínez</strong>
-                <span style="font-size:0.72rem; color:var(--teal);">Aspirante a Ing. Química — UCA</span>
+                <span style="font-size:0.72rem; color:var(--teal);">{{ __('Aspirante a Ing. Química — UCA') }}</span>
               </div>
             </div>
-            <p class="social-post-text">"¿Alguien más aplicando a la Beca Excelencia UCA 2026? Organicemos un grupo de estudio virtual este fin de semana. 📚✨"</p>
+            <p class="social-post-text">"{{ __('¿Alguien más aplicando a la Beca Excelencia UCA 2026? Organicemos un grupo de estudio virtual este fin de semana. 📚✨') }}"</p>
           </div>
 
           <div class="social-post-card">
             <div class="social-post-user">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="User">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="user-avatar-mini" alt="{{ __('Usuario') }}">
               <div>
                 <strong style="color:#fff; font-size:0.85rem; block;">Mateo Hernández</strong>
-                <span style="font-size:0.72rem; color:var(--gold);">Estudiante UES — San Miguel</span>
+                <span style="font-size:0.72rem; color:var(--gold);">{{ __('Estudiante UES — San Miguel') }}</span>
               </div>
             </div>
-            <p class="social-post-text">"¡Les confirmo que ya abrieron la recepción de documentos para las becas en la sede oriental de la UES! Revisen el calendario. 🎉"</p>
+            <p class="social-post-text">"{{ __('¡Les confirmo que ya abrieron la recepción de documentos para las becas en la sede oriental de la UES! Revisen el calendario. 🎉') }}"</p>
           </div>
         </div>
       </div>
@@ -365,19 +394,19 @@
   <section class="section section-deep" id="universidades">
     <div class="container">
       <div class="section-header light" data-reveal>
-        <span class="section-tag">Cobertura Nacional</span>
-        <h2>Presencia en todo<br />El Salvador</h2>
-        <p>Haz clic en cualquier departamento para ver las universidades disponibles con becas activas, horarios, carreras y servicios.</p>
+        <span class="section-tag">{{ __('Cobertura Nacional') }}</span>
+        <h2>{{ __('Presencia en todo') }}<br />{{ __('El Salvador') }}</h2>
+        <p>{{ __('Haz clic en cualquier departamento para ver las universidades disponibles con becas activas, horarios, carreras y servicios.') }}</p>
       </div>
 
       <div class="map-wrapper" data-reveal>
         <!-- Hover Tooltip -->
         <div class="map-tooltip" id="mapTooltip">
-          <strong id="tooltipName">Departamento</strong>
+          <strong id="tooltipName">{{ __('Departamento') }}</strong>
           <span class="tooltip-unis" id="tooltipUnis">
-            <span>🎓</span><span id="tooltipUnisText">— universidades</span>
+            <span>🎓</span><span id="tooltipUnisText">— {{ __('universidades') }}</span>
           </span>
-          <span class="tooltip-click-hint">👆 Haz clic para ver detalles</span>
+          <span class="tooltip-click-hint">{{ __('👆 Haz clic para ver detalles') }}</span>
         </div>
 
         <!-- SVG Map -->
@@ -406,15 +435,15 @@
         <div class="map-legend">
           <div class="legend-item">
             <span class="legend-dot" style="background:rgba(45,212,191,0.5); border:1px solid var(--teal);"></span>
-            <span>Hover — Vista previa</span>
+            <span>{{ __('Hover — Vista previa') }}</span>
           </div>
           <div class="legend-item">
             <span class="legend-dot" style="background:rgba(232,200,71,0.4); border:1px solid var(--gold);"></span>
-            <span>Seleccionado</span>
+            <span>{{ __('Seleccionado') }}</span>
           </div>
           <div class="legend-item">
             <span class="legend-dot" style="background:rgba(14,60,100,0.65); border:1px solid rgba(100,180,255,0.5);"></span>
-            <span>Sin seleccionar</span>
+            <span>{{ __('Sin seleccionar') }}</span>
           </div>
         </div>
       </div>
@@ -422,25 +451,70 @@
   </section>
 
   <!-- ====== MODAL PREMIUM DE UNIVERSIDADES POR DEPARTAMENTO ====== -->
-  <div class="map-modal-overlay" id="mapModalOverlay">
-    <div class="map-modal" id="mapModal">
-      <!-- Header del departamento -->
-      <div class="modal-dept-header">
-        <div>
-          <h2 class="modal-dept-name" id="modalDeptName">Departamento</h2>
-          <div class="modal-dept-meta">
-            <span class="modal-dept-tag" id="modalDeptUniCount">0 universidades</span>
-            <span class="modal-dept-tag" style="background:rgba(232,200,71,0.12); border-color:rgba(232,200,71,0.3); color:var(--gold);" id="modalDeptRegion">El Salvador</span>
-          </div>
+<div class="map-modal-overlay" id="mapModalOverlay">
+  <div class="map-modal" id="mapModal">
+    <!-- Header del departamento -->
+    <div class="modal-dept-header">
+      <div>
+        <h2 class="modal-dept-name" id="modalDeptName">{{ __('Departamento') }}</h2>
+        <div class="modal-dept-meta">
+          <span class="modal-dept-tag" id="modalDeptUniCount">0 {{ __('universidades') }}</span>
+          <span class="modal-dept-tag" style="background:rgba(232,200,71,0.12); border-color:rgba(232,200,71,0.3); color:var(--gold);" id="modalDeptRegion">El Salvador</span>
         </div>
-        <button class="modal-close-btn" id="mapModalClose" aria-label="Cerrar">✕</button>
       </div>
-      <!-- Cards de universidades (generadas por JS) -->
-      <div class="modal-body" id="mapModalBody">
-        <!-- se llena dinámicamente -->
-      </div>
+      <button class="modal-close-btn" id="mapModalClose" aria-label="{{ __('Cerrar') }}">✕</button>
+    </div>
+    <!-- Cards de universidades (generadas por JS) -->
+    <div class="modal-body" id="mapModalBody">
+      <!-- Se llena dinámicamente -->
     </div>
   </div>
+</div>
+
+<!-- SVGs con traducciones en los Data Attributes -->
+<g id="features">
+  <path class="dept cursor-pointer" 
+        data-name="{{ __('Santa Ana') }}" 
+        data-unis="4" 
+        data-desc="UNASA, UNICO, Galileo, UCO" 
+        data-universities='[
+          {
+            "name": "UNASA",
+            "image": "https://campussostenible.unasa.edu.sv/images/UNASA2024/UNASA_SUR_2024.jpg",
+            "description": "{{ __('Universidad Autónoma de Santa Ana.') }}",
+            "careers": "{{ __('Medicina, Enfermería, Laboratorio Clínico.') }}",
+            "website": "https://www.unasa.edu.sv"
+          },
+          {
+            "name": "Universidad Católica de Occidente",
+            "image": "https://i.ytimg.com/vi/28XYWdg6QJw/hq720.jpg",
+            "description": "{{ __('Universidad privada.') }}",
+            "careers": "{{ __('Derecho, Ingeniería, Arquitectura.') }}",
+            "website": "https://www.uco.edu.sv"
+          }
+        ]' 
+        d="M194.1 232.6l7.5-25.9..." id="SVSA" name="Santa Ana"></path>
+</g>
+
+<!-- Pasar variables traducidas directamente a JS -->
+<script>
+  window.mapTranslations = {
+    careersLabel: "{{ __('Carreras disponibles:') }}",
+    visitWebsite: "{{ __('Visitar sitio web →') }}",
+    noUniversities: "{{ __('No hay información de universidades disponible para este departamento.') }}",
+    unisSuffix: "{{ __('universidades') }}",
+    constructionInfo: "{{ __('Construction Information') }}",
+    incomingUniversities: "{{ __('Incoming Universities') }}",
+    workingOnIt: "{{ __('We are working on it') }}",
+    universitiesLoaded: "{{ __('Universities Loaded') }}",
+    withActiveScholarships: "{{ __('with active scholarships') }}",
+    university: "{{ __('university') }}",
+    universities: "{{ __('universities') }}",
+    withScholarships: "{{ __('with scholarships') }}",
+    elSalvador: "{{ __('El Salvador') }}",
+    department: "{{ __('Department') }}"
+  };
+</script>
 
        
  <g id="features">
@@ -496,52 +570,52 @@
   <section class="roadmap-section" id="roadmap">
     <div class="container">
       <div class="section-header" data-reveal>
-        <span class="section-tag">Guía de Navegación</span>
-        <h2>La ruta hacia tu universidad</h2>
-        <p>Conoce los 5 pasos esenciales para asegurar tu beca en El Salvador.</p>
+        <span class="section-tag">{{ __('Navigation Guide') }}</span>
+        <h2>{{ __('The path to your university') }}</h2>
+        <p>{{ __('Learn the 5 essential steps to secure your scholarship in El Salvador.') }}</p>
       </div>
 
       <div class="roadmap-steps-container" data-reveal>
         <div class="roadmap-step-item active" data-step="1">
           <div class="step-num-badge">1</div>
-          <h4 style="color:#fff; font-size:0.95rem;">Test Socioemocional</h4>
-          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">Diagnóstico de fortalezas</p>
+          <h4 style="color:#fff; font-size:0.95rem;">{{ __('Socioemotional Test') }}</h4>
+          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">{{ __('Strengths diagnosis') }}</p>
         </div>
 
         <div class="roadmap-step-item" data-step="2">
           <div class="step-num-badge">2</div>
-          <h4 style="color:#fff; font-size:0.95rem;">Exploración del Mapa</h4>
-          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">Búsqueda por departamento</p>
+          <h4 style="color:#fff; font-size:0.95rem;">{{ __('Map Exploration') }}</h4>
+          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">{{ __('Search by department') }}</p>
         </div>
 
         <div class="roadmap-step-item" data-step="3">
           <div class="step-num-badge">3</div>
-          <h4 style="color:#fff; font-size:0.95rem;">Agenda & Alertas</h4>
-          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">Control de fechas límite</p>
+          <h4 style="color:#fff; font-size:0.95rem;">{{ __('Schedule & Alerts') }}</h4>
+          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">{{ __('Deadline control') }}</p>
         </div>
 
         <div class="roadmap-step-item" data-step="4">
           <div class="step-num-badge">4</div>
-          <h4 style="color:#fff; font-size:0.95rem;">Red de Padrinos</h4>
-          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">Patrocinio transparente</p>
+          <h4 style="color:#fff; font-size:0.95rem;">{{ __('Sponsor Network') }}</h4>
+          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">{{ __('Transparent sponsorship') }}</p>
         </div>
 
         <div class="roadmap-step-item" data-step="5">
           <div class="step-num-badge">5</div>
-          <h4 style="color:#fff; font-size:0.95rem;">Zarpar a la Universidad</h4>
-          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">¡Éxito académico!</p>
+          <h4 style="color:#fff; font-size:0.95rem;">{{ __('Sail to University') }}</h4>
+          <p style="font-size:0.78rem; color:var(--text-2); margin-top:0.3rem;">{{ __('Academic success!') }}</p>
         </div>
       </div>
 
       <div class="roadmap-preview-box" id="roadmapPreviewBox" data-reveal>
         <div>
-          <span id="stepTag" style="color:var(--teal); font-size:0.8rem; font-weight:800; text-transform:uppercase;">Paso 1 de 5</span>
-          <h3 id="stepTitle" style="font-size:1.4rem; margin-top:0.3rem; color:#fff;">Test Socioemocional & Orientación Vocacional</h3>
+          <span id="stepTag" style="color:var(--teal); font-size:0.8rem; font-weight:800; text-transform:uppercase;">{{ __('Step 1 of 5') }}</span>
+          <h3 id="stepTitle" style="font-size:1.4rem; margin-top:0.3rem; color:#fff;">{{ __('Socioemotional Test & Vocational Guidance') }}</h3>
           <p id="stepDesc" style="color:var(--text-2); margin-top:0.5rem; max-width:600px;">
-            Inicias identificando tus inteligencias múltiples y rasgos socioemocionales. Esto te permite elegir la carrera y universidad con mayor proyección para ti.
+            {{ __('You start by identifying your multiple intelligences and socioemotional traits. This allows you to choose the career and university with the greatest potential for you.') }}
           </p>
         </div>
-        <a href="#" id="stepBtn" class="btn-primary" style="white-space:nowrap;">Hacer el Test Gratis →</a>
+        <a href="#" id="stepBtn" class="btn-primary" style="white-space:nowrap;">{{ __('Take the Free Test →') }}</a>
       </div>
     </div>
   </section>
@@ -628,60 +702,60 @@
 
   <!-- BITÁCORA DE NAVEGANTES (Testimonios Slider) -->
   <section class="section-testimonios" id="testimonios">
-    <div class="container">
-      <div class="section-header" data-reveal>
-        <span class="section-tag">Bitácora de Navegantes</span>
-        <h2>Estudiantes que ya alcanzaron la orilla</h2>
-        <p>Historias reales de jóvenes salvadoreños que transformaron su futuro con una beca universitaria.</p>
-      </div>
-
-      <div class="testimonios-grid">
-        
-        <div class="bitacora-card" data-reveal>
-          <div class="captain-info">
-            <div class="captain-avatar-box">
-              <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.30-PM-1024x682.jpeg" alt="Jose Alejandro Hernández Grijalva" class="captain-avatar">
-            </div>
-            <div>
-              <h4 class="captain-name">José Alejandro Hernández Grijalva</h4>
-              <span class="captain-univ">Becario del Programa Agrobecas (Universidad Zamorano)</span>
-            </div>
-          </div>
-          <p class="bitacora-quote">""Estoy profundamente agradecido con el Ministerio de Relaciones Exteriores y la Universidad Zamorano por esta oportunidad. Mi mayor motivación para estudiar agricultura es poder contribuir al desarrollo de mi familia y de mi país a través de la innovación, aprovechando la tierra para obtener los mejores frutos. Trabajar en el campo es un privilegio porque se trata con vida; los agrónomos y agricultores somos quienes alimentamos a la nación.""</p>
-          <span class="bitacora-badge">⭐ Becado 100% — Ahuachapán</span>
-        </div>
-
-        <div class="bitacora-card" data-reveal>
-          <div class="captain-info">
-            <div class="captain-avatar-box">
-              <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.31-PM-1023x1536.jpeg" alt="Emeris Adilene Castillo Guevara" class="captain-avatar">
-            </div>
-            <div>
-              <h4 class="captain-name">Emeris Adilene Castillo Guevara</h4>
-              <span class="captain-univ">Becaria del Programa Agrobecas (Universidad Zamorano)</span>
-            </div>
-          </div>
-          <p class="bitacora-quote">""Formar parte del Programa Agrobecas representa un paso decisivo hacia mi futuro profesional en el sector agrícola. Agradezco las gestiones para hacer posible que los jóvenes salvadoreños accedamos a una educación superior de excelencia en la Universidad Zamorano, comprometiéndome a aplicar cada conocimiento adquirido en favor del desarrollo y la seguridad alimentaria de nuestro país."</p>
-          <span class="bitacora-badge">⭐ Becaria Nacional — San Salvador</span>
-        </div>
-
-        <div class="bitacora-card" data-reveal>
-          <div class="captain-info">
-            <div class="captain-avatar-box">
-              <img src="https://rree.gob.sv/wp-content/uploads/2025/07/WhatsApp-Image-2025-07-30-at-1.25.47-PM-1024x628.jpeg" alt="Jovenes" class="captain-avatar">
-            </div>
-            <div>
-              <h4 class="captain-name">Programa de Agrobecas – Jóvenes Salvadoreños</h4>
-              <span class="captain-univ">Programa Agrobecas (Cancillería / ESCO / SETEFE)</span>
-            </div>
-          </div>
-          <p class="bitacora-quote">""Ser parte de esta iniciativa educativa nos compromete a dar nuestro máximo esfuerzo en la Universidad Zamorano. Este programa no solo abre las puertas a una formación profesional de excelencia, sino que nos motiva a regresar capacitados para responder a los desafíos agrícolas del país y transformar el desarrollo territorial de nuestras comunidades."</p>
-          <span class="bitacora-badge">⭐ (Cancillería / ESCO / SETEFE) — El Salvador</span>
-        </div>
-
-      </div>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-tag">{{ __('Navigator Log') }}</span>
+      <h2>{{ __('Students who have reached the shore') }}</h2>
+      <p>{{ __('Real stories of Salvadoran youth who transformed their future with a university scholarship.') }}</p>
     </div>
-  </section>
+
+    <div class="testimonios-grid">
+      
+      <div class="bitacora-card" data-reveal>
+        <div class="captain-info">
+          <div class="captain-avatar-box">
+            <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.30-PM-1024x682.jpeg" alt="{{ __('José Alejandro Hernández Grijalva') }}" class="captain-avatar">
+          </div>
+          <div>
+            <h4 class="captain-name">{{ __('José Alejandro Hernández Grijalva') }}</h4>
+            <span class="captain-univ">{{ __('Becario del Programa Agrobecas (Universidad Zamorano)') }}</span>
+          </div>
+        </div>
+        <p class="bitacora-quote">"{{ __('Estoy profundamente agradecido con el Ministerio de Relaciones Exteriores y la Universidad Zamorano por esta oportunidad. Mi mayor motivación para estudiar agricultura es poder contribuir al desarrollo de mi familia y de mi país a través de la innovación, aprovechando la tierra para obtener los mejores frutos. Trabajar en el campo es un privilegio porque se trata con vida; los agrónomos y agricultores somos quienes alimentamos a la nación.') }}"</p>
+        <span class="bitacora-badge">{{ __('⭐ Becado 100% — Ahuachapán') }}</span>
+      </div>
+
+      <div class="bitacora-card" data-reveal>
+        <div class="captain-info">
+          <div class="captain-avatar-box">
+            <img src="https://rree.gob.sv/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-14-at-1.55.31-PM-1023x1536.jpeg" alt="{{ __('Emeris Adilene Castillo Guevara') }}" class="captain-avatar">
+          </div>
+          <div>
+            <h4 class="captain-name">{{ __('Emeris Adilene Castillo Guevara') }}</h4>
+            <span class="captain-univ">{{ __('Becaria del Programa Agrobecas (Universidad Zamorano)') }}</span>
+          </div>
+        </div>
+        <p class="bitacora-quote">"{{ __('Formar parte del Programa Agrobecas representa un paso decisivo hacia mi futuro profesional en el sector agrícola. Agradezco las gestiones para hacer posible que los jóvenes salvadoreños accedamos a una educación superior de excelencia en la Universidad Zamorano, comprometiéndome a aplicar cada conocimiento adquirido en favor del desarrollo y la seguridad alimentaria de nuestro país.') }}"</p>
+        <span class="bitacora-badge">{{ __('⭐ Becaria Nacional — San Salvador') }}</span>
+      </div>
+
+      <div class="bitacora-card" data-reveal>
+        <div class="captain-info">
+          <div class="captain-avatar-box">
+            <img src="https://rree.gob.sv/wp-content/uploads/2025/07/WhatsApp-Image-2025-07-30-at-1.25.47-PM-1024x628.jpeg" alt="{{ __('Programa de Agrobecas – Jóvenes Salvadoreños') }}" class="captain-avatar">
+          </div>
+          <div>
+            <h4 class="captain-name">{{ __('Programa de Agrobecas – Jóvenes Salvadoreños') }}</h4>
+            <span class="captain-univ">{{ __('Programa Agrobecas (Cancillería / ESCO / SETEFE)') }}</span>
+          </div>
+        </div>
+        <p class="bitacora-quote">"{{ __('Ser parte de esta iniciativa educativa nos compromete a dar nuestro máximo esfuerzo en la Universidad Zamorano. Este programa no solo abre las puertas a una formación profesional de excelencia, sino que nos motiva a regresar capacitados para responder a los desafíos agrícolas del país y transformar el desarrollo territorial de nuestras comunidades.') }}"</p>
+        <span class="bitacora-badge">{{ __('⭐ (Cancillería / ESCO / SETEFE) — El Salvador') }}</span>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   <!-- MODAL MAPA -->
   <div id="uniModal" class="modal">
@@ -717,14 +791,12 @@
         <div class="container">
             <div class="historia-grid" data-reveal>
                 <div class="historia-text">
-                    <span class="section-tag">Nuestra Historia</span>
-                    <h2>Nacimos de la misma<br />necesidad que tú sientes</h2>
+                    <span class="section-tag">{{ __('Our Story') }}</span>
+                    <h2>{{ __('We were born from the same') }}<br />{{ __('need you feel') }}</h2>
                     <p class="historia-quote">
-                        UGF nació de la mente de un estudiante de bachillerato que no podía costear la universidad. Hoy
-                        es la plataforma que conecta el talento salvadoreño con oportunidades reales, sin importar el
-                        origen económico.
+                        {{ __('UGF was born from the mind of a high school student who could not afford university. Today it is the platform that connects Salvadoran talent with real opportunities, regardless of economic background.') }}
                     </p>
-                    <a href="#" class="btn-primary">Conocer la historia completa →</a>
+                    <a href="#" class="btn-primary">{{ __('Learn the full story →') }}</a>
                 </div>
                 <div class="mvv-cards">
                     <div class="mvv-card" data-reveal>
@@ -736,8 +808,8 @@
                                     stroke-width="1.5" />
                             </svg>
                         </div>
-                        <h4>Misión</h4>
-                        <p>Democratizar el acceso a la educación universitaria en El Salvador.</p>
+                        <h4>{{ __('Mission') }}</h4>
+                        <p>{{ __('Democratize access to university education in El Salvador.') }}</p>
                     </div>
                     <div class="mvv-card highlight" data-reveal>
                         <div class="mvv-icon">
@@ -746,8 +818,8 @@
                                     stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                             </svg>
                         </div>
-                        <h4>Visión</h4>
-                        <p>Ser la red educativa más grande de Centroamérica para 2030.</p>
+                        <h4>{{ __('Vision') }}</h4>
+                        <p>{{ __('Be the largest educational network in Central America by 2030.') }}</p>
                     </div>
                     <div class="mvv-card" data-reveal>
                         <div class="mvv-icon">
@@ -756,8 +828,8 @@
                                     stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                             </svg>
                         </div>
-                        <h4>Valores</h4>
-                        <p>Transparencia, equidad y compromiso con cada estudiante.</p>
+                        <h4>{{ __('Values') }}</h4>
+                        <p>{{ __('Transparency, equity and commitment to every student.') }}</p>
                     </div>
                 </div>
             </div>
@@ -768,9 +840,9 @@
     <section class="cta-section section-treasure">
         <div class="treasure-glow"></div>
         <div class="container cta-content" data-reveal>
-            <p>Miles de estudiantes ya están navegando con UGF. ¿Que esperas?</p>
-            <a href="{{ url('/becas') }}">Ver lista de Becas</a>
-            Únete ahora
+            <p>{{ __('Thousands of students are already navigating with UGF. What are you waiting for?') }}</p>
+            <a href="{{ url('/becas') }}">{{ __('View list of Scholarships') }}</a>
+            {{ __('Join now') }}
             <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                     stroke-linejoin="round" />
@@ -844,26 +916,26 @@
     <p id="modalDeptDesc" class="text-gray-300 mb-4"></p>
 
     <div class="overflow-y-auto max-h-[60vh] pr-2">
-      <h4 class="text-lg font-semibold text-teal-400 mb-3">Universidades con Becas:</h4>
+      <h4 class="text-lg font-semibold text-teal-400 mb-3">{{ __('Universities with Scholarships:') }}</h4>
       <div id="modalUniversitiesList" class="space-y-6"></div>
     </div>
   </dialog>
 
-  <!-- BRÚJULA FLOTANTE DE NAVEGACIÓN -->
-  <div class="floating-compass-widget" id="floatingCompass" title="Brújula de Navegación">
+  <!-- FLOATING NAVIGATION COMPASS -->
+  <div class="floating-compass-widget" id="floatingCompass" title="{{ __('Navigation Compass') }}">
     <div class="compass-needle" id="compassNeedle"></div>
   </div>
 
-  <!-- BARRA FLOTANTE DE ACCESOS RÁPIDOS (Marine Dock) -->
+  <!-- FLOATING QUICK ACCESS BAR (Marine Dock) -->
   <nav class="floating-marine-dock" id="marineDock">
-    <a href="#inicio" class="dock-item active">⛵ Inicio</a>
-    <a href="#servicios" class="dock-item">🌊 Servicios</a>
-    <a href="#becas" class="dock-item">🎓 Becas</a>
-    <a href="#hub-social" class="dock-item">💬 Hub Social</a>
-    <a href="#universidades" class="dock-item">🗺️ Mapa</a>
-    <a href="#roadmap" class="dock-item">🧭 La Ruta</a>
-    <a href="#testimonios" class="dock-item">⚓ Bitácora</a>
-    <a href="{{ route('becas.calendario') }}" class="dock-item">📅 Calendario</a>
+    <a href="#inicio" class="dock-item active">⛵ {{ __('Home') }}</a>
+    <a href="#servicios" class="dock-item">🌊 {{ __('Services') }}</a>
+    <a href="#becas" class="dock-item">🎓 {{ __('Scholarships') }}</a>
+    <a href="#hub-social" class="dock-item">💬 {{ __('Social Hub') }}</a>
+    <a href="#universidades" class="dock-item">🗺️ {{ __('Map') }}</a>
+    <a href="#roadmap" class="dock-item">🧭 {{ __('The Route') }}</a>
+    <a href="#testimonios" class="dock-item">⚓ {{ __('Log') }}</a>
+    <a href="{{ route('becas.calendario') }}" class="dock-item">📅 {{ __('Calendar') }}</a>
   </nav>
 
   @include('components.chatbot')

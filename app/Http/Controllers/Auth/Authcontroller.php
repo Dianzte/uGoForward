@@ -51,11 +51,11 @@ class AuthController extends Controller
         if (Auth::attempt(['correo' => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('index'))->with('status', '¡Bienvenido de nuevo!');
+            return redirect()->intended(route('index'))->with('status', __('¡Bienvenido de nuevo!'));
         }
 
         throw ValidationException::withMessages([
-            'email' => 'Las credenciales no coinciden con nuestros registros.',
+            'email' => __('auth.failed'),
         ]);
     }
 
@@ -89,7 +89,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('index')->with('status', '¡Cuenta creada con éxito!');
+        return redirect()->route('index')->with('status', __('¡Cuenta creada con éxito!'));
     }
 
     /**
@@ -105,13 +105,10 @@ class AuthController extends Controller
         }
 
         $validated = $request->validate([
-            'usuario' => ['required', 'string', 'max:255', 'unique:users,usuario'], // <-- AGREGAR ESTA LÍNEA
             'nombre' => ['required', 'string', 'max:255'],
-             'correo' => ['required', 'string', 'email', 'max:255', 'unique:users,correo'],
             'departamento' => ['required', 'string', 'max:255'],
-              'fechaNac' => ['required', 'date'],
             'contrasena' => ['nullable', 'string', 'min:8'],
-             'nie' => ['nullable', 'string', 'max:20'],
+            'nie' => ['nullable', 'string', 'max:20'],
             'dui' => ['nullable', 'string', 'max:20'],
             'avatar' => ['nullable', 'image', 'max:2048'],
             'banner' => ['nullable', 'image', 'max:2048'],
@@ -134,9 +131,6 @@ class AuthController extends Controller
                 Storage::disk('public')->delete('imagenes/'.$avatarAntiguo->ruta);
                 $avatarAntiguo->delete();
             }
-        } else {
-
-            $user->avatar = $user->avatar;
         }
 
         if ($request->hasFile('banner')) {
@@ -153,8 +147,6 @@ class AuthController extends Controller
                 Storage::disk('public')->delete('imagenes/'.$bannerAntiguo->ruta);
                 $bannerAntiguo->delete();
             }
-        } else {
-            $user->banner = $user->banner;
         }
 
         $user->nombre = $validated['nombre'];
@@ -166,7 +158,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        return back()->with('status', 'Perfil actualizado correctamente.');
+        return back()->with('status', __('Perfil actualizado correctamente.'));
     }
 
     /**

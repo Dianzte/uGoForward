@@ -295,7 +295,7 @@ function updateShip(bob, tilt) {
   // El translateX(-50%) es para mantenerlo centrado si así lo tienes en CSS
   ship.style.transform = `translateX(-50%) translateY(${bob}px) rotate(${tilt}deg)`;
   
-  // Aseguramos que las propiedades de visibilidad sean constantes
+  // Aseguramos que las propiedades of visibilidad sean constantes
   ship.style.opacity = "1";
   ship.style.filter = "none";
 }
@@ -442,55 +442,55 @@ if (heroStats) counterObs.observe(heroStats);
 const UNI_DATA = {
   'san-salvador': {
     name: 'San Salvador',
-    region: 'Zona Central',
+    region: 'Central Zone',
     unis: [
       {
         name: 'UES',
-        fullName: 'Universidad de El Salvador',
+        fullName: 'University of El Salvador',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_de_la_Universidad_de_El_Salvador.svg/1200px-Logo_de_la_Universidad_de_El_Salvador.svg.png',
         youtubeId: null,
-        desc: 'La principal institución pública de educación superior del país. Fundada en 1841, ofrece la mayor oferta académica a nivel nacional con el sistema de becas remuneradas más amplio de El Salvador.',
-        badges: ['🏛️ Pública', '👨‍🎓 65,000 Estudiantes', '⭐ Fundada 1841', '📅 Beca 2026 Abierta'],
-        careers: ['Medicina', 'Ingeniería Industrial', 'Derecho', 'Economía', 'Ciencias Químicas', 'Informática', 'Odontología', 'Arquitectura', 'Química y Farmacia'],
+        desc: 'The main public higher education institution in the country. Founded in 1841, it offers the largest academic offer nationwide with the widest paid scholarship system in El Salvador.',
+        badges: ['🏛️ Public', '👨‍🎓 65,000 Students', '⭐ Founded 1841', '📅 2026 Scholarship Open'],
+        careers: ['Medicine', 'Industrial Engineering', 'Law', 'Economics', 'Chemical Sciences', 'Computing', 'Dentistry', 'Architecture', 'Chemistry and Pharmacy'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:00 PM' },
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:00 PM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:00 AM – 6:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:00 PM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '7:00 AM – 5:00 PM' },
         ],
-        services: ['🏥 Clínica Médica Gratuita', '📚 Biblioteca Central 24H', '🍽️ Comedor Universitario', '🚌 Transporte Colectivo', '💻 Laboratorios TI', '🏋️ Deportes', '🎨 Arte y Cultura', '🔬 Centro de Investigación'],
+        services: ['🏥 Free Medical Clinic', '📚 24H Central Library', '🍽️ University Cafeteria', '🚌 Public Transport', '💻 IT Labs', '🏋️ Sports', '🎨 Art and Culture', '🔬 Research Center'],
         beca: {
-          tipo: 'Beca Remunerada y Exoneración de Escolaridad',
+          tipo: 'Paid Scholarship and Tuition Waiver',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo de 7.0 en bachillerato' },
-            { icon: '💰', text: 'Comprobante de necesidad económica' },
-            { icon: '📋', text: 'Partida de nacimiento certificada' },
-            { icon: '🎯', text: 'Prueba de aptitudes aprobada' },
-            { icon: '📆', text: 'Aplicación antes de Enero 2026' },
+            { icon: '📊', text: 'Minimum high school GPA of 7.0' },
+            { icon: '💰', text: 'Proof of financial need' },
+            { icon: '📋', text: 'Certified birth certificate' },
+            { icon: '🎯', text: 'Approved aptitude test' },
+            { icon: '📆', text: 'Apply before January 2026' },
           ],
         },
         website: 'https://www.ues.edu.sv',
       },
       {
         name: 'UCA',
-        fullName: 'Universidad Centroamericana José Simeón Cañas',
+        fullName: 'Central American University José Simeón Cañas',
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwjqm5gCq_2DYlnuKO0g7HRGDJfUvSqOXhpQ&s',
         youtubeId: null,
-        desc: 'Universidad privada de alto prestigio y orientación social. Sus programas de beca de excelencia son reconocidos en todo Centroamérica.',
-        badges: ['🎓 Privada', '👨‍🎓 8,000 Estudiantes', '⭐ Alta Calidad Académica', '🌎 Reconocimiento Internacional'],
-        careers: ['Ingeniería Informática', 'Administración de Empresas', 'Psicología', 'Comunicaciones', 'Maestría en Derecho', 'Ingeniería Civil', 'Teología'],
+        desc: 'Private university of high prestige and social orientation. Its academic excellence scholarship programs are recognized throughout Central America.',
+        badges: ['🎓 Private', '👨‍🎓 8,000 Students', '⭐ High Academic Quality', '🌎 International Recognition'],
+        careers: ['Computer Engineering', 'Business Administration', 'Psychology', 'Communications', 'Master of Law', 'Civil Engineering', 'Theology'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 7:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '8:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:00 AM – 7:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '8:00 AM – 4:00 PM' },
         ],
-        services: ['📚 Biblioteca Especializada', '💻 Campus Digital', '🌱 Cafetería', '🔬 Laboratorios Modernos', '🎭 Centro Cultural', '♿ Accesibilidad Total'],
+        services: ['📚 Specialized Library', '💻 Digital Campus', '🌱 Cafeteria', '🔬 Modern Labs', '🎭 Cultural Center', '♿ Full Accessibility'],
         beca: {
-          tipo: 'Beca Excelencia Académica 2026',
+          tipo: 'Academic Excellence Scholarship 2026',
           requisitos: [
-            { icon: '📊', text: 'Promedio de bachillerato de 8.5 o superior' },
-            { icon: '🏆', text: 'Participación en actividades comunitarias' },
-            { icon: '📋', text: 'Carta de motivación personal' },
-            { icon: '💼', text: 'Entrevista con comité de admisiones' },
-            { icon: '📆', text: 'Convocatoria: Febrero – Marzo 2026' },
+            { icon: '📊', text: 'High school GPA of 8.5 or higher' },
+            { icon: '🏆', text: 'Participation in community activities' },
+            { icon: '📋', text: 'Personal motivation letter' },
+            { icon: '💼', text: 'Interview with admissions committee' },
+            { icon: '📆', text: 'Call for applications: February – March 2026' },
           ],
         },
         website: 'https://www.uca.edu.sv',
@@ -499,51 +499,51 @@ const UNI_DATA = {
   },
   'santa-ana': {
     name: 'Santa Ana',
-    region: 'Zona Occidental',
+    region: 'Western Zone',
     unis: [
       {
         name: 'UNASA',
-        fullName: 'Universidad Autónoma de Santa Ana',
+        fullName: 'Autonomous University of Santa Ana',
         image: 'https://campussostenible.unasa.edu.sv/images/UNASA2024/UNASA_SUR_2024.jpg',
         youtubeId: null,
-        desc: 'Institución líder en la zona occidental especializada en ciencias de la salud y tecnología. Cuenta con convenios de beca con la municipalidad.',
-        badges: ['🏥 Especialidad Salud', '🌍 Zona Occidental', '📅 Beca Parcial Activa'],
-        careers: ['Medicina', 'Laboratorio Clínico', 'Enfermería', 'Fisioterapia', 'Nutrición y Dietética'],
+        desc: 'Leading institution in the western zone specializing in health sciences and technology. It has scholarship agreements with the municipality.',
+        badges: ['🏥 Health Specialty', '🌍 Western Zone', '📅 Partial Scholarship Active'],
+        careers: ['Medicine', 'Clinical Laboratory', 'Nursing', 'Physiotherapy', 'Nutrition and Dietetics'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:30 AM – 6:30 PM' },
-          { dia: 'Sábado', turno: 'Complementario', hora: '8:00 AM – 1:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:30 AM – 6:30 PM' },
+          { dia: 'Saturday', turno: 'Complementary', hora: '8:00 AM – 1:00 PM' },
         ],
-        services: ['🏥 Clínica de Práctica', '🔬 Laboratorio Biomédico', '📚 Biblioteca', '🍽️ Cafetería', '🏋️ Área Deportiva'],
+        services: ['🏥 Practice Clinic', '🔬 Biomedical Lab', '📚 Library', '🍽️ Cafeteria', '🏋️ Sports Area'],
         beca: {
-          tipo: 'Beca Mérito Académico — Zona Occidental',
+          tipo: 'Academic Merit Scholarship — Western Zone',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 8.0 en bachillerato' },
-            { icon: '🏠', text: 'Residir en Santa Ana, Ahuachapán o Sonsonate' },
-            { icon: '💰', text: 'Ingreso familiar menor a $500/mes' },
-            { icon: '📋', text: 'DUI del solicitante o tutor' },
+            { icon: '📊', text: 'Minimum GPA of 8.0 in high school' },
+            { icon: '🏠', text: 'Reside in Santa Ana, Ahuachapán or Sonsonate' },
+            { icon: '💰', text: 'Family income under $500/month' },
+            { icon: '📋', text: 'Applicant or guardian ID' },
           ],
         },
         website: 'https://www.unasa.edu.sv',
       },
       {
         name: 'UCO',
-        fullName: 'Universidad Católica de Occidente',
+        fullName: 'Catholic University of the West',
         image: 'https://upload.wikimedia.org/wikipedia/commons/d/db/Logo_UCO_unico.png',
         youtubeId: null,
-        desc: 'Universidad de tradición católica en el corazón de Santa Ana con oferta académica en derecho, negocios y ciencias.',
-        badges: ['⛪ Privada Católica', '👨‍🎓 4,500 Estudiantes', '🏛️ Tradición Santa Ana'],
-        careers: ['Derecho', 'Ciencias Empresariales', 'Arquitectura', 'Ingeniería Civil', 'Educación'],
+        desc: 'University with Catholic tradition in the heart of Santa Ana with academic offers in law, business and sciences.',
+        badges: ['⛪ Private Catholic', '👨‍🎓 4,500 Students', '🏛️ Santa Ana Tradition'],
+        careers: ['Law', 'Business Sciences', 'Architecture', 'Civil Engineering', 'Education'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime and Nighttime', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '7:00 AM – 4:00 PM' },
         ],
-        services: ['⛪ Capilla Universitaria', '📚 Biblioteca Jurídica', '💻 Sala de Computación', '🎓 Bienestar Estudiantil'],
+        services: ['⛪ University Chapel', '📚 Law Library', '💻 Computer Room', '🎓 Student Welfare'],
         beca: {
-          tipo: 'Beca Vocacional Occidental',
+          tipo: 'Western Vocational Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '📋', text: 'Carta parroquial o de comunidad religiosa' },
-            { icon: '💰', text: 'Comprobante de ingreso familiar' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '📋', text: 'Parish or religious community letter' },
+            { icon: '💰', text: 'Proof of family income' },
           ],
         },
         website: 'https://www.uco.edu.sv',
@@ -552,51 +552,51 @@ const UNI_DATA = {
   },
   'la-libertad': {
     name: 'La Libertad',
-    region: 'Zona Central-Sur',
+    region: 'South-Central Zone',
     unis: [
       {
         name: 'UTEC',
-        fullName: 'Universidad Tecnológica de El Salvador',
+        fullName: 'Technological University of El Salvador',
         image: 'https://www.utec.edu.sv/images/utec-campus.jpg',
         youtubeId: null,
-        desc: 'Una de las universidades privadas más grandes del país. Fuertemente orientada a tecnología, negocios y diseño.',
-        badges: ['💻 Tecnología', '👨‍🎓 30,000 Estudiantes', '🌐 Sede Nacional', '📅 Beca Activa'],
-        careers: ['Informática', 'Diseño Gráfico', 'Administración', 'Mercadotecnia', 'Periodismo', 'Ingeniería Electrónica', 'Gastronomía'],
+        desc: 'One of the largest private universities in the country. Strongly oriented towards technology, business and design.',
+        badges: ['💻 Technology', '👨‍🎓 30,000 Students', '🌐 National Headquarters', '📅 Active Scholarship'],
+        careers: ['Computing', 'Graphic Design', 'Administration', 'Marketing', 'Journalism', 'Electronic Engineering', 'Gastronomy'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:00 PM' },
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:30 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:00 AM – 6:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:30 PM – 9:30 PM' },
         ],
-        services: ['💻 Data Center Propio', '🎨 Estudio de Diseño', '📡 Canal Universitario UTEC TV', '🍽️ Comedor', '🏋️ Gimnasio', '🚌 Buses Inter-Sede'],
+        services: ['💻 Own Data Center', '🎨 Design Studio', '📡 UTEC TV University Channel', '🍽️ Cafeteria', '🏋️ Gym', '🚌 Inter-Campus Buses'],
         beca: {
-          tipo: 'Beca Digital Futuro',
+          tipo: 'Future Digital Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '💰', text: 'Estudio socioeconómico aprobado' },
-            { icon: '🖥️', text: 'Interés comprobado en áreas tecnológicas' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '💰', text: 'Approved socioeconomic study' },
+            { icon: '🖥️', text: 'Proven interest in technological areas' },
           ],
         },
         website: 'https://www.utec.edu.sv',
       },
       {
         name: 'UDB',
-        fullName: 'Universidad Don Bosco',
+        fullName: 'Don Bosco University',
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJelJuKqLj7HCIIFwKzeFWt2cQHVdvCFEPQ&s',
         youtubeId: null,
-        desc: 'Reconocida por su excelencia en ingeniería y formación técnica de alto nivel. Muy fuerte en STEM con equipamiento de primer nivel.',
-        badges: ['⚙️ Ingeniería & STEM', '🤖 Mecatrónica', '🌟 Top STEM El Salvador', '📅 Convocatoria Abierta'],
-        careers: ['Mecatrónica', 'Ingeniería de Sistemas', 'Electrónica', 'Industrial', 'Software', 'Biomédica'],
+        desc: 'Recognized for its excellence in engineering and high-level technical training. Very strong in STEM with top-tier equipment.',
+        badges: ['⚙️ Engineering & STEM', '🤖 Mechatronics', '🌟 Top STEM El Salvador', '📅 Open Call'],
+        careers: ['Mechatronics', 'Systems Engineering', 'Electronics', 'Industrial', 'Software', 'Biomedical'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:30 PM' },
-          { dia: 'Sábado', turno: 'Especial', hora: '8:00 AM – 12:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:00 AM – 6:30 PM' },
+          { dia: 'Saturday', turno: 'Special', hora: '8:00 AM – 12:00 PM' },
         ],
-        services: ['🔬 Laboratorio Mecatrónica', '🏭 Taller Industrial', '📡 Red WiFi Campus', '🍽️ Cafetería', '🏋️ Área Deportiva', '🤝 Vinculación Empresarial'],
+        services: ['🔬 Mechatronics Lab', '🏭 Industrial Workshop', '📡 WiFi Campus Network', '🍽️ Cafeteria', '🏋️ Sports Area', '🤝 Business Linkage'],
         beca: {
-          tipo: 'Beca Talento STEM — Don Bosco',
+          tipo: 'STEM Talent Scholarship — Don Bosco',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 8.0 en materias STEM' },
-            { icon: '🏆', text: 'Participación en ferias científicas o robótica' },
-            { icon: '📋', text: 'Carta de recomendación del bachillerato' },
-            { icon: '💡', text: 'Examen de habilidades científicas' },
+            { icon: '📊', text: 'Minimum GPA 8.0 in STEM subjects' },
+            { icon: '🏆', text: 'Participation in science fairs or robotics' },
+            { icon: '📋', text: 'Recommendation letter from high school' },
+            { icon: '💡', text: 'Scientific skills test' },
           ],
         },
         website: 'https://www.udb.edu.sv',
@@ -605,51 +605,51 @@ const UNI_DATA = {
   },
   'san-miguel': {
     name: 'San Miguel',
-    region: 'Zona Oriental',
+    region: 'Eastern Zone',
     unis: [
       {
         name: 'UES Oriente',
-        fullName: 'Universidad de El Salvador — Sede Oriental',
+        fullName: 'University of El Salvador — Eastern Campus',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_de_la_Universidad_de_El_Salvador.svg/1200px-Logo_de_la_Universidad_de_El_Salvador.svg.png',
         youtubeId: null,
-        desc: 'Sede de la Universidad de El Salvador en el oriente del país. La opción pública más accesible para estudiantes de San Miguel, Usulután, Morazán y La Unión.',
-        badges: ['🏛️ Pública', '🌍 Zona Oriental', '📅 Beca Remunerada 2026'],
-        careers: ['Derecho', 'Economía', 'Agronomía', 'Enfermería', 'Ingeniería', 'Educación'],
+        desc: 'Campus of the University of El Salvador in the east of the country. The most accessible public option for students from San Miguel, Usulután, Morazán and La Unión.',
+        badges: ['🏛️ Public', '🌍 Eastern Zone', '📅 Paid Scholarship 2026'],
+        careers: ['Law', 'Economics', 'Agronomy', 'Nursing', 'Engineering', 'Education'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 6:00 PM' },
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:00 PM – 9:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:00 AM – 6:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:00 PM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '🍽️ Comedor Estudiantil', '💻 Sala de Computación', '🏋️ Deportes', '🏥 Clínica'],
+        services: ['📚 Library', '🍽️ Student Cafeteria', '💻 Computer Room', '🏋️ Sports', '🏥 Clinic'],
         beca: {
-          tipo: 'Beca Pública Oriental 2026',
+          tipo: 'Eastern Public Scholarship 2026',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '🏠', text: 'Residir en zona oriental del país' },
-            { icon: '💰', text: 'Necesidad económica comprobada' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '🏠', text: 'Reside in the eastern zone of the country' },
+            { icon: '💰', text: 'Proven financial need' },
           ],
         },
         website: 'https://www.ues.edu.sv',
       },
       {
         name: 'UGB',
-        fullName: 'Universidad Gerardo Barrios',
+        fullName: 'Gerardo Barrios University',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'La universidad privada más importante del oriente. Cubre los 14 departamentos con sedes estratégicas y becas de liderazgo.',
-        badges: ['🎓 Privada', '📍 14 Departamentos', '🏆 Liderazgo Estudiantil'],
-        careers: ['Administración', 'Contaduría', 'Derecho', 'Ingeniería Industrial', 'Turismo', 'Psicología'],
+        desc: 'The most important private university in the east. Covers all 14 departments with strategic campuses and leadership scholarships.',
+        badges: ['🎓 Private', '📍 14 Departments', '🏆 Student Leadership'],
+        careers: ['Administration', 'Accounting', 'Law', 'Industrial Engineering', 'Tourism', 'Psychology'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime and Nighttime', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '7:00 AM – 5:00 PM' },
         ],
-        services: ['📚 Biblioteca Digital', '💻 Laboratorios', '🎓 Bolsa de Trabajo', '🏋️ Deportes', '🌐 Campus Virtual'],
+        services: ['📚 Digital Library', '💻 Labs', '🎓 Job Board', '🏋️ Sports', '🌐 Virtual Campus'],
         beca: {
-          tipo: 'Beca Liderazgo UGB',
+          tipo: 'UGB Leadership Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5 en bachillerato' },
-            { icon: '🏆', text: 'Demostrar liderazgo en comunidad escolar' },
-            { icon: '📋', text: 'Cartas de recomendación' },
-            { icon: '📝', text: 'Ensayo de 500 palabras sobre metas académicas' },
+            { icon: '📊', text: 'Minimum GPA 7.5 in high school' },
+            { icon: '🏆', text: 'Show leadership in school community' },
+            { icon: '📋', text: 'Recommendation letters' },
+            { icon: '📝', text: '500-word essay on academic goals' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
@@ -658,50 +658,50 @@ const UNI_DATA = {
   },
   'ahuachaapan': {
     name: 'Ahuachapán',
-    region: 'Zona Occidental',
+    region: 'Western Zone',
     unis: [
       {
-        name: 'UGB — Sede Ahuachapán',
-        fullName: 'Universidad Gerardo Barrios — Sede Ahuachapán',
+        name: 'UGB — Ahuachapán Campus',
+        fullName: 'Gerardo Barrios University — Ahuachapán Campus',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'Sede de la Universidad Gerardo Barrios que atiende a los estudiantes del departamento de Ahuachapán con carreras enfocadas en negocios y tecnología.',
-        badges: ['🎓 Privada', '📍 Zona Occidental', '📅 Beca Liderazgo'],
-        careers: ['Administración de Empresas', 'Contaduría Pública', 'Ingeniería en Sistemas', 'Derecho'],
+        desc: 'Campus of the Gerardo Barrios University serving students from the department of Ahuachapán with careers focused on business and technology.',
+        badges: ['🎓 Private', '📍 Western Zone', '📅 Leadership Scholarship'],
+        careers: ['Business Administration', 'Public Accounting', 'Systems Engineering', 'Law'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime and Nighttime', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '7:00 AM – 4:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Laboratorio Informático', '🎓 Orientación Vocacional', '📶 WiFi Campus'],
+        services: ['📚 Library', '💻 IT Lab', '🎓 Vocational Counseling', '📶 Campus WiFi'],
         beca: {
-          tipo: 'Beca Liderazgo Occidental — UGB',
+          tipo: 'Western Leadership Scholarship — UGB',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '🏠', text: 'Residir en Ahuachapán' },
-            { icon: '🏆', text: 'Participación activa en actividades estudiantiles' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '🏠', text: 'Reside in Ahuachapán' },
+            { icon: '🏆', text: 'Active participation in student activities' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
       },
       {
-        name: 'UNIVO — Sede Ahuachapán',
-        fullName: 'Universidad de Oriente — Sede Ahuachapán',
+        name: 'UNIVO — Ahuachapán Campus',
+        fullName: 'University of the East — Ahuachapán Campus',
         image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
         youtubeId: null,
-        desc: 'La Universidad de Oriente con presencia nacional ofrece carreras accesibles para bachilleres de Ahuachapán.',
-        badges: ['🌾 Zona Occidental', '💼 Enfoque Empresarial', '📅 Admisión Abierta'],
-        careers: ['Ciencias Jurídicas', 'Administración de Empresas', 'Contaduría Pública'],
+        desc: 'The University of the East with national presence offers accessible careers for high school graduates from Ahuachapán.',
+        badges: ['🌾 Western Zone', '💼 Business Focus', '📅 Admission Open'],
+        careers: ['Legal Sciences', 'Business Administration', 'Public Accounting'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Nocturno', hora: '5:00 PM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '8:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Nighttime', hora: '5:00 PM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '8:00 AM – 4:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Computación', '🎓 Bolsa de Empleo'],
+        services: ['📚 Library', '💻 Computing', '🎓 Job Board'],
         beca: {
-          tipo: 'Beca Socioeconómica UNIVO',
+          tipo: 'UNIVO Socioeconomic Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '💰', text: 'Estudio socioeconómico favorable' },
-            { icon: '📋', text: 'Documentos personales completos' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '💰', text: 'Favorable socioeconomic study' },
+            { icon: '📋', text: 'Complete personal documents' },
           ],
         },
         website: 'https://www.univo.edu.sv',
@@ -710,27 +710,27 @@ const UNI_DATA = {
   },
   'sonsonate': {
     name: 'Sonsonate',
-    region: 'Zona Occidental',
+    region: 'Western Zone',
     unis: [
       {
         name: 'UNICO',
-        fullName: 'Universidad de Sonsonate (UNICO)',
+        fullName: 'University of Sonsonate (UNICO)',
         image: 'https://www.unico.edu.sv/images/campus.jpg',
         youtubeId: null,
-        desc: 'La principal institución privada en Sonsonate, con enfoque en negocios, tecnología y carreras de la salud.',
-        badges: ['🏫 Privada', '📍 Sonsonate', '📅 Convocatoria Activa'],
-        careers: ['Administración', 'Informática', 'Nutrición', 'Derecho', 'Contaduría'],
+        desc: 'The main private institution in Sonsonate, with a focus on business, technology and health careers.',
+        badges: ['🏫 Private', '📍 Sonsonate', '📅 Active Call'],
+        careers: ['Administration', 'Computing', 'Nutrition', 'Law', 'Accounting'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime and Nighttime', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '7:00 AM – 4:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Laboratorios', '🍽️ Cafetería', '🎓 Bienestar Estudiantil'],
+        services: ['📚 Library', '💻 Labs', '🍽️ Cafeteria', '🎓 Student Welfare'],
         beca: {
-          tipo: 'Beca Municipal Sonsonate',
+          tipo: 'Sonsonate Municipal Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '🏠', text: 'Residir en municipio de Sonsonate' },
-            { icon: '💰', text: 'Necesidad económica verificada' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '🏠', text: 'Reside in the municipality of Sonsonate' },
+            { icon: '💰', text: 'Verified financial need' },
           ],
         },
         website: 'https://www.unico.edu.sv',
@@ -739,26 +739,26 @@ const UNI_DATA = {
   },
   'chalatenango': {
     name: 'Chalatenango',
-    region: 'Zona Norte',
+    region: 'Northern Zone',
     unis: [
       {
         name: 'UGB — Chalatenango',
-        fullName: 'Universidad Gerardo Barrios — Sede Chalatenango',
+        fullName: 'Gerardo Barrios University — Chalatenango Campus',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'Sede en la región norte que brinda acceso a educación superior a estudiantes de Chalatenango y sus municipios.',
-        badges: ['🎓 Privada', '📍 Zona Norte', '📅 Beca Liderazgo'],
-        careers: ['Administración de Empresas', 'Derecho', 'Contaduría', 'Ingeniería en Sistemas'],
+        desc: 'Campus in the northern region that provides access to higher education to students from Chalatenango and its municipalities.',
+        badges: ['🎓 Private', '📍 Northern Zone', '📅 Leadership Scholarship'],
+        careers: ['Business Administration', 'Law', 'Accounting', 'Systems Engineering'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Daytime and Nighttime', hora: '7:00 AM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Lab. Informático', '📶 Internet Campus'],
+        services: ['📚 Library', '💻 IT Lab', '📶 Campus Internet'],
         beca: {
-          tipo: 'Beca Liderazgo Norte',
+          tipo: 'Northern Leadership Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '🏠', text: 'Residir en departamento de Chalatenango' },
-            { icon: '🏆', text: 'Participación comunitaria' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '🏠', text: 'Reside in the department of Chalatenango' },
+            { icon: '🏆', text: 'Community participation' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
@@ -767,27 +767,27 @@ const UNI_DATA = {
   },
   'cabanas': {
     name: 'Cabañas',
-    region: 'Zona Norte-Central',
+    region: 'North-Central Zone',
     unis: [
       {
         name: 'UNIVO — Cabañas',
-        fullName: 'Universidad de Oriente — Sede Cabañas',
+        fullName: 'University of the East — Cabañas Campus',
         image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
         youtubeId: null,
-        desc: 'Presencia de la Universidad de Oriente en el departamento de Cabañas, ofreciendo carreras accesibles para la población estudiantil local.',
-        badges: ['🌾 Zona Norte-Central', '💼 Bachilleres Cabañas', '📅 Admisión Agosto'],
-        careers: ['Ciencias Jurídicas', 'Administración de Empresas', 'Contaduría Pública'],
+        desc: 'Presence of the University of the East in the department of Cabañas, offering accessible careers for the local student population.',
+        badges: ['🌾 North-Central Zone', '💼 Cabañas High School Grads', '📅 August Admission'],
+        careers: ['Legal Sciences', 'Business Administration', 'Public Accounting'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Completo', hora: '8:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Full', hora: '8:00 AM – 4:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Sala de Cómputo', '🎓 Asesoría Académica'],
+        services: ['📚 Library', '💻 Computer Room', '🎓 Academic Counseling'],
         beca: {
-          tipo: 'Beca Socioeconómica Cabañas',
+          tipo: 'Cabañas Socioeconomic Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '🏠', text: 'Residir en Cabañas' },
-            { icon: '💰', text: 'Ingreso familiar comprobado bajo' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '🏠', text: 'Reside in Cabañas' },
+            { icon: '💰', text: 'Proven low family income' },
           ],
         },
         website: 'https://www.univo.edu.sv',
@@ -796,47 +796,47 @@ const UNI_DATA = {
   },
   'cuscatlan': {
     name: 'Cuscatlán',
-    region: 'Zona Central',
+    region: 'Central Zone',
     unis: [
       {
         name: 'UNICO Cuscatlán',
-        fullName: 'Universidad de Cuscatlán',
+        fullName: 'University of Cuscatlán',
         image: 'https://www.udecusca.edu.sv/images/campus.jpg',
         youtubeId: null,
-        desc: 'Universidad privada con sede en Cojutepeque, ofreciendo acceso a educación superior para la zona central-norte del país.',
-        badges: ['🏫 Privada', '📍 Cojutepeque', '📅 Beca Parcial'],
-        careers: ['Administración', 'Contaduría', 'Ciencias Jurídicas', 'Ingeniería en Computación'],
+        desc: 'Private university based in Cojutepeque, offering access to higher education for the north-central zone of the country.',
+        badges: ['🏫 Private', '📍 Cojutepeque', '📅 Partial Scholarship'],
+        careers: ['Administration', 'Accounting', 'Legal Sciences', 'Computer Engineering'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
-          { dia: 'Sábado', turno: 'Fin de Semana', hora: '8:00 AM – 4:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Saturday', turno: 'Weekend', hora: '8:00 AM – 4:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Laboratorio', '🎓 Orientación'],
+        services: ['📚 Library', '💻 Lab', '🎓 Counseling'],
         beca: {
-          tipo: 'Beca Acceso Cuscatlán',
+          tipo: 'Cuscatlán Access Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '💰', text: 'Estudio socioeconómico' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '💰', text: 'Socioeconomic study' },
           ],
         },
         website: '#',
       },
       {
-        name: 'UNIVO — Sede Cuscatlán',
-        fullName: 'Universidad de Oriente — Cuscatlán',
+        name: 'UNIVO — Cuscatlán Campus',
+        fullName: 'University of the East — Cuscatlán',
         image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
         youtubeId: null,
-        desc: 'Sede de UNIVO en la zona central ofreciendo continuidad educativa para bachilleres de Cuscatlán.',
-        badges: ['🌾 Zona Central', '📅 Admisión Continua'],
-        careers: ['Administración', 'Derecho', 'Contaduría'],
+        desc: 'UNIVO campus in the central zone offering educational continuity for high school graduates from Cuscatlán.',
+        badges: ['🌾 Central Zone', '📅 Continuous Admission'],
+        careers: ['Administration', 'Law', 'Accounting'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Computación'],
+        services: ['📚 Library', '💻 Computing'],
         beca: {
-          tipo: 'Beca Socioeconómica',
+          tipo: 'Socioeconomic Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '💰', text: 'Necesidad económica comprobada' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '💰', text: 'Proven financial need' },
           ],
         },
         website: 'https://www.univo.edu.sv',
@@ -845,48 +845,48 @@ const UNI_DATA = {
   },
   'la-paz': {
     name: 'La Paz',
-    region: 'Zona Central-Sur',
+    region: 'South-Central Zone',
     unis: [
       {
         name: 'UNIVO — La Paz',
-        fullName: 'Universidad de Oriente — Sede La Paz',
+        fullName: 'University of the East — La Paz Campus',
         image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
         youtubeId: null,
-        desc: 'Sede en la zona paracentral que atiende a estudiantes de La Paz y municipios circundantes.',
-        badges: ['🌾 Paracentral', '📅 Beca Socioeconómica'],
-        careers: ['Administración de Empresas', 'Contaduría', 'Ciencias Jurídicas'],
+        desc: 'Campus in the paracentral zone that serves students from La Paz and surrounding municipalities.',
+        badges: ['🌾 Paracentral', '📅 Socioeconomic Scholarship'],
+        careers: ['Business Administration', 'Accounting', 'Legal Sciences'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Computación', '🎓 Asesoría'],
+        services: ['📚 Library', '💻 Computing', '🎓 Counseling'],
         beca: {
-          tipo: 'Beca Socioeconómica La Paz',
+          tipo: 'La Paz Socioeconomic Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '🏠', text: 'Residir en La Paz' },
-            { icon: '💰', text: 'Necesidad económica' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '🏠', text: 'Reside in La Paz' },
+            { icon: '💰', text: 'Financial need' },
           ],
         },
         website: 'https://www.univo.edu.sv',
       },
       {
         name: 'UGB — La Paz',
-        fullName: 'Universidad Gerardo Barrios — Sede La Paz',
+        fullName: 'Gerardo Barrios University — La Paz Campus',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'Sede de UGB en la zona paracentral con énfasis en carreras empresariales y jurídicas.',
-        badges: ['🎓 Privada', '📍 Zacatecoluca', '🏆 Beca Liderazgo'],
-        careers: ['Administración', 'Derecho', 'Contaduría', 'Ingeniería en Sistemas'],
+        desc: 'UGB campus in the paracentral zone with an emphasis on business and legal careers.',
+        badges: ['🎓 Private', '📍 Zacatecoluca', '🏆 Leadership Scholarship'],
+        careers: ['Administration', 'Law', 'Accounting', 'Systems Engineering'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Diurno y Nocturno', hora: '7:00 AM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Daytime and Nighttime', hora: '7:00 AM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Laboratorio', '🎓 Bolsa de Empleo'],
+        services: ['📚 Library', '💻 Lab', '🎓 Job Board'],
         beca: {
-          tipo: 'Beca Liderazgo Paracentral',
+          tipo: 'Paracentral Leadership Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '🏠', text: 'Residir en La Paz' },
-            { icon: '🏆', text: 'Activismo estudiantil' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '🏠', text: 'Reside in La Paz' },
+            { icon: '🏆', text: 'Student activism' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
@@ -895,47 +895,47 @@ const UNI_DATA = {
   },
   'san-vicente': {
     name: 'San Vicente',
-    region: 'Zona Paracentral',
+    region: 'Paracentral Zone',
     unis: [
       {
         name: 'UES — San Vicente',
-        fullName: 'Universidad de El Salvador — Paramédica San Vicente',
+        fullName: 'University of El Salvador — San Vicente Paracentral',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_de_la_Universidad_de_El_Salvador.svg/1200px-Logo_de_la_Universidad_de_El_Salvador.svg.png',
         youtubeId: null,
-        desc: 'Centro regional de la UES para la zona paracentral, con enfoque en ciencias de la salud y ciencias agropecuarias.',
-        badges: ['🏛️ Pública', '🌿 Agropecuario', '📅 Beca Nacional'],
-        careers: ['Enfermería', 'Técnico Agropecuario', 'Educación'],
+        desc: 'UES regional center for the paracentral zone, focusing on health sciences and agricultural sciences.',
+        badges: ['🏛️ Public', '🌿 Agricultural', '📅 National Scholarship'],
+        careers: ['Nursing', 'Agricultural Technician', 'Education'],
         schedule: [
-          { dia: 'Lunes – Viernes', turno: 'Diurno', hora: '7:00 AM – 5:00 PM' },
+          { dia: 'Monday – Friday', turno: 'Daytime', hora: '7:00 AM – 5:00 PM' },
         ],
-        services: ['📚 Biblioteca', '🌿 Parcela Agrícola', '🏥 Clínica', '🍽️ Cafetería'],
+        services: ['📚 Library', '🌿 Agricultural Plot', '🏥 Clinic', '🍽️ Cafeteria'],
         beca: {
-          tipo: 'Beca Pública Paracentral',
+          tipo: 'Paracentral Public Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '🏠', text: 'Residir en zona paracentral' },
-            { icon: '💰', text: 'Necesidad económica comprobada' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '🏠', text: 'Reside in paracentral zone' },
+            { icon: '💰', text: 'Proven financial need' },
           ],
         },
         website: 'https://www.ues.edu.sv',
       },
       {
         name: 'UNIVO — San Vicente',
-        fullName: 'Universidad de Oriente — Sede San Vicente',
+        fullName: 'University of the East — San Vicente Campus',
         image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
         youtubeId: null,
-        desc: 'Sede universitaria para bachilleres de San Vicente con carreras accesibles en horario nocturno.',
-        badges: ['🌾 Paracentral', '📅 Admisión Continua'],
-        careers: ['Administración', 'Contaduría', 'Derecho'],
+        desc: 'University campus for San Vicente high school graduates with accessible careers in nighttime hours.',
+        badges: ['🌾 Paracentral', '📅 Continuous Admission'],
+        careers: ['Administration', 'Accounting', 'Law'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Computación'],
+        services: ['📚 Library', '💻 Computing'],
         beca: {
-          tipo: 'Beca Socioeconómica',
+          tipo: 'Socioeconomic Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '💰', text: 'Necesidad económica' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '💰', text: 'Financial need' },
           ],
         },
         website: 'https://www.univo.edu.sv',
@@ -944,25 +944,25 @@ const UNI_DATA = {
   },
   'usulutan': {
     name: 'Usulután',
-    region: 'Zona Oriental',
+    region: 'Eastern Zone',
     unis: [
       {
         name: 'UGB — Usulután',
-        fullName: 'Universidad Gerardo Barrios — Sede Usulután',
+        fullName: 'Gerardo Barrios University — Usulután Campus',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'Sede de UGB en Usulután atendiendo a estudiantes del litoral y zona costera del oriente.',
-        badges: ['🎓 Privada', '🌊 Zona Costera', '🏆 Beca Liderazgo'],
-        careers: ['Administración', 'Turismo y Hotelería', 'Contaduría', 'Derecho'],
+        desc: 'UGB campus in Usulután serving students from the coast and coastal zone of the east.',
+        badges: ['🎓 Private', '🌊 Coastal Zone', '🏆 Leadership Scholarship'],
+        careers: ['Administration', 'Tourism and Hospitality', 'Accounting', 'Law'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Laboratorio', '🏋️ Deporte'],
+        services: ['📚 Library', '💻 Lab', '🏋️ Sports'],
         beca: {
-          tipo: 'Beca Liderazgo Oriente',
+          tipo: 'Eastern Leadership Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '🏠', text: 'Residir en Usulután' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '🏠', text: 'Reside in Usulután' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
@@ -971,47 +971,47 @@ const UNI_DATA = {
   },
   'morazan': {
     name: 'Morazán',
-    region: 'Zona Oriental',
+    region: 'Eastern Zone',
     unis: [
       {
         name: 'UGB — Morazán',
-        fullName: 'Universidad Gerardo Barrios — Sede Morazán',
+        fullName: 'Gerardo Barrios University — Morazán Campus',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'La única sede universitaria privada con beca activa en el departamento de Morazán, facilitando acceso en la zona más rural del oriente.',
-        badges: ['🎓 Privada', '🏔️ Zona Rural', '📅 Beca Acceso Rural'],
-        careers: ['Administración', 'Contaduría', 'Derecho'],
+        desc: 'The only private university campus with an active scholarship in the department of Morazán, facilitating access in the most rural area of the east.',
+        badges: ['🎓 Private', '🏔️ Rural Zone', '📅 Rural Access Scholarship'],
+        careers: ['Administration', 'Accounting', 'Law'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Weekend', hora: '7:00 AM – 5:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Computación', '🎓 Asesoría'],
+        services: ['📚 Library', '💻 Computing', '🎓 Counseling'],
         beca: {
-          tipo: 'Beca Acceso Rural Morazán',
+          tipo: 'Morazán Rural Access Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '🏠', text: 'Residir en Morazán' },
-            { icon: '💰', text: 'Necesidad económica' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '🏠', text: 'Reside in Morazán' },
+            { icon: '💰', text: 'Financial need' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
       },
       {
         name: 'UNIVO — Morazán',
-        fullName: 'Universidad de Oriente — Sede Morazán',
+        fullName: 'University of the East — Morazán Campus',
         image: 'https://www.univo.edu.sv/assets/images/campus.jpg',
         youtubeId: null,
-        desc: 'Sede de UNIVO que brinda cobertura educativa en la zona montañosa de Morazán.',
-        badges: ['🌾 Rural', '📅 Admisión Continua'],
-        careers: ['Administración de Empresas', 'Ciencias Jurídicas'],
+        desc: 'UNIVO campus that provides educational coverage in the mountainous area of Morazán.',
+        badges: ['🌾 Rural', '📅 Continuous Admission'],
+        careers: ['Business Administration', 'Legal Sciences'],
         schedule: [
-          { dia: 'Sábado y Domingo', turno: 'Fin de Semana', hora: '7:00 AM – 5:00 PM' },
+          { dia: 'Saturday and Sunday', turno: 'Weekend', hora: '7:00 AM – 5:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Computación'],
+        services: ['📚 Library', '💻 Computing'],
         beca: {
-          tipo: 'Beca Socioeconómica Rural',
+          tipo: 'Rural Socioeconomic Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.0' },
-            { icon: '💰', text: 'Estudio de necesidad económica' },
+            { icon: '📊', text: 'Minimum GPA 7.0' },
+            { icon: '💰', text: 'Study of financial need' },
           ],
         },
         website: 'https://www.univo.edu.sv',
@@ -1020,26 +1020,26 @@ const UNI_DATA = {
   },
   'la-union': {
     name: 'La Unión',
-    region: 'Zona Oriental',
+    region: 'Eastern Zone',
     unis: [
       {
         name: 'UGB — La Unión',
-        fullName: 'Universidad Gerardo Barrios — Sede La Unión',
+        fullName: 'Gerardo Barrios University — La Unión Campus',
         image: 'https://www.ugb.edu.sv/images/campus_ugb.jpg',
         youtubeId: null,
-        desc: 'Sede portuaria de UGB en La Unión, con carreras orientadas a comercio internacional, logística y administración.',
-        badges: ['⚓ Zona Portuaria', '🚢 Logística & Comercio', '📅 Beca Liderazgo'],
-        careers: ['Administración', 'Contaduría', 'Comercio Internacional', 'Derecho'],
+        desc: 'UGB port campus in La Unión, with careers focused on international trade, logistics and administration.',
+        badges: ['⚓ Port Zone', '🚢 Logistics & Trade', '📅 Leadership Scholarship'],
+        careers: ['Administration', 'Accounting', 'International Trade', 'Law'],
         schedule: [
-          { dia: 'Lunes – Sábado', turno: 'Nocturno', hora: '5:30 PM – 9:00 PM' },
+          { dia: 'Monday – Saturday', turno: 'Nighttime', hora: '5:30 PM – 9:00 PM' },
         ],
-        services: ['📚 Biblioteca', '💻 Laboratorio', '🌐 Conexión Portuaria'],
+        services: ['📚 Library', '💻 Lab', '🌐 Port Connection'],
         beca: {
-          tipo: 'Beca Liderazgo La Unión',
+          tipo: 'La Unión Leadership Scholarship',
           requisitos: [
-            { icon: '📊', text: 'Promedio mínimo 7.5' },
-            { icon: '🏠', text: 'Residir en La Unión' },
-            { icon: '🏆', text: 'Participación comunitaria' },
+            { icon: '📊', text: 'Minimum GPA 7.5' },
+            { icon: '🏠', text: 'Reside in La Unión' },
+            { icon: '🏆', text: 'Community participation' },
           ],
         },
         website: 'https://www.ugb.edu.sv',
@@ -1080,7 +1080,7 @@ function buildUniCard(uni, idx) {
     <div class="uni-card-top">
       <div class="uni-media-wrap">
         ${mediaHtml}
-        <span class="uni-media-badge">${uni.youtubeId ? '▶ Video' : '📷 Foto'}</span>
+        <span class="uni-media-badge">${uni.youtubeId ? '▶ Video' : '📷 Photo'}</span>
       </div>
       <div class="uni-card-info">
         <div class="uni-card-name">${uni.name}</div>
@@ -1092,10 +1092,10 @@ function buildUniCard(uni, idx) {
 
     <!-- Tabs -->
     <div class="uni-tabs-bar" id="tabs-${tabId}">
-      <button class="uni-tab-btn active" data-tab="carreras-${tabId}">🎓 Carreras</button>
-      <button class="uni-tab-btn" data-tab="horario-${tabId}">🕐 Horarios</button>
-      <button class="uni-tab-btn" data-tab="servicios-${tabId}">🛠️ Servicios</button>
-      <button class="uni-tab-btn" data-tab="beca-${tabId}">⭐ Beca Info</button>
+      <button class="uni-tab-btn active" data-tab="carreras-${tabId}">🎓 Careers</button>
+      <button class="uni-tab-btn" data-tab="horario-${tabId}">🕐 Schedules</button>
+      <button class="uni-tab-btn" data-tab="servicios-${tabId}">🛠️ Services</button>
+      <button class="uni-tab-btn" data-tab="beca-${tabId}">⭐ Scholarship Info</button>
     </div>
 
     <div id="carreras-${tabId}" class="uni-tab-panel active">
@@ -1103,7 +1103,7 @@ function buildUniCard(uni, idx) {
     </div>
     <div id="horario-${tabId}" class="uni-tab-panel">
       <table class="schedule-table">
-        <thead><tr><th>Días</th><th>Turno</th><th>Horario</th></tr></thead>
+        <thead><tr><th>Days</th><th>Shift</th><th>Schedule</th></tr></thead>
         <tbody>${scheduleHtml}</tbody>
       </table>
     </div>
@@ -1120,9 +1120,9 @@ function buildUniCard(uni, idx) {
     <!-- Footer -->
     <div class="uni-modal-card-footer">
       <a href="${uni.website}" target="_blank" rel="noopener" class="uni-website-link">
-        🌐 Sitio oficial — ${uni.fullName} ↗
+        🌐 Official site — ${uni.fullName} ↗
       </a>
-      <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.45rem 1.1rem; font-size:0.82rem;">Ver Calendario de Becas →</a>
+      <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.45rem 1.1rem; font-size:0.82rem;">View Scholarship Calendar →</a>
     </div>
   </div>`;
 }
@@ -1141,8 +1141,8 @@ function openMapModal(deptId) {
     mapModalBody.innerHTML = `
       <div class="map-modal-empty">
         <div class="empty-icon">🏗️</div>
-        <h3>Información en construcción</h3>
-        <p>Próximamente agregaremos las universidades de <strong>${deptId}</strong>. ¡Estamos trabajando en ello!</p>
+        <h3>Information under construction</h3>
+        <p>We will soon add the universities of <strong>${deptId}</strong>. We are working on it!</p>
       </div>`;
     modalDeptNameEl.textContent = deptId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     modalDeptUniCount.textContent = '0 universidades cargadas';
@@ -1153,7 +1153,7 @@ function openMapModal(deptId) {
 
   modalDeptNameEl.textContent = data.name;
   const n = data.unis.length;
-  modalDeptUniCount.textContent = `${n} universidad${n !== 1 ? 'es' : ''} con becas`;
+  modalDeptUniCount.textContent = `${n} universit${n !== 1 ? 'ies' : 'y'} with scholarships`;
   modalDeptRegion.textContent = data.region;
 
   mapModalBody.innerHTML = data.unis.map((uni, idx) => buildUniCard(uni, `${deptId}-${idx}`)).join('');
@@ -1198,10 +1198,10 @@ let activedept = null;
 document.querySelectorAll('.dept').forEach(dept => {
   dept.addEventListener('mouseenter', () => {
     if (tooltip) {
-      const deptName = dept.dataset.name || 'Departamento';
+      const deptName = dept.dataset.name || 'Department';
       const n = parseInt(dept.dataset.unis || 0);
       tooltipName.textContent = deptName;
-      tooltipUnisText.textContent = n === 1 ? '1 universidad con becas' : `${n} universidades con becas`;
+      tooltipUnisText.textContent = n === 1 ? '1 university with scholarships' : `${n} universities with scholarships`;
       tooltip.classList.add('visible');
     }
   });
@@ -1402,17 +1402,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (baseScore >= 90) {
-                if (descEl) descEl.innerText = '¡Felicidades! Tienes un perfil excepcional para becas completas de Excelencia y Posgrado Internacional con estipendio mensual.';
-                if (countEl) countEl.innerText = '5 Becas Matheadas';
-                if (cobEl) cobEl.innerText = '100% Cobertura + Estipendio';
+                if (descEl) descEl.innerText = '¡Felicidades! Tienes un perfil excepcional para becas completas of Excelencia y Posgrado Internacional con estipendio mensual.';
+                if (countEl) countEl.innerText = '5 Matched Scholarships';
+                if (cobEl) cobEl.innerText = '100% Coverage + Stipend';
             } else if (baseScore >= 80) {
-                if (descEl) descEl.innerText = '¡Gran perfil! Calificas para becas de Pregrado y Padrinazgo Educativo con cobertura de matrícula y mensualidades.';
-                if (countEl) countEl.innerText = '3 Becas Matheadas';
-                if (cobEl) cobEl.innerText = '80% - 100% Matrícula';
+                if (descEl) descEl.innerText = '¡Gran perfil! Calificas para becas of Pregrado y Padrinazgo Educativo con cobertura of matrícula y mensualidades.';
+                if (countEl) countEl.innerText = '3 Matched Scholarships';
+                if (cobEl) cobEl.innerText = '80% - 100% Tuition';
             } else {
-                if (descEl) descEl.innerText = 'Calificas para programas de apoyo socioeconómico y padrinazgo personalizado en universidades de El Salvador.';
-                if (countEl) countEl.innerText = '2 Becas Matheadas';
-                if (cobEl) cobEl.innerText = '50% - 75% Arancel';
+                if (descEl) descEl.innerText = 'Calificas para programas of apoyo socioeconómico y padrinazgo personalizado en universidades of El Salvador.';
+                if (countEl) countEl.innerText = '2 Matched Scholarships';
+                if (cobEl) cobEl.innerText = '50% - 75% Fee';
             }
         });
     }
@@ -1421,38 +1421,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const roadmapSteps = document.querySelectorAll('.roadmap-step-item');
     const stepData = {
         '1': {
-            tag: 'Paso 1 de 5',
-            title: 'Test Socioemocional & Orientación Vocacional',
-            desc: 'Inicias identificando tus inteligencias múltiples y rasgos socioemocionales. Esto te permite elegir la carrera y universidad con mayor proyección para ti.',
-            btnText: 'Hacer el Test Gratis →',
+            tag: 'Step 1 of 5',
+            title: 'Socioemotional Test & Vocational Guidance',
+            desc: 'You start by identifying your multiple intelligences and socioemotional traits. This allows you to choose the career and university with the best projection for you.',
+            btnText: 'Take the Free Test →',
             btnHref: '#'
         },
         '2': {
-            tag: 'Paso 2 de 5',
-            title: 'Exploración en el Mapa Territorial',
-            desc: 'Filtra universidades por departamento para descubrir las ofertas académicas más cercanas a tu municipio con programa de becas activo.',
-            btnText: 'Explorar Mapa →',
+            tag: 'Step 2 of 5',
+            title: 'Exploration on the Territorial Map',
+            desc: 'Filter universities by department to discover the closest academic offers to your municipality with an active scholarship program.',
+            btnText: 'Explore Map →',
             btnHref: '#universidades'
         },
         '3': {
-            tag: 'Paso 3 de 5',
-            title: 'Organización en Agenda & Calendario',
-            desc: 'Añade alertas de cierre y fechas límite para tus entregas de documentos con nuestro semáforo interactivo de urgencias.',
-            btnText: 'Ver Calendario →',
+            tag: 'Step 3 of 5',
+            title: 'Organization in Agenda & Calendar',
+            desc: 'Add closing alerts and deadlines for your document deliveries with our interactive urgency traffic light.',
+            btnText: 'View Calendar →',
             btnHref: '/calendario'
         },
         '4': {
-            tag: 'Paso 4 de 5',
-            title: 'Conexión Transparente con Padrinos',
-            desc: 'Conecta con patrocinadores e instituciones dispuestas a financiar tu educación bajo condiciones justas y directas.',
-            btnText: 'Conocer Padrinos →',
+            tag: 'Step 4 of 5',
+            title: 'Transparent Connection with Sponsors',
+            desc: 'Connect with sponsors and institutions willing to finance your education under fair and direct conditions.',
+            btnText: 'Meet Sponsors →',
             btnHref: '#servicios'
         },
         '5': {
-            tag: 'Paso 5 de 5',
-            title: '¡Zarpar a la Universidad y Triunfar!',
-            desc: 'Presenta tu admisión respaldada por UGF y comienza tus clases universitarias rumbo a un futuro brillante.',
-            btnText: 'Buscar Mi Beca →',
+            tag: 'Step 5 of 5',
+            title: 'Set Sail for University and Succeed!',
+            desc: 'Present your admission backed by UGF and start your university classes towards a bright future.',
+            btnText: 'Find My Scholarship →',
             btnHref: '/becas'
         }
     };
