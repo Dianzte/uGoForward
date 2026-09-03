@@ -6,13 +6,13 @@
     <title>{{ __('Registro') }} - UGF</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
-    @vite(['resources/css/Register.css', 'resources/js/script.js'])
+    @vite(['resources/css/Register.css', 'resources/css/temaUnido.css', 'resources/js/script.js'])
 </head>
 <body>
   @include('navegacion.navbar')
 
-<canvas id="ocean"></canvas>
-<div id="hint">{{ __('Haz clic en la luna para cambiar el día') }}</div>
+<canvas id="ocean" class="ocean-scene"></canvas>
+<div id="hint" data-ocean-hint>{{ __('Haz clic en la luna para cambiar el día') }}</div>
 
 <div class="scene">
   <div class="card-flipper" id="flipper">

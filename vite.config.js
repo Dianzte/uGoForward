@@ -7,6 +7,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                'resources/css/script.css',
                 'resources/css/app.css', 
                 'resources/js/app.js',
                 'resources/css/homepage.css', 
@@ -24,8 +25,7 @@ export default defineConfig({
                 'resources/css/foro/create.css',
                 'resources/css/rol-flow.css',
                 'resources/js/rolflow.js',
-
-                // ── Student Hub ──
+             'resources/css/temaUnido.css',
                 'resources/css/hub/hub.css',
                 'resources/js/hub-chat.js',
             ],

@@ -10,15 +10,15 @@
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Raleway:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     @vite(['resources/css/app.css'])
-    @vite(['resources/css/Login.css', 'resources/js/script.js'])
+    @vite(['resources/css/Login.css', 'resources/css/temaUnido.css', 'resources/js/script.js'])
 
 </head>
 
 <body>
     @include('navegacion.navbar')
 
-    <canvas id="ocean"></canvas>
-    <div id="hint">{{ __('Haz clic en la luna para cambiar el día') }}</div>
+    <canvas id="ocean" class="ocean-scene"></canvas>
+    <div id="hint" data-ocean-hint>{{ __('Haz clic en la luna para cambiar el día') }}</div>
 
     <div class="card">
         <div class="panel-left">
@@ -80,21 +80,8 @@
                 <p class="register-link">{{ __('¿No tienes cuenta?') }} <a href="{{ route('registro') }}">{{ __('Regístrate aquí') }}</a></p>
             </form>
         </div>
-        
-        @if (Route::has('password.request'))
-            <a href="{{ route('password.request') }}" class="forgot">¿Olvidaste tu contraseña?</a>
-        @endif
-        
-        <button type="submit" class="btn-login">LOGIN</button>
-        
-        <div class="divider"><span>o</span></div>
-        
-        <p class="register-link">¿No tienes cuenta? <a href="{{ route('registro') }}">Regístrate aquí</a></p>
-    </form>
-  </div>
-</div>
- 
- 
+    </div>
+
 </body>
 
 </html>

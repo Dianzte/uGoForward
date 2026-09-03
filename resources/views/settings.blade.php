@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  @vite(['resources/css/settings.css', 'resources/js/settings.js'])
+  @vite(['resources/css/settings.css', 'resources/css/temaUnido.css', 'resources/js/settings.js', 'resources/js/script.js'])
 </head>
 <body>
 
@@ -41,7 +41,14 @@
     @method('PUT')
 
     <!-- BANNER -->
-<div class="profile-banner" id="profileBanner" style="{{ auth()->user()->bannerImg ? 'background-image: url(' . asset('storage/' . auth()->user()->bannerImg->ruta) . ')' : '' }}">      <div class="profile-banner-overlay"></div>
+<div class="profile-banner" id="profileBanner" style="{{ auth()->user()->bannerImg ? 'background-image: url(' . asset('storage/' . auth()->user()->bannerImg->ruta) . ')' : '' }}">
+      @unless (auth()->user()->bannerImg)
+        <canvas class="ocean-scene" data-mode="banner" aria-hidden="{{ auth()->user()->bannerImg ? 'true' : 'false' }}"></canvas>
+      @endunless
+      <div class="profile-banner-overlay"></div>
+      @unless (auth()->user()->bannerImg)
+        <span class="profile-banner-hint" data-ocean-hint>{{ __('Click the sun or moon to change the mood') }}</span>
+      @endunless
       <label class="profile-banner-edit" title="{{ __('Change banner') }}" for="bannerInput">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>

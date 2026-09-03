@@ -7,10 +7,12 @@
   <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  @vite(['resources/css/rol-flow.css'])
+  @vite(['resources/css/rol-flow.css', 'resources/css/temaUnido.css', 'resources/js/script.js'])
 </head>
 <body class="rf-page">
+
+<canvas class="ocean-scene"></canvas>
+<div class="rf-ocean-hint" data-ocean-hint>{{ __('Haz clic en el sol o la luna para cambiar el ambiente') }}</div>
 
   {{-- ============ OVERLAY DE INTRODUCCIÓN (3 pasos animados) ============ --}}
   <div class="rf-intro-overlay" id="rfIntroOverlay">

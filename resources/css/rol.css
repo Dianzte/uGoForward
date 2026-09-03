@@ -1,0 +1,311 @@
+/* ==========================================================================
+   UGF · seleccionar-rol.css — "La bifurcación"
+   Concepto: elegir un rol es un cruce de caminos irreversible, así que la
+   pantalla ENTERA se convierte en dos caminos completos, no en dos botones
+   dentro de una tarjeta. Cada mitad tiene su propio color, su propio ícono
+   trazado a mano y crece al pasar el cursor, como si la puerta se abriera.
+   ========================================================================== */
+
+@import "tailwindcss";
+
+:root {
+  --navy-1: #020812;
+  --navy-2: #06111f;
+  --navy-3: #0b1e38;
+
+  --amber:      #e8b23d;
+  --amber-dim:  rgba(232, 178, 61, 0.14);
+  --teal:       #3fb6a8;
+  --teal-dim:   rgba(63, 182, 168, 0.14);
+
+  --white: #ffffff;
+  --text-2: #9fb2c4;
+  --text-3: #64798d;
+
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body.rp-page {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--navy-1);
+  color: var(--white);
+  font-family: var(--ugf-font-body, 'Instrument Sans'), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.rp-page h1, .rp-page h2, .rp-page h3 {
+  font-family: var(--ugf-font-display, 'Fraunces'), serif;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+.rp-page p { margin: 0; color: var(--text-2); }
+
+/* ============================================================
+   LA BIFURCACIÓN — dos caminos, pantalla completa
+   ============================================================ */
+.rp-fork {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.rp-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  padding: 4rem 2.5rem;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
+  color: inherit;
+  font: inherit;
+  transition: flex-grow 0.6s var(--ease), background 0.5s ease;
+}
+
+.rp-half--student {
+  background:
+    radial-gradient(ellipse 640px 480px at 50% 30%, var(--amber-dim), transparent 65%),
+    linear-gradient(200deg, var(--navy-2), var(--navy-1) 80%);
+}
+.rp-half--sponsor {
+  background:
+    radial-gradient(ellipse 640px 480px at 50% 30%, var(--teal-dim), transparent 65%),
+    linear-gradient(160deg, var(--navy-2), var(--navy-1) 80%);
+}
+
+/* Al pasar el cursor, ese camino crece — el otro cede espacio.
+   No es un hover genérico de "levantar la tarjeta": es la decisión
+   tomando protagonismo visual real. */
+.rp-fork:has(.rp-half--student:hover) .rp-half--student,
+.rp-fork:has(.rp-half--sponsor:hover) .rp-half--sponsor {
+  flex-grow: 1.35;
+}
+.rp-fork:has(.rp-half--student:hover) .rp-half--sponsor,
+.rp-fork:has(.rp-half--sponsor:hover) .rp-half--student {
+  flex-grow: 0.75;
+  filter: brightness(0.72) saturate(0.8);
+}
+
+.rp-half-glyph {
+  width: 84px;
+  height: 84px;
+  color: var(--amber);
+  transition: transform 0.5s var(--ease);
+}
+.rp-half--sponsor .rp-half-glyph { color: var(--teal); }
+.rp-half:hover .rp-half-glyph { transform: translateY(-6px) scale(1.05); }
+
+.rp-half-kicker {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--amber);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.rp-half--sponsor .rp-half-kicker { color: var(--teal); }
+
+.rp-half h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); margin-bottom: 0.65rem; }
+.rp-half-copy p { max-width: 320px; font-size: 0.98rem; line-height: 1.6; }
+
+.rp-half-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--white);
+  opacity: 0.55;
+  transition: opacity 0.3s ease, gap 0.3s ease;
+}
+.rp-half:hover .rp-half-cta { opacity: 1; gap: 0.65rem; }
+
+/* La costura entre los dos caminos */
+.rp-seam {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.18) 20%, rgba(255,255,255,0.18) 80%, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+.rp-seam-mark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--navy-1);
+  border: 1px solid rgba(255,255,255,0.14);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ugf-font-display, 'Fraunces'), serif;
+  font-size: 0.85rem;
+  color: var(--text-3);
+  z-index: 3;
+}
+
+@media (max-width: 760px) {
+  .rp-fork { flex-direction: column; }
+  .rp-seam { top: 50%; bottom: auto; left: 0; right: 0; width: auto; height: 1px; }
+  .rp-half { padding: 3.25rem 1.75rem; }
+  .rp-fork:has(.rp-half:hover) .rp-half { flex-grow: 1; filter: none; }
+}
+
+/* ============================================================
+   FORMULARIO OCULTO (envío real del rol)
+   ============================================================ */
+.rp-hidden-form { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ============================================================
+   OVERLAY DE INTRODUCCIÓN — 3 pasos antes de llegar a la bifurcación
+   ============================================================ */
+.rp-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--navy-1);
+}
+
+.rp-intro-panel {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+  animation: rpSlideDown 0.7s var(--ease) both;
+}
+
+@keyframes rpSlideDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rp-intro-overlay.is-leaving { animation: rpFade 0.5s var(--ease) both; }
+@keyframes rpFade { to { opacity: 0; } }
+
+.rp-intro-step { display: none; }
+.rp-intro-step.is-active { display: block; animation: rpFadeIn 0.5s var(--ease) both; }
+@keyframes rpFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.rp-intro-eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-3);
+  margin-bottom: 0.75rem;
+}
+.rp-intro-title { font-size: clamp(1.8rem, 4.5vw, 2.6rem); margin-bottom: 1rem; }
+.rp-intro-text { font-size: 1.04rem; line-height: 1.7; max-width: 420px; margin: 0 auto 2.25rem; }
+
+.rp-roles-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0 0 2.25rem;
+  text-align: left;
+}
+@media (max-width: 520px) { .rp-roles-preview { grid-template-columns: 1fr; } }
+.rp-role-preview-item {
+  border-top: 2px solid var(--amber);
+  padding: 1rem 0 0;
+}
+.rp-role-preview-item.is-padrino { border-top-color: var(--teal); }
+.rp-role-preview-item span {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--amber);
+  margin-bottom: 0.4rem;
+}
+.rp-role-preview-item.is-padrino span { color: var(--teal); }
+.rp-role-preview-item p { font-size: 0.88rem; line-height: 1.55; }
+
+.rp-intro-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+}
+.rp-intro-progress span {
+  width: 20px; height: 2px;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.3s ease;
+}
+.rp-intro-progress span.is-active { background: var(--amber); }
+
+.rp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.94rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.22s var(--ease), opacity 0.22s ease, background 0.22s ease;
+}
+.rp-btn-primary { background: var(--amber); color: #1a1204; }
+.rp-btn-primary:hover { transform: translateY(-2px); }
+.rp-btn-ghost { background: transparent; color: var(--text-2); border: 1px solid rgba(255,255,255,0.16); }
+.rp-btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+.rp-intro-actions { display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap; }
+
+.rp-alert {
+  max-width: 560px;
+  margin: 0 auto 1.5rem;
+  padding: 0.9rem 1.15rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  text-align: left;
+  background: rgba(242,134,125,0.1);
+  border: 1px solid rgba(242,134,125,0.32);
+  color: #ffcfc9;
+}
+
+/* ============================================================
+   MODAL DE CONFIRMACIÓN — el acento cambia según el camino elegido
+   ============================================================ */
+.rp-modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(2,6,14,0.8);
+  align-items: center; justify-content: center;
+  z-index: 1100;
+  padding: 1rem;
+}
+.rp-modal-overlay.is-open { display: flex; }
+
+.rp-modal {
+  background: var(--navy-2);
+  border-top: 3px solid var(--amber);
+  border-radius: 16px;
+  max-width: 440px;
+  width: 100%;
+  padding: 2.25rem;
+  animation: rpFadeIn 0.3s var(--ease) both;
+}
+.rp-modal-overlay.is-padrino .rp-modal { border-top-color: var(--teal); }
+
+.rp-modal h3 { font-size: 1.25rem; margin-bottom: 0.4rem; }
+.rp-modal-sub { font-size: 0.87rem; color: var(--text-3); margin-bottom: 1.4rem; }
+.rp-modal ul { list-style: none; margin: 0 0 1.75rem; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.rp-modal ul li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.9rem; color: var(--text-2); }
+.rp-modal ul li svg { flex-shrink: 0; margin-top: 2px; color: var(--amber); }
+.rp-modal-overlay.is-padrino ul li svg { color: var(--teal); }
+.rp-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rp-half, .rp-half-glyph { transition: none; }
+}
