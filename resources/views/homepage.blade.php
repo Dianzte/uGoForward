@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="">
 
 <head>
   <meta charset="UTF-8" />
@@ -9,9 +9,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  {{-- ══ ANTI-FOUC: aplicar tema ANTES de renderizar el DOM ══ --}}
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
   @vite(['resources/css/homepage.css', 'resources/js/homepage.js' ,'resources/css/app.css'])
 
 </head>
+
 
 <body>
  
@@ -116,7 +131,7 @@
       </div>
       <div class="services-grid">
 
-        <div class="service-card" data-reveal>
+        <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#7ec8e3;">
             <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="16" r="8" stroke="currentColor" stroke-width="2"/><path d="M8 32c0-5.523 5.373-10 12-10s12 4.477 12 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </div>
@@ -125,7 +140,7 @@
           <a href="#" class="card-link">Hacer el test →</a>
         </div>
 
-        <div class="service-card featured" data-reveal>
+        <div class="service-card featured" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#e8c847;">
             <svg viewBox="0 0 40 40" fill="none"><path d="M12 20l4 4 12-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2"/></svg>
           </div>
@@ -134,7 +149,7 @@
           <a href="#" class="card-link">Conocer más →</a>
         </div>
 
-        <div class="service-card" data-reveal>
+        <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#4fc3f7;">
             <svg viewBox="0 0 40 40" fill="none"><path d="M8 28L20 10l12 18H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="10" r="2" fill="currentColor"/></svg>
           </div>
@@ -143,7 +158,7 @@
           <a href="#universidades" class="card-link">Ver mapa →</a>
         </div>
 
-        <div class="service-card" data-reveal>
+        <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#81c784;">
             <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="28" rx="2" stroke="currentColor" stroke-width="2"/><path d="M14 16h12M14 22h8M14 28h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
@@ -152,7 +167,7 @@
           <a href="#" class="card-link">Practicar →</a>
         </div>
 
-        <div class="service-card" data-reveal>
+        <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#f48fb1;">
             <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="26" rx="2" stroke="currentColor" stroke-width="2"/><path d="M14 8V6M26 8V6M6 18h28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 25h4v4h-4z" fill="currentColor" opacity=".4"/></svg>
           </div>
@@ -161,13 +176,13 @@
           <a href="{{ route('becas.calendario') }}" class="card-link">Ver calendario →</a>
         </div>
 
-        <div class="service-card" data-reveal>
+        <div class="service-card" data-reveal onclick="window.location.href=this.querySelector('a').href" style="cursor: pointer;">
           <div class="service-icon" style="--icon-color:#ce93d8;">
             <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2"/><path d="M14 20c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="24" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="25" cy="24" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
           </div>
           <h3>Red Social Académica</h3>
           <p>Comparte y analiza respuestas con otros estudiantes salvadoreños. Aprende en comunidad.</p>
-          <a href="#hub-social" class="card-link">Explorar Hub →</a>
+          <a href="http://ugoforward.test/hub" class="card-link">Explorar Hub →</a>
         </div>
 
       </div>

@@ -1,3 +1,16 @@
+/* ======================================================
+   app.css — UGF global styles + Dark Mode support
+   ====================================================== */
+
+/* Tailwind v4 */
+@import "tailwindcss";
+
+/* Scan Blade views for Tailwind utility classes */
+@source "../views";
+
+/* ======================================================
+   VARIABLES MODO CLARO (light) — defaults
+   ====================================================== */
 :root {
     /*-------------------Becas-------------------*/
     --cielo: #092631d7;
@@ -73,3 +86,171 @@
     font-display: swap;
 }
 
+
+
+
+
+body {
+    background-color: var(--cielo);
+    font-family: "SplineSans";
+    
+}
+
+.difuminado {
+    width: 80vw;
+    height: 100%;
+    margin: 80px auto;
+    background-color: var(--difuminado);
+    border-radius: 20px;
+    padding: 60px;
+    backdrop-filter: blur(40px);
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.subtitulo {
+    display: block;
+    color: var(--oro);
+    font-size: var(--subtitulo);
+    font-weight: 700;
+}
+
+.importante {
+    display: block;
+    color: var(--oro);
+    font-size: var(--tamanoh1);
+    font-weight: 300;
+}
+
+.ocean {
+    width: 100%;
+    height: 80%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mar {
+
+    background-color: var(--mar);
+    flex-grow: 12;
+}
+
+.ola {
+
+    flex-grow: 1;
+    display: flex;
+}
+
+.onda {
+    animation: animacionOnda 3s linear infinite;
+    fill: var(--mar);
+}
+
+@keyframes animacionOnda {
+    from {
+        transform: translate(0, 2%);
+    }
+
+    to {
+        transform: translate(50%, 2%);
+    }
+}
+
+/* ======================================================
+   TRANSICIÓN SUAVE DE TEMA
+   ====================================================== */
+body,
+body * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Excluir elementos que no deben tener transición (animaciones propias) */
+body .onda,
+body canvas,
+body #oceanCanvas,
+body [class*="animate-"] {
+    transition: none !important;
+}
+
+/* ======================================================
+   VARIABLES MODO OSCURO — se activan con la clase .dark en <html>
+   ====================================================== */
+.dark {
+    /*-------------------Becas (dark)-------------------*/
+    --cielo: #0f172a;
+    --tarjeta: #38bdf8;
+    --tarjetaPortada: #0369a1;
+    --informacionTarjeta: #e2e8f0;
+    --difuminado: rgba(15, 23, 42, 0.75);
+    --mar: #1e40af;
+
+    --bordesFormulario: #475569;
+    --oro: #f0d060;
+    --blanco: #f1f5f9;
+    --fondoInputs: #1e293b;
+
+    /*-------------------Homepage (dark)-------------------*/
+    --sky-top: #020d18;
+    --sky-mid: #071325;
+    --ocean-surf: #082030;
+    --deep-1: #061a28;
+    --deep-2: #041020;
+    --deep-3: #020a18;
+    --deep-4: #010610;
+    --abyss: #010408;
+    --gold: #f0d060;
+    --gold-2: #f5d875;
+    --gold-glow: rgba(240, 208, 96, 0.18);
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45, 212, 191, 0.15);
+    --wave-light: rgba(80, 180, 240, 0.22);
+    --wave-foam: rgba(180, 230, 255, 0.6);
+    --white: #f1f5f9;
+    --text: #e2e8f0;
+    --text-2: #94a3b8;
+    --text-3: #64748b;
+    --card-bg: rgba(15, 23, 42, 0.6);
+    --card-border: rgba(99, 102, 241, 0.15);
+}
+
+/* ======================================================
+   DARK MODE — Componentes de layout (becas, perfil, etc.)
+   ====================================================== */
+.dark body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+.dark .difuminado {
+    background-color: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(99, 102, 241, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.dark .subtitulo {
+    color: var(--gold);
+}
+
+.dark .importante {
+    color: var(--gold);
+}
+
+/* Ocean / Mar en dark */
+.dark .mar {
+    background-color: #1e3a5f;
+}
+
+.dark .onda {
+    fill: #1e3a5f;
+}

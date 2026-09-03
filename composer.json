@@ -11,9 +11,11 @@
     "require": {
         "php": "^8.3",
         "laravel/framework": "^13.8",
+        "laravel/reverb": "^1.11",
         "laravel/tinker": "^3.0",
         "symfony/css-selector": "^8.1",
         "symfony/dom-crawler": "^8.1",
+        "pusher/pusher-php-server": "^7.3",
         "resend/resend-laravel": "^1.4"
     },
     "require-dev": {

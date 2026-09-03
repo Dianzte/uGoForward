@@ -2058,3 +2058,101 @@ a { text-decoration: none; color: inherit; }
   max-height: 250px;
   padding: 0 1.5rem 1.5rem 1.5rem;
 }
+
+/* ======================================================
+   MODO CLARO (LIGHT) — Paleta de océano diurna
+   Se activa cuando NO existe la clase .dark en <html>
+   La homepage ya tiene una paleta oscura por defecto.
+   Aquí solo anulamos para cuando el sistema prefiera light.
+   ====================================================== */
+
+/* El canvas JS se adapta automáticamente via las variables CSS */
+
+/* En modo claro, reducir la oscuridad del fondo */
+:root:not(.dark) body {
+  background: linear-gradient(180deg, #0a2a4a 0%, #0d3a6e 40%, #1a5490 100%);
+}
+
+/* En modo claro, la tipografía usa el mismo sistema de variables */
+:root:not(.dark) .hero { }  /* Las variables de :root ya aplican */
+
+/* ======================================================
+   MODO OSCURO (DARK) — Profundidad marina intensificada
+   ====================================================== */
+.dark body {
+  background: linear-gradient(180deg, #010408 0%, #020a14 40%, #020d18 100%);
+}
+
+/* Secciones en dark — fondo más profundo */
+.dark .section-panel {
+  background: transparent;
+}
+
+/* Cards en dark */
+.dark .scholarship-card,
+.dark .uni-card,
+.dark .step-card,
+.dark .feat-card,
+.dark .testimonial-card,
+.dark .faq-item {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(99, 102, 241, 0.15);
+}
+
+.dark .scholarship-card:hover,
+.dark .uni-card:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+}
+
+/* Badges y etiquetas en dark */
+.dark .badge {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.25);
+  color: #c7d2fe;
+}
+
+/* Iconos y stats */
+.dark .stat-num {
+  color: var(--gold);
+}
+
+/* Sección de filtros / búsqueda */
+.dark .search-bar,
+.dark .filter-bar {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.dark .search-bar input,
+.dark .filter-btn {
+  background: rgba(30, 41, 59, 0.8);
+  color: #e2e8f0;
+  border-color: rgba(99, 102, 241, 0.15);
+}
+
+/* CTA sección en dark */
+.dark .cta-section {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(99, 102, 241, 0.15);
+}
+
+/* Footer dark */
+.dark .site-footer {
+  background: #010408;
+  border-top-color: rgba(99, 102, 241, 0.1);
+}
+
+/* FAQ dark */
+.dark .faq-item {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(99, 102, 241, 0.1);
+}
+
+.dark .faq-header {
+  color: #e2e8f0;
+}
+
+.dark .faq-header:hover {
+  color: var(--teal);
+}

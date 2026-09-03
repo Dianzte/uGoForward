@@ -10,6 +10,10 @@ use App\Http\Controllers\TestSocioemocionalController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\GoalController;
+use App\Http\Controllers\PerfilHubController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +31,13 @@ Route::get('/homepage', function () {
 });
 
 
+// --- BECAS ---
+Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
+Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
+Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
+Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
+
+
 // --- RUTAS PARA INVITADOS (NO LOGUEADOS) ---
 Route::middleware('guest')->group(function () {
     // Login
@@ -34,8 +45,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [Authcontroller::class, 'login']);
 
     // Registro
-    Route::get('/registro', [Authcontroller::class, 'showRegister'])->name('registro');
-    Route::post('/registro', [Authcontroller::class, 'register'])->name('registro.store');
+    Route::get('/registro', [AuthController::class, 'showRegister'])->name('registro');
+    Route::post('/registro', [AuthController::class, 'register'])->name('registro.store');
 });
 
 Route::get('/calendario', function () {
@@ -103,3 +114,32 @@ Route::middleware(['auth', 'rol.seleccionado'])->group(function () {
 });
 // --- CHATBOT ---
 Route::post('/api/chatbot', [ChatbotController::class, 'chat']);
+
+// ============================================================
+// --- STUDENT HUB ---
+// ============================================================
+Route::prefix('hub')->middleware('auth')->group(function () {
+
+    // --- FEED (Muro Académico) ---
+    Route::get('/', [PostController::class, 'index'])->name('hub.feed');
+    Route::post('/posts', [PostController::class, 'store'])->name('hub.posts.store');
+    Route::post('/posts/{post}/upvote', [PostController::class, 'upvote'])->name('hub.posts.upvote');
+    Route::post('/posts/{post}/comentar', [PostController::class, 'comentar'])->name('hub.posts.comentar');
+
+    // --- CHAT (Tiempo Real) ---
+    Route::get('/chat', [ChatController::class, 'index'])->name('hub.chat');
+    Route::get('/chat/{room:slug}', [ChatController::class, 'show'])->name('hub.chat.room');
+    Route::post('/chat/{room}/messages', [ChatController::class, 'store'])->name('hub.chat.store');
+
+    // --- METAS (Goal Tracker) ---
+    Route::get('/metas', [GoalController::class, 'index'])->name('hub.goals');
+    Route::post('/metas', [GoalController::class, 'store'])->name('hub.goals.store');
+    Route::patch('/metas/{goal}', [GoalController::class, 'update'])->name('hub.goals.update');
+    Route::post('/metas/{goal}/apoyo', [GoalController::class, 'apoyo'])->name('hub.goals.apoyo');
+
+    // --- PERFIL DE ESTUDIANTE ---
+    Route::get('/perfil', [PerfilHubController::class, 'show'])->name('hub.perfil');
+    Route::get('/perfil/{user}', [PerfilHubController::class, 'show'])->name('hub.perfil.user');
+    Route::get('/perfil/editar', [PerfilHubController::class, 'edit'])->name('hub.perfil.edit');
+    Route::patch('/perfil', [PerfilHubController::class, 'update'])->name('hub.perfil.update');
+});

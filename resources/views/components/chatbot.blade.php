@@ -75,6 +75,64 @@
         70% { opacity: 0;  transform: scale(1.35); }
         100%{ opacity: 0;  transform: scale(1.35); }
     }
+
+    /* ===== DARK MODE — Transición del widget ===== */
+    #chatbot-window,
+    #chatbot-messages,
+    #chatbot-typing,
+    #chatbot-input-area {
+        transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Dark: ventana principal */
+    .dark #chatbot-window {
+        background: rgba(15, 23, 42, 0.92) !important;
+        border-color: rgba(99, 102, 241, 0.2) !important;
+        box-shadow: 0 25px 60px -10px rgba(0,0,0,0.5), 0 10px 30px -5px rgba(6,182,212,0.1) !important;
+    }
+
+    /* Dark: área de mensajes */
+    .dark #chatbot-messages {
+        background: linear-gradient(to bottom, #0f172a, #1e293b) !important;
+    }
+
+    /* Dark: burbuja del bot (estáticas, las dinámicas las maneja JS) */
+    .dark #chatbot-messages > div:first-child > div:last-child {
+        background: #1e293b !important;
+        border-color: rgba(99,102,241,0.15) !important;
+        color: #e2e8f0 !important;
+    }
+
+    /* Dark: typing indicator */
+    .dark #chatbot-typing {
+        background: #0f172a !important;
+        border-top-color: rgba(99,102,241,0.1) !important;
+    }
+
+    .dark #chatbot-typing .bg-slate-100 {
+        background: #1e293b !important;
+    }
+
+    /* Dark: input area */
+    .dark #chatbot-input-area {
+        background: #0f172a !important;
+        border-top-color: rgba(99,102,241,0.1) !important;
+    }
+
+    .dark #chatbot-input {
+        background: rgba(30, 41, 59, 0.8) !important;
+        border-color: rgba(99, 102, 241, 0.25) !important;
+        color: #e2e8f0 !important;
+    }
+
+    .dark #chatbot-input::placeholder {
+        color: #64748b !important;
+    }
+
+    .dark #chatbot-input:focus {
+        border-color: rgba(99, 102, 241, 0.5) !important;
+        box-shadow: 0 0 0 3px rgba(99,102,241,0.15) !important;
+    }
 </style>
 
 <div id="chatbot-widget" class="fixed bottom-6 left-6 z-50 font-sans flex flex-col items-start" style="max-height: calc(100vh - 3rem);">
@@ -178,7 +236,7 @@
         </div>
 
         {{-- ── INPUT AREA ── --}}
-        <div class="p-3 bg-white border-t border-slate-100 flex items-center gap-2 flex-shrink-0">
+        <div id="chatbot-input-area" class="p-3 bg-white border-t border-slate-100 flex items-center gap-2 flex-shrink-0">
             <input
                 type="text"
                 id="chatbot-input"
@@ -358,8 +416,12 @@
                         white-space: pre-wrap;
                     ">${escapeHTML(text)}</div>`;
             } else {
-                // Burbuja bot — izquierda, blanco con avatar
+                // Burbuja bot — izquierda, blanco/dark con avatar
                 const formattedText = formatBotText(text);
+                const isDark = document.documentElement.classList.contains('dark');
+                const botBg  = isDark ? '#1e293b' : '#fff';
+                const botBorder = isDark ? 'rgba(99,102,241,0.15)' : '#f1f5f9';
+                const botColor  = isDark ? '#e2e8f0' : '#334155';
                 msgDiv.innerHTML = `
                     <div style="width:32px;height:32px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6366f1,#06b6d4);box-shadow:0 2px 6px rgba(99,102,241,0.3);">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="width:16px;height:16px;fill:white;">
@@ -374,18 +436,19 @@
                         </svg>
                     </div>
                     <div style="
-                        background: #fff;
-                        border: 1px solid #f1f5f9;
+                        background: ${botBg};
+                        border: 1px solid ${botBorder};
                         border-radius: 18px 18px 18px 4px;
                         padding: 10px 14px;
                         font-size: 0.875rem;
-                        color: #334155;
+                        color: ${botColor};
                         max-width: 80%;
                         text-align: left;
                         line-height: 1.55;
                         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
                         word-break: break-word;
                         overflow-wrap: break-word;
+                        transition: background 0.3s ease, color 0.3s ease;
                     ">${formattedText}</div>`;
             }
 
@@ -444,5 +507,52 @@
             if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
         });
     });
+
+    // ── Función expuesta para actualizar el tema del chatbot en tiempo real ──
+    window.guayabotUpdateTheme = function(isDark) {
+        const windowEl   = document.getElementById('chatbot-window');
+        const messagesEl = document.getElementById('chatbot-messages');
+        const typingEl   = document.getElementById('chatbot-typing');
+        const inputArea  = document.getElementById('chatbot-input-area');
+        const inputEl    = document.getElementById('chatbot-input');
+
+        if (!windowEl) return;
+
+        // Ventana principal
+        if (isDark) {
+            windowEl.style.background    = 'rgba(15, 23, 42, 0.92)';
+            windowEl.style.borderColor   = 'rgba(99, 102, 241, 0.2)';
+            windowEl.style.boxShadow     = '0 25px 60px -10px rgba(0,0,0,0.5), 0 10px 30px -5px rgba(6,182,212,0.1)';
+        } else {
+            windowEl.style.background    = 'rgba(255,255,255,0.85)';
+            windowEl.style.borderColor   = 'rgba(255,255,255,0.6)';
+            windowEl.style.boxShadow     = '0 25px 60px -10px rgba(99,102,241,0.3), 0 10px 30px -5px rgba(6,182,212,0.2)';
+        }
+
+        // Área de mensajes
+        if (messagesEl) {
+            messagesEl.style.background = isDark
+                ? 'linear-gradient(to bottom, #0f172a, #1e293b)'
+                : 'linear-gradient(to bottom, #f8fafc, #ffffff)';
+        }
+
+        // Input area
+        if (inputArea) {
+            inputArea.style.background   = isDark ? '#0f172a'  : '#ffffff';
+            inputArea.style.borderTopColor = isDark ? 'rgba(99,102,241,0.1)' : 'rgba(241,245,249,0.8)';
+        }
+
+        // Input field
+        if (inputEl) {
+            inputEl.style.background   = isDark ? 'rgba(30,41,59,0.8)'  : '';
+            inputEl.style.borderColor  = isDark ? 'rgba(99,102,241,0.25)' : '';
+            inputEl.style.color        = isDark ? '#e2e8f0' : '';
+        }
+
+        // Typing indicator
+        if (typingEl) {
+            typingEl.style.background = isDark ? '#0f172a' : '#ffffff';
+        }
+    };
 }());
 </script>

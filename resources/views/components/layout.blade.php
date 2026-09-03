@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $titulo ?? 'U Go Forward' }}</title>
+
+    {{-- ══ ANTI-FOUC: aplicar tema ANTES de renderizar el DOM ══ --}}
+    <script>
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
     @vite(['resources/css/app.css'])
     @vite(['resources/css/becasListado.css'])
 </head>
 
 
+<body class="fondo" style="transition: background-color 0.3s ease, color 0.3s ease;">
 
-
-<body >
 
     @include('navegacion.navbar')
 

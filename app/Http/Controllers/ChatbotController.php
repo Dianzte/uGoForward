@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 class ChatbotController extends Controller
 {
     public function chat(Request $request)
-    {
+    {  
         $request->validate([
             'message' => 'required|string',
             'history' => 'array'

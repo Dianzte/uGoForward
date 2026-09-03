@@ -81,9 +81,21 @@
                 <p class="register-link">¿No tienes cuenta? <a href="{{ route('registro') }}">Regístrate aquí</a></p>
             </form>
         </div>
-    </div>
-
-
+        
+        @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="forgot">¿Olvidaste tu contraseña?</a>
+        @endif
+        
+        <button type="submit" class="btn-login">LOGIN</button>
+        
+        <div class="divider"><span>o</span></div>
+        
+        <p class="register-link">¿No tienes cuenta? <a href="{{ route('registro') }}">Regístrate aquí</a></p>
+    </form>
+  </div>
+</div>
+ 
+ 
 </body>
 
 </html>
