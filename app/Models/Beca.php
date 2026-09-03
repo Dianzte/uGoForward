@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Beca extends Model
 {
@@ -46,5 +48,34 @@ class Beca extends Model
     public function ayuda(): BelongsTo
     {
         return $this->belongsTo(Ayuda::class, 'ayuda_id');
+    }
+
+    // ── Relaciones de interacción de usuarios ──────────────────────────────
+
+    /**
+     * Usuarios que se han postulado a esta beca.
+     */
+    public function postulantes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'postulaciones')
+                    ->withPivot('estado', 'postulado_at')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Usuarios que han guardado/favoriteado esta beca.
+     */
+    public function guardadoPor(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'becas_guardadas')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Sala de chat privada asociada a esta beca.
+     */
+    public function chatRoom(): HasOne
+    {
+        return $this->hasOne(ChatRoom::class, 'beca_id');
     }
 }

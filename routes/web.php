@@ -3,9 +3,12 @@
 use App\Http\Controllers\Auth\Authcontroller;
 use App\Http\Controllers\BecaCalendarioController;
 use App\Http\Controllers\BecaController;
+use App\Http\Controllers\BecaGuardadaController;
+use App\Http\Controllers\BecaChatController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ForoController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\PostulacionController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TestSocioemocionalController;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +89,22 @@ Route::post('/api/calendario/tareas', [BecaCalendarioController::class, 'guardar
 // Rutas para Modificar y Eliminar Tareas de la Agenda
 Route::put('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'actualizarTarea']);
 Route::delete('/api/calendario/tareas/{id}', [BecaCalendarioController::class, 'eliminarTarea']);
+
+// ============================================================
+// --- BECAS: INTERACCIÓN DE ESTUDIANTES (auth requerido) ---
+// ============================================================
+Route::middleware('auth')->group(function () {
+    // Postulaciones
+    Route::post('/becas/{beca}/postular', [PostulacionController::class, 'store'])->name('becas.postular');
+    Route::delete('/becas/{beca}/postular', [PostulacionController::class, 'destroy'])->name('becas.postular.destroy');
+
+    // Guardados / Favoritos
+    Route::post('/becas/{beca}/guardar', [BecaGuardadaController::class, 'toggle'])->name('becas.guardar');
+
+    // Chat privado beca-padrino
+    Route::post('/becas/{beca}/chat', [BecaChatController::class, 'getOrCreate'])->name('becas.chat.init');
+    Route::post('/becas/{beca}/chat/mensaje', [BecaChatController::class, 'sendMessage'])->name('becas.chat.mensaje');
+});
 
 // --- SELECCIÓN DE ROL (una sola vez por usuario) ---
 Route::middleware('auth')->group(function () {

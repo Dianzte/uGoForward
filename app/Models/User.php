@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
@@ -64,6 +65,25 @@ class User extends Authenticatable
     public function chatMessages(): HasMany
     {
         return $this->hasMany(ChatMessage::class)->latest();
+    }
+
+    /**
+     * Becas a las que se ha postulado el usuario.
+     */
+    public function postulaciones(): BelongsToMany
+    {
+        return $this->belongsToMany(Beca::class, 'postulaciones')
+                    ->withPivot('estado', 'postulado_at')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Becas que el usuario ha guardado como favorito.
+     */
+    public function becasGuardadas(): BelongsToMany
+    {
+        return $this->belongsToMany(Beca::class, 'becas_guardadas')
+                    ->withTimestamps();
     }
 
     /**

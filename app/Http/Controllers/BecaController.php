@@ -10,6 +10,7 @@ use App\Models\Imagen;
 use App\Models\Universidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class BecaController extends Controller
@@ -20,11 +21,18 @@ class BecaController extends Controller
     public function index()
     {
        $becas = Beca::whereDate('vencimiento', '>=', Carbon::today())->latest()->paginate(12);
-       $universidades =  Universidad::get();
+       $universidades = Universidad::get();
 
-       return view('becas.index', compact('becas', 'universidades'));
+       // Cargar estados de interacción para el usuario autenticado
+       $postulacionIds = [];
+       $guardadoIds = [];
 
-        
+       if (Auth::check() && Auth::user()->role === 'estudiante') {
+           $postulacionIds = Auth::user()->postulaciones()->pluck('beca_id')->toArray();
+           $guardadoIds    = Auth::user()->becasGuardadas()->pluck('beca_id')->toArray();
+       }
+
+       return view('becas.index', compact('becas', 'universidades', 'postulacionIds', 'guardadoIds'));
     }
 
     public function filtrar(Request $request)
@@ -58,7 +66,16 @@ class BecaController extends Controller
             ->paginate(9)
             ->appends($request->all());
 
-        return view('becas.index', compact('becas', 'universidades'));
+        // Cargar estados de interacción para el usuario autenticado
+        $postulacionIds = [];
+        $guardadoIds = [];
+
+        if (Auth::check() && Auth::user()->role === 'estudiante') {
+            $postulacionIds = Auth::user()->postulaciones()->pluck('beca_id')->toArray();
+            $guardadoIds    = Auth::user()->becasGuardadas()->pluck('beca_id')->toArray();
+        }
+
+        return view('becas.index', compact('becas', 'universidades', 'postulacionIds', 'guardadoIds'));
     }
 
     /**
@@ -168,12 +185,23 @@ class BecaController extends Controller
      */
     public function show($id)
     {
-
         $beca = Beca::findOrFail($id);
         $beca->load('universidad');
 
+        // Cargar estados de interacción del usuario
+        $postulado = false;
+        $guardado  = false;
+
+        if (Auth::check() && Auth::user()->role === 'estudiante') {
+            $userId    = Auth::id();
+            $postulado = $beca->postulantes()->wherePivot('user_id', $userId)->exists();
+            $guardado  = $beca->guardadoPor()->wherePivot('user_id', $userId)->exists();
+        }
+
         return view('becas.detalle', [
-            'beca' => $beca,
+            'beca'      => $beca,
+            'postulado' => $postulado,
+            'guardado'  => $guardado,
         ]);
     }
 
