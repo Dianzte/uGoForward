@@ -1,5 +1,4 @@
 <x-hub-layout title="Chat Estudiantil">
-
 {{-- Chat usa su propio layout de pantalla completa --}}
 <style>
     /* Sobrescribir el padding del hub-content para el chat */

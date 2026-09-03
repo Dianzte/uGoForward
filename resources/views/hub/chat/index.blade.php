@@ -1,5 +1,4 @@
 <x-hub-layout title="Chat Estudiantil">
-
 <div style="max-width:800px;margin:0 auto;">
     <div style="margin-bottom:24px;">
         <h2 style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;">

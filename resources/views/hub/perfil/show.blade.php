@@ -38,7 +38,7 @@
             </h1>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                 @if($user->usuario)
-                    <span style="color:var(--hub-text-muted);font-size:13px;">@{{ $user->usuario }}</span>
+                    <span style="color:var(--hub-text-muted);font-size:13px;">{{ Auth::user()->usuario }}</span>
                 @endif
                 @if($user->departamento)
                     <span class="hub-badge hub-badge-violet" style="font-size:11px;">📍 {{ $user->departamento }}</span>

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AyudaSeeder::class);
         $this->call(ImagenSeeder::class);
         $this->call(CategoriasForoSeeder::class);
+        $this->call(ChatRoomSeeder::class);
 
         Beca::factory(5)->create();
 
