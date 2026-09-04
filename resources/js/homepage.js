@@ -1050,79 +1050,36 @@ const UNI_DATA = {
 
 // === GENERADOR DE CARDS DE UNIVERSIDAD ===
 function buildUniCard(uni, idx) {
-  const tabId = `uni-${idx}`;
+  const careersHtml = uni.careers 
+    ? uni.careers.split(',').map(c => `<span class="career-chip">${c.trim()}</span>`).join('') 
+    : '';
 
-  const careersHtml = uni.careers.map(c => `<span class="career-chip">${c}</span>`).join('');
-  const badgesHtml = uni.badges.map(b => `<span class="uni-stat-badge"><span>${b}</span></span>`).join('');
-  const scheduleHtml = uni.schedule.map(s => `
-    <tr>
-      <td><span class="schedule-dot"></span>${s.dia}</td>
-      <td>${s.turno}</td>
-      <td><strong style="color:#fff;">${s.hora}</strong></td>
-    </tr>`).join('');
-  const servicesHtml = uni.services.map(s => `
-    <div class="service-item">
-      <span class="service-icon-sm">${s.split(' ')[0]}</span>
-      <span>${s.split(' ').slice(1).join(' ')}</span>
-    </div>`).join('');
-  const reqHtml = uni.beca.requisitos.map(r => `
-    <div class="beca-requirement">
-      <span class="beca-req-icon">${r.icon}</span>
-      <span>${r.text}</span>
-    </div>`).join('');
+  const mediaHtml = `<img src="${uni.image || 'https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=80'}" alt="${uni.name}" onerror="this.src='https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=80'">`;
 
-  const mediaHtml = uni.youtubeId
-    ? `<iframe src="https://www.youtube.com/embed/${uni.youtubeId}?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-    : `<img src="${uni.image}" alt="${uni.name}" onerror="this.src='https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=80'">`;
+  const visitText = window.mapTranslations?.visitWebsite || "Visitar sitio web →";
+  const careersLabel = window.mapTranslations?.careersLabel || "Carreras disponibles:";
 
   return `
   <div class="uni-modal-card">
-    <div class="uni-card-top">
-      <div class="uni-media-wrap">
+    <div class="uni-card-top" style="flex-direction: column; gap: 1rem;">
+      <div class="uni-media-wrap" style="width: 100%; height: 160px;">
         ${mediaHtml}
-        <span class="uni-media-badge">${uni.youtubeId ? '▶ Video' : '📷 Photo'}</span>
       </div>
-      <div class="uni-card-info">
-        <div class="uni-card-name">${uni.name}</div>
-        <div class="uni-card-full-name">${uni.fullName}</div>
-        <p class="uni-card-desc">${uni.desc}</p>
-        <div class="uni-stat-badges">${badgesHtml}</div>
+      <div class="uni-card-info" style="width: 100%;">
+        <div class="uni-card-name" style="font-size: 1.4rem;">${uni.name}</div>
+        <p class="uni-card-desc" style="margin-top: 0.5rem; font-size: 0.95rem; color: var(--text-2);">${uni.description}</p>
+        
+        <div style="margin-top: 1.2rem;">
+          <h5 style="color: var(--teal); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">${careersLabel}</h5>
+          <div class="careers-grid" style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            ${careersHtml}
+          </div>
+        </div>
+
+        ${uni.website ? `<div style="margin-top: 1.5rem;">
+          <a href="${uni.website}" target="_blank" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">${visitText}</a>
+        </div>` : ''}
       </div>
-    </div>
-
-    <!-- Tabs -->
-    <div class="uni-tabs-bar" id="tabs-${tabId}">
-      <button class="uni-tab-btn active" data-tab="carreras-${tabId}">🎓 Careers</button>
-      <button class="uni-tab-btn" data-tab="horario-${tabId}">🕐 Schedules</button>
-      <button class="uni-tab-btn" data-tab="servicios-${tabId}">🛠️ Services</button>
-      <button class="uni-tab-btn" data-tab="beca-${tabId}">⭐ Scholarship Info</button>
-    </div>
-
-    <div id="carreras-${tabId}" class="uni-tab-panel active">
-      <div class="careers-grid">${careersHtml}</div>
-    </div>
-    <div id="horario-${tabId}" class="uni-tab-panel">
-      <table class="schedule-table">
-        <thead><tr><th>Days</th><th>Shift</th><th>Schedule</th></tr></thead>
-        <tbody>${scheduleHtml}</tbody>
-      </table>
-    </div>
-    <div id="servicios-${tabId}" class="uni-tab-panel">
-      <div class="services-list">${servicesHtml}</div>
-    </div>
-    <div id="beca-${tabId}" class="uni-tab-panel">
-      <div class="beca-info-panel">
-        <h4 style="color:var(--gold); margin-bottom:1rem; font-size:1rem;">🏆 ${uni.beca.tipo}</h4>
-        ${reqHtml}
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="uni-modal-card-footer">
-      <a href="${uni.website}" target="_blank" rel="noopener" class="uni-website-link">
-        🌐 Official site — ${uni.fullName} ↗
-      </a>
-      <a href="{{ route('becas.calendario') }}" class="btn-primary" style="padding:0.45rem 1.1rem; font-size:0.82rem;">View Scholarship Calendar →</a>
     </div>
   </div>`;
 }
@@ -1136,44 +1093,39 @@ const modalDeptUniCount = document.getElementById('modalDeptUniCount');
 const modalDeptRegion = document.getElementById('modalDeptRegion');
 
 function openMapModal(deptId) {
-  const data = UNI_DATA[deptId];
-  if (!data || !data.unis || data.unis.length === 0) {
-    mapModalBody.innerHTML = `
-      <div class="map-modal-empty">
+  const path = document.getElementById(deptId);
+  if (!path) return;
+  
+  const name = path.getAttribute("data-name") || deptId;
+  const unisStr = path.getAttribute("data-universities");
+  let unis = [];
+  try {
+    if (unisStr) unis = JSON.parse(unisStr);
+  } catch(e) { 
+    console.error("Error parsing JSON for " + name, e); 
+  }
+
+  const n = unis.length;
+
+  if (n === 0) {
+    mapModalBody.innerHTML = `<div class="map-modal-empty">
         <div class="empty-icon">🏗️</div>
-        <h3>Information under construction</h3>
-        <p>We will soon add the universities of <strong>${deptId}</strong>. We are working on it!</p>
+        <h3>${window.mapTranslations?.constructionInfo || "Información en construcción"}</h3>
+        <p>${window.mapTranslations?.workingOnIt || "Estamos trabajando en ello"}</p>
       </div>`;
-    modalDeptNameEl.textContent = deptId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-    modalDeptUniCount.textContent = '0 universidades cargadas';
-    modalDeptRegion.textContent = 'El Salvador';
+    modalDeptNameEl.textContent = name;
+    modalDeptUniCount.textContent = "0 " + (window.mapTranslations?.unisSuffix || "universidades");
+    modalDeptRegion.textContent = window.mapTranslations?.elSalvador || "El Salvador";
     mapModalOverlay.classList.add('open');
     return;
   }
 
-  modalDeptNameEl.textContent = data.name;
-  const n = data.unis.length;
-  modalDeptUniCount.textContent = `${n} universit${n !== 1 ? 'ies' : 'y'} with scholarships`;
-  modalDeptRegion.textContent = data.region;
+  modalDeptNameEl.textContent = name;
+  modalDeptUniCount.textContent = n + " " + (window.mapTranslations?.unisSuffix || "universidades");
+  modalDeptRegion.textContent = window.mapTranslations?.elSalvador || "El Salvador";
 
-  mapModalBody.innerHTML = data.unis.map((uni, idx) => buildUniCard(uni, `${deptId}-${idx}`)).join('');
-
-  // Inicializar tabs para cada universidad
-  mapModalBody.querySelectorAll('.uni-tabs-bar').forEach(bar => {
-    bar.querySelectorAll('.uni-tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetPanelId = btn.dataset.tab;
-        const card = btn.closest('.uni-modal-card');
-        card.querySelectorAll('.uni-tab-btn').forEach(b => b.classList.remove('active'));
-        card.querySelectorAll('.uni-tab-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(targetPanelId)?.classList.add('active');
-      });
-    });
-  });
-
+  mapModalBody.innerHTML = unis.map((uni, idx) => buildUniCard(uni, idx)).join('');
   mapModalOverlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 
 function closeMapModal() {
@@ -1201,7 +1153,9 @@ document.querySelectorAll('.dept').forEach(dept => {
       const deptName = dept.dataset.name || 'Department';
       const n = parseInt(dept.dataset.unis || 0);
       tooltipName.textContent = deptName;
-      tooltipUnisText.textContent = n === 1 ? '1 university with scholarships' : `${n} universities with scholarships`;
+              tooltipUnisText.textContent = n === 1 
+          ? '1 ' + (window.mapTranslations?.university || 'universidad') + ' ' + (window.mapTranslations?.withActiveScholarships || 'con becas activas')
+          : n + ' ' + (window.mapTranslations?.unisSuffix || 'universidades') + ' ' + (window.mapTranslations?.withActiveScholarships || 'con becas activas');
       tooltip.classList.add('visible');
     }
   });
@@ -1228,7 +1182,7 @@ document.querySelectorAll('.dept').forEach(dept => {
     dept.classList.add('active');
     activedept = dept;
 
-    const deptId = dept.dataset.id || '';
+    const deptId = dept.id || dept.dataset.name || '';
     openMapModal(deptId);
   });
 });

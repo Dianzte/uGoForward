@@ -31,8 +31,7 @@ class AuthController extends Controller
             'contrasena'   => ['required', 'confirmed', Rules\Password::defaults()],
             'fechaNac'     => 'required|date|before:-16 years', // exige minimo 16 anios, igual que el JS del front
             'departamento' => 'required|string|max:255',
-            'nie'          => 'nullable|string|max:255|required_without:dui',
-            'dui'          => 'nullable|string|max:255|required_without:nie',
+            'nie'          => 'required|string|max:255',
         ]);
 
         $user = User::create([
@@ -43,7 +42,6 @@ class AuthController extends Controller
             'fechaNac'     => $validated['fechaNac'],
             'departamento' => $validated['departamento'],
             'nie'          => $validated['nie'] ?? null,
-            'dui'          => $validated['dui'] ?? null,
         ]);
 
         Auth::login($user);

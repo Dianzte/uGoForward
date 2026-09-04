@@ -71,8 +71,7 @@ class AuthController extends Controller
             'contrasena' => ['required', 'string', 'min:4'],
             'fechaNac' => ['required', 'date', 'before:today'],
             'departamento' => ['required', 'string', 'max:255'],
-            'nie' => ['nullable', 'string', 'max:20'],
-            'dui' => ['nullable', 'string', 'max:20'],
+            'nie' => ['required', 'string', 'max:20'],
         ]);
 
         $user = User::create([
@@ -83,7 +82,6 @@ class AuthController extends Controller
             'fechaNac' => $validated['fechaNac'],
             'departamento' => $validated['departamento'],
             'nie' => $request->input('nie'),
-            'dui' => $request->input('dui'),
         ]);
 
         Auth::login($user);
@@ -109,7 +107,6 @@ class AuthController extends Controller
             'departamento' => ['required', 'string', 'max:255'],
             'contrasena' => ['nullable', 'string', 'min:8'],
             'nie' => ['nullable', 'string', 'max:20'],
-            'dui' => ['nullable', 'string', 'max:20'],
             'avatar' => ['nullable', 'image', 'max:2048'],
             'banner' => ['nullable', 'image', 'max:2048'],
         ]);

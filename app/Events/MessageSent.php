@@ -44,12 +44,21 @@ class MessageSent implements ShouldBroadcastNow
             'contenido'   => $this->message->contenido,
             'url_adjunto' => $this->message->url_adjunto,
             'tipo'        => $this->message->tipo,
+            'reply_to_id' => $this->message->reply_to_id,
             'created_at'  => $this->message->created_at->toISOString(),
             'user' => [
                 'id'     => $this->message->user->id,
                 'nombre' => $this->message->user->nombre,
                 'avatar' => $this->message->user->avatar,
             ],
+            // Datos completos del mensaje citado (null si no es respuesta)
+            'reply_to' => $this->message->replyTo ? [
+                'id'        => $this->message->replyTo->id,
+                'contenido' => $this->message->replyTo->contenido,
+                'user'      => [
+                    'nombre' => $this->message->replyTo->user?->nombre ?? 'Usuario',
+                ],
+            ] : null,
         ];
     }
 }

@@ -53,23 +53,46 @@
                 @forelse($messages as $msg)
                     @php $isOwn = $msg->user_id === Auth::id(); @endphp
                     <div class="hub-message {{ $isOwn ? 'own' : '' }}" id="msg-{{ $msg->id }}">
-                        @if(!$isOwn)
-                            <div class="hub-avatar hub-avatar-sm">
-                                @if($msg->user?->avatar)
-                                    <img src="{{ $msg->user->avatar }}" alt="">
-                                @else
-                                    {{ strtoupper(substr($msg->user?->nombre ?? 'U', 0, 1)) }}
-                                @endif
-                            </div>
-                        @endif
+
+                        {{-- Avatar --}}
+                        <div class="hub-avatar hub-avatar-sm">
+                            @if($msg->user?->avatar)
+                                <img src="{{ $msg->user->avatar }}" alt="">
+                            @else
+                                {{ strtoupper(substr($msg->user?->nombre ?? 'U', 0, 1)) }}
+                            @endif
+                        </div>
+
+                        {{-- Burbuja --}}
                         <div class="hub-message-bubble">
+                            {{-- Meta (nombre + hora) --}}
                             <div class="hub-message-meta">
                                 @if(!$isOwn)
                                     <span class="hub-message-name">{{ $msg->user?->nombre ?? 'Usuario' }}</span>
                                 @endif
                                 <span>{{ $msg->created_at->format('H:i') }}</span>
                             </div>
-                            <div class="hub-message-content">{{ $msg->contenido }}</div>
+
+                            {{-- Burbuja de contenido --}}
+                            <div class="hub-message-content">
+
+                                {{-- ★ Cita del mensaje original (si es respuesta) --}}
+                                @if($msg->replyTo)
+                                    <a class="hub-reply-quote"
+                                       href="#msg-{{ $msg->replyTo->id }}"
+                                       onclick="scrollToMsg({{ $msg->replyTo->id }}, event)">
+                                        <span class="hub-reply-quote-author">
+                                            ↩ {{ $msg->replyTo->user?->nombre ?? 'Usuario' }}
+                                        </span>
+                                        <span class="hub-reply-quote-text">
+                                            {{ Str::limit($msg->replyTo->contenido, 80) }}
+                                        </span>
+                                    </a>
+                                @endif
+
+                                {{ $msg->contenido }}
+                            </div>
+
                             @if($msg->url_adjunto)
                                 <a href="{{ $msg->url_adjunto }}" target="_blank" rel="noopener"
                                    class="hub-message-url-preview">
@@ -77,15 +100,15 @@
                                 </a>
                             @endif
                         </div>
-                        @if($isOwn)
-                            <div class="hub-avatar hub-avatar-sm">
-                                @if(Auth::user()->avatar)
-                                    <img src="{{ Auth::user()->avatar }}" alt="">
-                                @else
-                                    {{ strtoupper(substr(Auth::user()->nombre, 0, 1)) }}
-                                @endif
-                            </div>
-                        @endif
+
+                        {{-- ★ Botón Responder (visible en hover) --}}
+                        <button class="hub-reply-btn"
+                                title="Responder"
+                                onclick="setReply({{ $msg->id }}, '{{ addslashes($msg->user?->nombre ?? 'Usuario') }}', '{{ addslashes(Str::limit($msg->contenido, 80)) }}')">
+                            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                            </svg>
+                        </button>
                     </div>
                 @empty
                     <div class="hub-empty" style="margin:auto;">
@@ -94,6 +117,15 @@
                         <div class="hub-empty-desc">Inicia la conversación en esta sala.</div>
                     </div>
                 @endforelse
+            </div>
+
+            {{-- ★ Banner "Respondiendo a..." --}}
+            <div class="hub-reply-preview" id="replyPreview">
+                <div class="hub-reply-preview-info">
+                    <div class="hub-reply-preview-author" id="replyPreviewAuthor">↩ Respondiendo a...</div>
+                    <div class="hub-reply-preview-text" id="replyPreviewText"></div>
+                </div>
+                <button class="hub-reply-cancel" id="replyCancelBtn" onclick="cancelReply()" title="Cancelar">×</button>
             </div>
 
             {{-- Input de mensaje --}}

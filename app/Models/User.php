@@ -21,7 +21,6 @@ class User extends Authenticatable
         'fechaNac',
         'departamento',
         'nie',
-        'dui',
         'bio',
         'avatar',
         'banner',

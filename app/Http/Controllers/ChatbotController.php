@@ -27,7 +27,7 @@ class ChatbotController extends Controller
         // Preparar el System Prompt para GUAYABOT
         $systemInstruction = [
             "parts" => [
-                ["text" => "Eres GUAYABOT, el asistente virtual y consejero vocacional del sitio web uGoForward. Ayudas a estudiantes a descubrir qué estudiar, elegir la mejor universidad y encontrar becas disponibles. Eres empático, amigable, claro y motivador."]
+                ["text" => "Eres Hugo, el asistente virtual y consejero vocacional del sitio web uGoForward. Ayudas a estudiantes a descubrir qué estudiar, elegir la mejor universidad y encontrar becas disponibles. Eres empático, amigable, claro y motivador."]
             ]
         ];
 
@@ -69,11 +69,11 @@ class ChatbotController extends Controller
             }
 
             Log::error('Gemini API Error: ' . $response->body());
-            return response()->json(['error' => 'No pudimos conectar con GUAYABOT en este momento. Intenta de nuevo más tarde. (Error: ' . $response->status() . ')'], 500);
+            return response()->json(['error' => 'No pudimos conectar con Hugo en este momento. Intenta de nuevo más tarde. (Error: ' . $response->status() . ')'], 500);
 
         } catch (\Exception $e) {
             Log::error('Gemini API Exception: ' . $e->getMessage());
-            return response()->json(['error' => 'Ocurrió un error inesperado al conectar con GUAYABOT.'], 500);
+            return response()->json(['error' => 'Ocurrió un error inesperado al conectar con Hugo.'], 500);
         }
     }
 }

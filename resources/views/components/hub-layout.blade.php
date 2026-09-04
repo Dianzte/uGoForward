@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Student Hub' }} · uGoForward</title>
+    <title>{{ $title ?? 'UGF Hub' }} · uGoForward</title>
     <meta name="description" content="Plataforma estudiantil colaborativa de uGoForward. Comparte recursos, chatea y alcanza tus metas.">
 
     {{-- Anti-FOUC: aplicar tema oscuro antes de render --}}
@@ -23,7 +23,7 @@
         <div class="hub-sidebar-logo">
             <div class="hub-sidebar-logo-icon">🎓</div>
             <div>
-                <div class="hub-sidebar-logo-text">Student Hub</div>
+                <div class="hub-sidebar-logo-text">UGF Hub</div>
                 <div class="hub-sidebar-logo-sub">uGoForward</div>
             </div>
         </div>
@@ -66,12 +66,7 @@
 
             <div class="hub-nav-section" style="margin-top:8px;">Plataforma</div>
 
-            <a href="{{ route('foro.index') }}" class="hub-nav-item">
-                <svg class="hub-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                </svg>
-                Foro
-            </a>
+
 
             <a href="{{ route('becas.index') }}" class="hub-nav-item">
                 <svg class="hub-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -117,7 +112,7 @@
                 </svg>
             </button>
 
-            <h1 class="hub-header-title">{{ $title ?? 'Student Hub' }}</h1>
+            <h1 class="hub-header-title">{{ $title ?? 'UGF Hub' }}</h1>
 
             {{-- Búsqueda --}}
             <form method="GET" action="{{ route('hub.feed') }}" class="hub-header-search">

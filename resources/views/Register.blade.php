@@ -202,18 +202,11 @@
       if (edad < 16) {
           campo.innerHTML = "<p style='color:red; font-size:.85rem; font-weight:600; margin-top:.3rem;'>{{ __('Debes tener al menos 16 años para registrarte.') }}</p>";
       }
-      else if (edad >= 16 && edad < 18) {
+      else {
           let oldNie = "{{ old('nie') }}";
           campo.innerHTML = `
             <label>{{ __('NIE') }}</label>
             <input type="text" name="nie" placeholder="{{ __('Ingrese su NIE') }}" value="${oldNie}" required>
-          `;
-      }
-      else {
-          let oldDui = "{{ old('dui') }}";
-          campo.innerHTML = `
-            <label>{{ __('DUI') }}</label>
-            <input type="text" name="dui" placeholder="{{ __('Ingrese su DUI') }}" value="${oldDui}" required>
           `;
       }
   }

@@ -159,21 +159,12 @@
         {{-- ── HEADER ── --}}
         <div id="chatbot-header" class="p-4 text-white flex justify-between items-center flex-shrink-0">
             <div class="flex items-center space-x-3">
-                {{-- Ícono robot SVG --}}
-                <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-6 h-6 fill-white">
-                        <rect x="16" y="20" width="32" height="28" rx="6"/>
-                        <rect x="28" y="10" width="8" height="10" rx="2"/>
-                        <circle cx="22" cy="32" r="3" class="fill-indigo-900/40"/>
-                        <circle cx="42" cy="32" r="3" class="fill-indigo-900/40"/>
-                        <rect x="23" y="39" width="18" height="4" rx="2" class="fill-indigo-900/30"/>
-                        <rect x="8"  y="28" width="6"  height="12" rx="3"/>
-                        <rect x="50" y="28" width="6"  height="12" rx="3"/>
-                        <circle cx="32" cy="10" r="3"/>
-                    </svg>
+                {{-- Ícono bot --}}
+                <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 shadow-inner overflow-hidden border border-white/30">
+                    <img src="{{ asset('media/hugo.png') }}" alt="Hugo Avatar" class="w-full h-full object-cover">
                 </div>
                 <div>
-                    <h3 class="font-extrabold text-base leading-tight tracking-wide">GUAYABOT</h3>
+                    <h3 class="font-extrabold text-base leading-tight tracking-wide">Hugo</h3>
                     <p class="text-xs text-white/75 flex items-center gap-1">
                         <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-pulse"></span>
                         Tu guía hacia el futuro
@@ -190,43 +181,25 @@
 
         {{-- ── ÁREA DE MENSAJES ── --}}
         <div id="chatbot-messages"
-             class="flex-1 p-4 bg-gradient-to-b from-slate-50 to-white flex flex-col space-y-3 scroll-smooth"
+             class="flex-1 p-4 bg-gradient-to-b from-slate-50 to-white flex flex-col space-y-5 scroll-smooth"
              style="overflow-y: auto; min-height: 200px; max-height: min(420px, calc(100vh - 18rem));">
 
             {{-- Mensaje de bienvenida (BOT - izquierda) --}}
-            <div class="gb-msg" style="display:flex; flex-direction:row; align-items:flex-end; gap:8px; width:100%;">
-                {{-- Avatar robot --}}
-                <div style="width:32px; height:32px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#6366f1,#06b6d4); box-shadow:0 2px 6px rgba(99,102,241,0.3);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="width:16px;height:16px;fill:white;">
-                        <rect x="16" y="20" width="32" height="28" rx="6"/>
-                        <rect x="28" y="10" width="8" height="10" rx="2"/>
-                        <circle cx="22" cy="32" r="3" fill="rgba(49,46,129,0.4)"/>
-                        <circle cx="42" cy="32" r="3" fill="rgba(49,46,129,0.4)"/>
-                        <rect x="23" y="39" width="18" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
-                        <rect x="8"  y="28" width="6"  height="12" rx="3"/>
-                        <rect x="50" y="28" width="6"  height="12" rx="3"/>
-                        <circle cx="32" cy="10" r="3"/>
-                    </svg>
+            <div class="gb-msg" style="display:flex; flex-direction:row; align-items:flex-end; gap:8px; width:100%; margin-bottom: 16px;">
+                {{-- Avatar bot --}}
+                <div style="width:44px; height:44px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid rgba(255,255,255,0.2); box-shadow:0 2px 6px rgba(99,102,241,0.3);">
+                    <img src="{{ asset('media/hugo.png') }}" alt="Hugo" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div style="background:#fff; border:1px solid #f1f5f9; border-radius:18px 18px 18px 4px; padding:10px 14px; font-size:0.875rem; color:#334155; max-width:80%; text-align:left; line-height:1.55; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
-                    ¡Hola! 👋 Soy <strong style="color:#6366f1;">GUAYABOT</strong>. ¿En qué te puedo ayudar hoy sobre becas o tu orientación vocacional?
+                <div style="background:#f1f5f9; border:1px solid #e2e8f0; border-radius:16px 16px 16px 4px; padding:12px 16px; font-size:0.875rem; color:#334155; max-width:80%; text-align:left; line-height:1.55; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    ¡Hola! 👋 Soy <strong style="color:#4f46e5;">Hugo</strong>. ¿En qué te puedo ayudar hoy sobre becas o tu orientación vocacional?
                 </div>
             </div>
         </div>
 
         {{-- ── TYPING INDICATOR ── --}}
         <div id="chatbot-typing" class="hidden px-4 py-2 bg-white flex items-center space-x-2 flex-shrink-0 border-t border-slate-100/80">
-            <div class="w-7 h-7 rounded-xl flex-shrink-0 flex items-center justify-center"
-                 style="background: linear-gradient(135deg,#6366f1,#06b6d4);">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-3.5 h-3.5 fill-white">
-                    <rect x="16" y="20" width="32" height="28" rx="6"/>
-                    <rect x="28" y="10" width="8" height="10" rx="2"/>
-                    <circle cx="22" cy="32" r="3" class="fill-indigo-900/40"/>
-                    <circle cx="42" cy="32" r="3" class="fill-indigo-900/40"/>
-                    <rect x="8"  y="28" width="6"  height="12" rx="3"/>
-                    <rect x="50" y="28" width="6"  height="12" rx="3"/>
-                    <circle cx="32" cy="10" r="3"/>
-                </svg>
+            <div class="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden border border-slate-200" style="box-shadow:0 2px 6px rgba(99,102,241,0.3);">
+                <img src="{{ asset('media/hugo.png') }}" alt="Hugo typing" class="w-full h-full object-cover">
             </div>
             <div class="bg-slate-100 rounded-2xl rounded-bl-none px-4 py-2.5 shadow-sm flex space-x-1.5 items-center">
                 <span class="w-2 h-2 rounded-full gb-dot" style="background:linear-gradient(135deg,#6366f1,#06b6d4);"></span>
@@ -263,25 +236,18 @@
     ══════════════════════════════════════════ --}}
     <button
         id="chatbot-toggle-btn"
-        aria-label="Abrir GUAYABOT"
-        class="relative w-14 h-14 rounded-full text-white flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-indigo-300/60 transition-transform duration-200 hover:scale-110 active:scale-95"
+        aria-label="Abrir Hugo"
+        class="relative w-16 h-16 rounded-full text-white flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-indigo-300/60 transition-transform duration-200 hover:scale-110 active:scale-95 border-2 border-transparent hover:border-white/50"
         style="background: linear-gradient(135deg,#6366f1,#06b6d4); box-shadow: 0 8px 25px -4px rgba(99,102,241,0.55);"
     >
-        {{-- Ícono robot (botón) --}}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-7 h-7 fill-white" id="gb-icon-robot">
-            <rect x="16" y="20" width="32" height="28" rx="6"/>
-            <rect x="28" y="10" width="8" height="10" rx="2"/>
-            <circle cx="22" cy="32" r="3" class="fill-indigo-900/50"/>
-            <circle cx="42" cy="32" r="3" class="fill-indigo-900/50"/>
-            <rect x="23" y="39" width="18" height="4" rx="2" class="fill-white/40"/>
-            <rect x="8"  y="28" width="6"  height="12" rx="3"/>
-            <rect x="50" y="28" width="6"  height="12" rx="3"/>
-            <circle cx="32" cy="10" r="3"/>
-        </svg>
+        {{-- Ícono bot (botón) --}}
+        <img src="{{ asset('media/hugo.png') }}" alt="Hugo" class="w-full h-full object-cover rounded-full" id="gb-icon-robot">
         {{-- Ícono X (cuando está abierto) --}}
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden absolute" id="gb-icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
+        <div id="gb-icon-close" class="hidden absolute inset-0 bg-indigo-600 flex items-center justify-center rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </div>
     </button>
 </div>
 
@@ -292,21 +258,7 @@
 (function () {
     'use strict';
 
-    // ── SVG del avatar robot (reutilizable) ──────────────────────────────
-    const ROBOT_SVG = `
-        <div class="w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center shadow-sm"
-             style="background: linear-gradient(135deg,#6366f1,#06b6d4);">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-4 h-4 fill-white">
-                <rect x="16" y="20" width="32" height="28" rx="6"/>
-                <rect x="28" y="10" width="8" height="10" rx="2"/>
-                <circle cx="22" cy="32" r="3" fill="rgba(49,46,129,0.4)"/>
-                <circle cx="42" cy="32" r="3" fill="rgba(49,46,129,0.4)"/>
-                <rect x="23" y="39" width="18" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
-                <rect x="8"  y="28" width="6"  height="12" rx="3"/>
-                <rect x="50" y="28" width="6"  height="12" rx="3"/>
-                <circle cx="32" cy="10" r="3"/>
-            </svg>
-        </div>`;
+    // ── SVG del avatar robot (reemplazado por imagen) ──────────────────────────────
 
     document.addEventListener('DOMContentLoaded', () => {
         const toggleBtn  = document.getElementById('chatbot-toggle-btn');
@@ -330,7 +282,7 @@
             windowEl.classList.add('flex', 'is-open');
             iconRobot.classList.add('hidden');
             iconClose.classList.remove('hidden');
-            toggleBtn.setAttribute('aria-label', 'Cerrar GUAYABOT');
+            toggleBtn.setAttribute('aria-label', 'Cerrar Hugo');
             setTimeout(() => inputEl.focus(), 300);
             scrollToBottom();
         };
@@ -341,7 +293,7 @@
             windowEl.classList.add('is-closing');
             iconRobot.classList.remove('hidden');
             iconClose.classList.add('hidden');
-            toggleBtn.setAttribute('aria-label', 'Abrir GUAYABOT');
+            toggleBtn.setAttribute('aria-label', 'Abrir Hugo');
             windowEl.addEventListener('animationend', () => {
                 if (!isOpen) {
                     windowEl.classList.add('hidden');
@@ -395,6 +347,7 @@
                 align-items: flex-end;
                 gap: 8px;
                 width: 100%;
+                margin-bottom: 16px;
                 flex-direction: ${isUser ? 'row-reverse' : 'row'};
             `;
 
@@ -419,33 +372,24 @@
                 // Burbuja bot — izquierda, blanco/dark con avatar
                 const formattedText = formatBotText(text);
                 const isDark = document.documentElement.classList.contains('dark');
-                const botBg  = isDark ? '#1e293b' : '#fff';
-                const botBorder = isDark ? 'rgba(99,102,241,0.15)' : '#f1f5f9';
+                const botBg  = isDark ? '#1e293b' : '#f1f5f9';
+                const botBorder = isDark ? 'rgba(99,102,241,0.15)' : '#e2e8f0';
                 const botColor  = isDark ? '#e2e8f0' : '#334155';
                 msgDiv.innerHTML = `
-                    <div style="width:32px;height:32px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6366f1,#06b6d4);box-shadow:0 2px 6px rgba(99,102,241,0.3);">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="width:16px;height:16px;fill:white;">
-                            <rect x="16" y="20" width="32" height="28" rx="6"/>
-                            <rect x="28" y="10" width="8" height="10" rx="2"/>
-                            <circle cx="22" cy="32" r="3" fill="rgba(49,46,129,0.4)"/>
-                            <circle cx="42" cy="32" r="3" fill="rgba(49,46,129,0.4)"/>
-                            <rect x="23" y="39" width="18" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
-                            <rect x="8"  y="28" width="6"  height="12" rx="3"/>
-                            <rect x="50" y="28" width="6"  height="12" rx="3"/>
-                            <circle cx="32" cy="10" r="3"/>
-                        </svg>
+                    <div style="width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,0.2);box-shadow:0 2px 6px rgba(99,102,241,0.3);">
+                        <img src="{{ asset('media/hugo.png') }}" alt="Hugo" style="width:100%; height:100%; object-fit:cover;">
                     </div>
                     <div style="
                         background: ${botBg};
                         border: 1px solid ${botBorder};
-                        border-radius: 18px 18px 18px 4px;
-                        padding: 10px 14px;
+                        border-radius: 16px 16px 16px 4px;
+                        padding: 12px 16px;
                         font-size: 0.875rem;
                         color: ${botColor};
                         max-width: 80%;
                         text-align: left;
                         line-height: 1.55;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
                         word-break: break-word;
                         overflow-wrap: break-word;
                         transition: background 0.3s ease, color 0.3s ease;
@@ -486,11 +430,11 @@
                     chatHistory.push({ role: 'model', text: data.reply });
                     addMessageToDOM(data.reply, false);
                 } else {
-                    addMessageToDOM("⚠️ " + (data.error || "No pude conectar con GUAYABOT en este momento."), false);
+                    addMessageToDOM("⚠️ " + (data.error || "No pude conectar con Hugo en este momento."), false);
                 }
             } catch (error) {
-                console.error("Error al conectar con GUAYABOT:", error);
-                addMessageToDOM("⚠️ No pude conectar con GUAYABOT en este momento.", false);
+                console.error("Error al conectar con Hugo:", error);
+                addMessageToDOM("⚠️ No pude conectar con Hugo en este momento.", false);
             } finally {
                 hideTyping();
                 inputEl.disabled = false;

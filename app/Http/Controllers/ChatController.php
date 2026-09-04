@@ -31,7 +31,7 @@ class ChatController extends Controller
 
         // Cargar los últimos 50 mensajes en orden cronológico
         $messages = $room->messages()
-            ->with('user')
+            ->with(['user', 'replyTo.user'])  // Cargar también el mensaje citado
             ->latest()
             ->take(50)
             ->get()
@@ -52,16 +52,18 @@ class ChatController extends Controller
         abort_if(!$room->activa, 403, 'Esta sala no está disponible.');
 
         $validated = $request->validate([
-            'contenido' => 'required|string|max:1000',
+            'contenido'   => 'required|string|max:1000',
+            'reply_to_id' => 'nullable|integer|exists:chat_messages,id',
         ]);
 
         $message = ChatMessage::create([
-            'room_id'   => $room->id,
-            'user_id'   => Auth::id(),
-            'contenido' => $validated['contenido'],
+            'room_id'     => $room->id,
+            'user_id'     => Auth::id(),
+            'contenido'   => $validated['contenido'],
+            'reply_to_id' => $validated['reply_to_id'] ?? null,
         ]);
 
-        $message->load('user');
+        $message->load(['user', 'replyTo.user']);
 
         // Disparar evento de WebSocket
         broadcast(new MessageSent($message, $room->slug));
@@ -73,12 +75,20 @@ class ChatController extends Controller
                 'contenido'   => $message->contenido,
                 'url_adjunto' => $message->url_adjunto,
                 'tipo'        => $message->tipo,
+                'reply_to_id' => $message->reply_to_id,
                 'created_at'  => $message->created_at->toISOString(),
                 'user' => [
                     'id'     => $message->user->id,
                     'nombre' => $message->user->nombre,
                     'avatar' => $message->user->avatar,
                 ],
+                'reply_to' => $message->replyTo ? [
+                    'id'       => $message->replyTo->id,
+                    'contenido'=> $message->replyTo->contenido,
+                    'user'     => [
+                        'nombre' => $message->replyTo->user?->nombre ?? 'Usuario',
+                    ],
+                ] : null,
             ],
         ]);
     }

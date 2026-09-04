@@ -594,43 +594,203 @@
 
 .hub-message {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: flex-end;        /* alinear al fondo para que el avatar quede pegado abajo */
+  gap: 8px;
   animation: hub-slideUp 0.25s ease;
+  /* Por defecto: mensaje recibido → izquierda */
+  justify-content: flex-start;
 }
 
+/* Burbuja: ancho ajustado al contenido, nunca todo el ancho */
 .hub-message-bubble {
-  flex: 1;
-  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;           /* límite máximo */
+  min-width: 0;
+  /* NO flex:1 — eso era lo que lo estiraba */
 }
 
 .hub-message-meta {
   font-size: 11px;
   color: var(--hub-text-muted);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.hub-message-name { font-weight: 600; color: var(--hub-violet-light); margin-right: 6px; }
+.hub-message-name { font-weight: 600; color: var(--hub-violet-light); }
 
 .hub-message-content {
   background: var(--hub-surface-2);
   border: 1px solid var(--hub-border);
-  border-radius: 0 10px 10px 10px;
-  padding: 10px 14px;
+  border-radius: 4px 14px 14px 14px;  /* pico arriba-izquierda para mensajes recibidos */
+  padding: 9px 13px;
   font-size: 13.5px;
   line-height: 1.5;
   color: var(--hub-text);
   word-break: break-word;
+  width: fit-content;         /* burbuja ajustada al texto */
+  max-width: 100%;
 }
 
-.hub-message.own { flex-direction: row-reverse; }
-.hub-message.own .hub-message-bubble { text-align: right; }
-.hub-message.own .hub-message-content {
-  background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(79,70,229,0.2));
-  border-color: rgba(124,58,237,0.3);
-  border-radius: 10px 0 10px 10px;
+/* ── Mensajes PROPIOS: derecha ── */
+.hub-message.own {
+  flex-direction: row-reverse;  /* avatar a la derecha */
+  justify-content: flex-start;  /* sigue siendo flex-start pero en dirección invertida */
 }
-.hub-message.own .hub-message-meta { text-align: right; }
+
+.hub-message.own .hub-message-bubble {
+  align-items: flex-end;        /* alinear burbuja y meta a la derecha */
+}
+
+.hub-message.own .hub-message-meta {
+  flex-direction: row-reverse;  /* hora a la izquierda del nombre */
+  text-align: right;
+}
+
+.hub-message.own .hub-message-content {
+  background: linear-gradient(135deg, rgba(124,58,237,0.28), rgba(79,70,229,0.22));
+  border-color: rgba(124,58,237,0.35);
+  border-radius: 14px 4px 14px 14px;  /* pico arriba-derecha para mensajes propios */
+  color: #E0D9FF;
+}
+
+/* ── Cita del mensaje (estilo WhatsApp) ─────────────────────────── */
+.hub-reply-quote {
+  display: block;
+  background: rgba(0,0,0,0.18);
+  border-left: 3px solid var(--hub-violet-light);
+  border-radius: 4px 8px 8px 4px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  max-width: 100%;
+  text-decoration: none;
+}
+
+.hub-reply-quote:hover { background: rgba(124,58,237,0.15); }
+
+/* Versión para mensajes propios (borde de color diferente) */
+.hub-message.own .hub-reply-quote {
+  border-left-color: var(--hub-cyan);
+  background: rgba(0,0,0,0.22);
+}
+
+.hub-reply-quote-author {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--hub-violet-light);
+  margin-bottom: 2px;
+  display: block;
+}
+
+.hub-message.own .hub-reply-quote-author { color: var(--hub-cyan); }
+
+.hub-reply-quote-text {
+  font-size: 12px;
+  color: var(--hub-text-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ── Botón "Responder" en hover de mensaje ──────────────────────── */
+.hub-message-actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+/* Recibidos: acciones a la derecha de la burbuja */
+.hub-message:not(.own) .hub-message-actions { right: -36px; }
+/* Propios: acciones a la izquierda de la burbuja */
+.hub-message.own .hub-message-actions       { left: -36px; }
+
+.hub-message-wrap {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Mostrar acciones al hacer hover sobre el mensaje */
+.hub-message:hover .hub-message-actions {
+  display: flex;
+  opacity: 1;
+}
+
+.hub-reply-btn {
+  width: 28px; height: 28px;
+  background: var(--hub-surface-2);
+  border: 1px solid var(--hub-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--hub-text-muted);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.hub-reply-btn:hover {
+  background: rgba(124,58,237,0.2);
+  border-color: var(--hub-violet-light);
+  color: var(--hub-violet-light);
+}
+
+/* ── Banner "Respondiendo a..." encima del input ────────────────── */
+.hub-reply-preview {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--hub-surface-2);
+  border-top: 1px solid rgba(124,58,237,0.3);
+  border-left: 3px solid var(--hub-violet-light);
+  animation: hub-slideUp 0.2s ease;
+}
+
+.hub-reply-preview.visible { display: flex; }
+
+.hub-reply-preview-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hub-reply-preview-author {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--hub-violet-light);
+}
+
+.hub-reply-preview-text {
+  font-size: 12px;
+  color: var(--hub-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hub-reply-cancel {
+  background: none;
+  border: none;
+  color: var(--hub-text-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.hub-reply-cancel:hover { color: var(--hub-text); }
 
 .hub-message-url-preview {
   margin-top: 6px;

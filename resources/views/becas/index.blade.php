@@ -87,7 +87,7 @@
                     <span class="tarjeta-univ"> {{ translate_db($beca->universidad->nombre_completo ?? 'El Salvador') }}</span>
 
                     {{-- ════ BOTONES DE ACCIÓN ════ --}}
-                    <div class="tarjeta-actions" onclick="event.stopPropagation()">
+                    <div class="tarjeta-actions">
 
                         @auth
                             @if(Auth::user()->role === 'estudiante')
@@ -100,7 +100,7 @@
                                     data-url="{{ route('becas.postular', $beca->id) }}"
                                     {{ $estaPostulado ? 'disabled' : '' }}
                                     title="{{ $estaPostulado ? __('Ya postulado') : __('Postularse a esta beca') }}"
-                                    onclick="postularBeca(this)">
+                                    onclick="event.preventDefault(); event.stopPropagation(); postularBeca(this);">
                                     @if($estaPostulado)
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                                         {{ __('Postulado') }}
@@ -118,7 +118,7 @@
                                     data-beca-id="{{ $beca->id }}"
                                     data-url="{{ route('becas.guardar', $beca->id) }}"
                                     title="{{ $estaGuardado ? __('Quitar de favoritos') : __('Guardar beca') }}"
-                                    onclick="toggleGuardar(this)">
+                                    onclick="event.preventDefault(); event.stopPropagation(); toggleGuardar(this);">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="{{ $estaGuardado ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                                 </button>
 
@@ -126,11 +126,11 @@
                                 <button
                                     class="btn-chat-padrino"
                                     data-beca-id="{{ $beca->id }}"
-                                    data-beca-titulo="{{ addslashes(translate_db($beca->titulo)) }}"
+                                    data-beca-titulo="{{ translate_db($beca->titulo) }}"
                                     data-url-init="{{ route('becas.chat.init', $beca->id) }}"
                                     data-url-mensaje="{{ route('becas.chat.mensaje', $beca->id) }}"
                                     title="{{ __('Contactar Padrino') }}"
-                                    onclick="abrirChatBeca(this)">
+                                    onclick="event.preventDefault(); event.stopPropagation(); abrirChatBeca(this);">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                                 </button>
 
