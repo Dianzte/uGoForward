@@ -15,38 +15,5 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $usuarios = [
-            ['usuario' => 'antho',
-            'nombre' => 'anthony',
-            'correo' => 'ant@gmail.com',
-            'contrasena' => Hash::make('123456789'),
-            'fechaNac' => '2000-10-10',
-            'departamento' => 'San Vicente',
-            'dui' => '123456',
-            'banner' => null,
-            'bio' => null,],
-
-            ['usuario' => 'rob',
-            'nombre' => 'robert',
-            'correo' => 'rob@gmail.com',
-            'contrasena' => Hash::make('123456789'),
-            'fechaNac' => '2000-10-10',
-            'departamento' => 'San Vicente',
-            'dui' => '123456',
-            'banner' => null,
-            'bio' => null,],
-
-            ['usuario' => 'owen',
-            'nombre' => 'owen',
-            'correo' => 'owen@gmail.com',
-            'contrasena' => Hash::make('123456789'),
-            'fechaNac' => '2000-10-10',
-            'departamento' => 'San Vicente',
-            'dui' => '123456',
-            'banner' => null,
-            'bio' => null,],
-        ];
-foreach ($usuarios as $usuarios) {
-            User::create($usuarios);
-        }    }
+    }
 }
