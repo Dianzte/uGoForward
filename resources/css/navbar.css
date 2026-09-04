@@ -66,36 +66,65 @@ box-sizing: border-box;
   list-style: none;
   gap: 2rem;
   margin-left: auto;
-box-sizing: border-box;
-
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .nav-links a {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: var(--text-2);
-  transition: color 0.3s ease;
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              text-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   font-family: 'DM Sans', sans-serif;
+  display: inline-block;
 }
 
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1.5px;
-  background: var(--gold);
-  transition: width 0.3s ease;
-}
-
+/* Hover moderno: resplandor luminoso oceánico sin subrayado */
 .nav-links a:hover {
-  color: var(--white);
+  color: #ffffff;
+  transform: translateY(-1px);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.75),
+               0 0 20px rgba(56, 189, 248, 0.4);
 }
 
-.nav-links a:hover::after {
-  width: 100%;
+/* Botón UGF Hub en Navbar */
+.nav-links .nav-hub-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: #ffffff !important;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 55%, #1d4ed8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.25s ease,
+              border-color 0.25s ease;
+  text-shadow: none !important;
+  text-decoration: none;
+}
+
+.nav-links .nav-hub-btn:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 22px rgba(37, 99, 235, 0.5), 0 0 16px rgba(14, 165, 233, 0.45);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+}
+
+.nav-links .nav-hub-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
 }
 
 .nav-actions {
@@ -313,7 +342,19 @@ a {
 }
 
 .dark .nav-links a:hover {
-  color: #f1f5f9;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(96, 165, 250, 0.8),
+               0 0 22px rgba(56, 189, 248, 0.5);
+}
+
+.dark .nav-links .nav-hub-btn {
+  border-color: rgba(96, 165, 250, 0.35);
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.45);
+}
+
+.dark .nav-links .nav-hub-btn:hover {
+  border-color: rgba(96, 165, 250, 0.6);
+  box-shadow: 0 6px 22px rgba(59, 130, 246, 0.6), 0 0 20px rgba(56, 189, 248, 0.5);
 }
 
 .dark .btn-ghost {

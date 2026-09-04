@@ -15,8 +15,8 @@
               <li><a href="{{ route('becas.index') }}">{{ __('Lista de becas') }}</a></li>
 
               <li>
-                  <a href="{{ route('hub.feed') }}" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7C3AED,#4F46E5);color:white;padding:5px 14px;border-radius:20px;font-weight:600;font-size:13px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.opacity='0.85';this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'">
-                      🎓 UGF Hub
+                  <a href="{{ route('hub.feed') }}" class="nav-hub-btn">
+                      UGF Hub
                   </a>
               </li>
           </ul>
@@ -114,6 +114,7 @@
           <a href="{{ route('index') }}#servicios">{{ __('Servicios') }}</a>
           <a href="{{ route('index') }}#universidades">{{ __('Universidades') }}</a>
           <a href="{{ route('becas.index') }}">{{ __('Lista de becas') }}</a>
+          <a href="{{ route('hub.feed') }}">{{ __('UGF Hub') }}</a>
 
           @auth
               <span style="color: var(--gold, #e8c847); padding: 0.4rem 0; font-weight: 600;">

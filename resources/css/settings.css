@@ -284,24 +284,22 @@ a { text-decoration: none; color: inherit; }
 }
 
 .nav-links a {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: var(--text-2);
-  transition: color 0.3s ease;
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              text-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  display: inline-block;
 }
 
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0; height: 1.5px;
-  background: var(--gold);
-  transition: width 0.3s ease;
+.nav-links a:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.75),
+               0 0 20px rgba(56, 189, 248, 0.4);
 }
-
-.nav-links a:hover { color: var(--white); }
-.nav-links a:hover::after { width: 100%; }
 
 .nav-actions {
   display: flex;
