@@ -32,3 +32,20 @@ if (!function_exists('translate_db')) {
         });
     }
 }
+
+if (!function_exists('translate_array')) {
+    function translate_array($items): array
+    {
+        if (empty($items)) {
+            return [];
+        }
+
+        // Si llega como JSON string (por si acaso el cast no se aplicó), decodificarlo
+        if (is_string($items)) {
+            $decoded = json_decode($items, true);
+            $items = is_array($decoded) ? $decoded : [$items];
+        }
+
+        return array_map(fn($item) => translate_db((string) $item), $items);
+    }
+}

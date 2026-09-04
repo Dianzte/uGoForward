@@ -12,7 +12,7 @@
 <body class="rf-page">
 
 <canvas class="ocean-scene"></canvas>
-<div class="rf-ocean-hint" data-ocean-hint>{{ __('Haz clic en el sol o la luna para cambiar el ambiente') }}</div>
+
 
   {{-- ============ OVERLAY DE INTRODUCCIÓN (3 pasos animados) ============ --}}
   <div class="rf-intro-overlay" id="rfIntroOverlay">

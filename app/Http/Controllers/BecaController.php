@@ -20,7 +20,7 @@ class BecaController extends Controller
      */
     public function index()
     {
-       $becas = Beca::whereDate('vencimiento', '>=', Carbon::today())->latest()->paginate(12);
+       $becas = Beca::paginate(12);
        $universidades = Universidad::get();
 
        // Cargar estados de interacción para el usuario autenticado
