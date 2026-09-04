@@ -68,12 +68,23 @@ class PerfilHubController extends Controller
             'banner' => 'nullable|url|max:500',
         ]);
 
-        $user->update($validated);
+        $user->bio = $validated['bio'] ?? null;
+        if ($request->has('avatar')) {
+            $user->avatar = $validated['avatar'] ?: null;
+        }
+        if ($request->has('banner')) {
+            $user->banner = $validated['banner'] ?: null;
+        }
+        $user->save();
 
         if ($request->expectsJson()) {
-            return response()->json(['success' => true, 'user' => $user->fresh()]);
+            return response()->json([
+                'success' => true,
+                'message' => __('¡Perfil actualizado!'),
+                'user'    => $user->fresh()
+            ]);
         }
 
-        return back()->with('success', '¡Perfil actualizado!');
+        return back()->with('success', __('¡Perfil actualizado!'));
     }
 }

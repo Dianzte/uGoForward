@@ -245,7 +245,7 @@
                 <label class="hub-label">URL del Avatar</label>
                 <input type="url" name="avatar" class="hub-input"
                        placeholder="https://i.pravatar.cc/150?u=tu-email"
-                       value="{{ $user->avatar }}">
+                       value="{{ $user->avatar_url ?? (str_starts_with($user->avatar ?? '', 'http') ? $user->avatar : '') }}">
                 <p style="font-size:11.5px;color:var(--hub-text-muted);margin-top:4px;">
                     💡 Puedes usar <a href="https://gravatar.com" target="_blank" style="color:var(--hub-cyan);">Gravatar</a> o una URL de imagen pública.
                 </p>
@@ -255,7 +255,7 @@
                 <label class="hub-label">URL del Banner (encabezado)</label>
                 <input type="url" name="banner" class="hub-input"
                        placeholder="https://images.unsplash.com/..."
-                       value="{{ $user->banner }}">
+                       value="{{ $user->banner_url ?? (str_starts_with($user->banner ?? '', 'http') ? $user->banner : '') }}">
             </div>
 
             <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -290,17 +290,35 @@ function guardarPerfil(e) {
 
     fetch('{{ route("hub.perfil.update") }}', {
         method: 'POST',
-        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' },
+        headers: {
+            'X-CSRF-TOKEN': CSRF,
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
         body: formData,
     })
-    .then(r => r.json())
+    .then(async r => {
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) {
+            let errorMsg = 'Error al guardar los cambios.';
+            if (data.errors) {
+                errorMsg = Object.values(data.errors).flat().join('\n');
+            } else if (data.message) {
+                errorMsg = data.message;
+            }
+            throw new Error(errorMsg);
+        }
+        return data;
+    })
     .then(data => {
         if (data.success) {
             document.getElementById('editarPerfil').style.display = 'none';
             location.reload();
         }
     })
-    .catch(() => alert('Error al guardar. Intenta de nuevo.'))
+    .catch(err => {
+        alert(err.message || 'Error al guardar. Intenta de nuevo.');
+    })
     .finally(() => {
         btn.disabled = false;
         btn.textContent = '💾 Guardar cambios';
