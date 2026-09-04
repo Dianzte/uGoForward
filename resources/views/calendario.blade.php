@@ -6,6 +6,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Calendario de Becas y Agenda — uGoForward') }}</title>
 
+    {{-- ══ ANTI-FOUC: aplicar tema ANTES de renderizar el DOM ══ --}}
+    <script>
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,38 +39,20 @@
     </div>
 
     <!-- NAVBAR INTEGRACIÓN UGF -->
-    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 backdrop-blur-md bg-slate-900/90">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <a href="{{ url('/') }}" class="flex items-center space-x-2 text-white font-bold text-xl tracking-tight font-heading group">
-                    <span class="bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent text-2xl group-hover:scale-105 transition-transform">UGF</span>
-                    <span class="text-xs bg-slate-800 text-yellow-400 px-2 py-0.5 rounded-full border border-cyan-500/20">uGoForward</span>
-                </a>
-                <span class="text-slate-600 hidden sm:inline">|</span>
-                <nav class="hidden sm:flex items-center space-x-3 text-xs font-medium text-slate-400">
-                    <a href="{{ url('/') }}" class="hover:text-yellow-400 transition">{{ __('Home') }}</a>
-                    <span>/</span>
-                    <a href="{{ route('becas.index') }}" class="hover:text-yellow-400 transition">{{ __('Scholarships') }}</a>
-                    <span>/</span>
-                    <span class="text-slate-200">{{ __('Calendar') }}</span>
-                </nav>
-            </div>
-
-            <div class="flex items-center space-x-3">
-                <a href="{{ route('becas.index') }}" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white transition">
-                    ← {{ __('Volver a la lista de becas') }}
-                </a>
-            </div>
-        </div>
-    </header>
+    @include('navegacion.navbar')
 
     <!-- BANNER DE ENCABEZADO CON ESTADÍSTICAS -->
-    <section class="calendar-banner text-white py-8 px-4 sm:px-6 lg:px-8 shadow-inner">
+    <section class="calendar-banner text-white pt-24 pb-8 px-4 sm:px-6 lg:px-8 shadow-inner">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
             <div>
-                <div class="inline-flex items-center space-x-2 bg-blue-500/20 text-yellow-300 border border-cyan-500/30 text-xs px-3 py-1 rounded-full mb-3 backdrop-blur-sm">
-                    <span class="w-2 h-2 rounded-full bg-yellow-400 animate-ping"></span>
-                    <span>{{ __('Agenda Académica y Convocatorias') }}</span>
+                <div class="flex flex-wrap items-center gap-2.5 mb-3">
+                    <a href="{{ route('becas.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-300 hover:text-white hover:bg-slate-700/80 transition shadow-xs">
+                        <span>←</span> {{ __('Volver a la lista de becas') }}
+                    </a>
+                    <div class="inline-flex items-center space-x-2 bg-blue-500/20 text-yellow-300 border border-cyan-500/30 text-xs px-3 py-1 rounded-full backdrop-blur-sm">
+                        <span class="w-2 h-2 rounded-full bg-yellow-400 animate-ping"></span>
+                        <span>{{ __('Agenda Académica y Convocatorias') }}</span>
+                    </div>
                 </div>
                 <h1 class="text-3xl sm:text-4xl font-extrabold font-heading tracking-tight text-white">
                     {{ __('Calendario de Becas & Tareas') }}
