@@ -9,10 +9,21 @@
 
     {{-- Anti-FOUC: aplicar tema oscuro antes de render --}}
     <script>document.documentElement.classList.add('dark');</script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/css/hub/hub.css'])
 </head>
-<body style="background:#080B14; margin:0; padding:0;">
+<body class="hub-body">
+
+    {{-- ══ AMBIENT BACKGROUND GLOWS ══ --}}
+    <div class="hub-ambient-container" aria-hidden="true">
+        <div class="hub-orb hub-orb-1"></div>
+        <div class="hub-orb hub-orb-2"></div>
+        <div class="hub-orb hub-orb-3"></div>
+    </div>
 
 <div class="hub-root">
 
@@ -20,13 +31,17 @@
     <aside class="hub-sidebar" id="hubSidebar">
 
         {{-- Logo --}}
-        <div class="hub-sidebar-logo">
-            <div class="hub-sidebar-logo-icon">🎓</div>
+        <a href="{{ route('hub.feed') }}" class="hub-sidebar-logo" style="text-decoration:none;">
+            <div class="hub-sidebar-logo-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
             <div>
                 <div class="hub-sidebar-logo-text">UGF Hub</div>
-                <div class="hub-sidebar-logo-sub">uGoForward</div>
+                <div class="hub-sidebar-logo-sub">Comunidad Estudiantil</div>
             </div>
-        </div>
+        </a>
 
         {{-- Navegación --}}
         <nav class="hub-nav">
@@ -57,9 +72,15 @@
                 Mis Metas
             </a>
 
+            <a href="{{ route('hub.perfil') }}"
+               class="hub-nav-item {{ request()->routeIs('hub.perfil*') ? 'active' : '' }}">
+                <svg class="hub-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                Mi Perfil
+            </a>
+
             <div class="hub-nav-section" style="margin-top:8px;">Plataforma</div>
-
-
 
             <a href="{{ route('becas.index') }}" class="hub-nav-item">
                 <svg class="hub-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -78,19 +99,20 @@
         </nav>
 
         {{-- Usuario activo --}}
-        <div class="hub-sidebar-user">
+        <a href="{{ route('hub.perfil') }}" class="hub-sidebar-user" style="text-decoration:none;">
             <div class="hub-sidebar-avatar">
                 @if(Auth::user()->avatar)
                     <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->nombre }}">
                 @else
                     {{ strtoupper(substr(Auth::user()->nombre, 0, 1)) }}
                 @endif
+                <span class="hub-user-status-dot"></span>
             </div>
             <div class="hub-sidebar-user-info">
                 <div class="hub-sidebar-user-name">{{ Auth::user()->nombre }}</div>
-                <div class="hub-sidebar-user-role">Estudiante</div>
+                <div class="hub-sidebar-user-role">{{ Auth::user()->role === 'padrino' ? 'Padrino' : 'Estudiante' }}</div>
             </div>
-        </div>
+        </a>
     </aside>
 
     {{-- ══ ÁREA PRINCIPAL ══ --}}
