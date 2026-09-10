@@ -7,14 +7,14 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/script.css',
-                'resources/css/app.css', 
+                'resources/js/script.js',
+                'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/css/homepage.css', 
+                'resources/css/homepage.css',
                 'resources/js/homepage.js',
                 'resources/css/becasListado.css',
-                'resources/js/becasListado.js', 
-                'resources/css/calendario.css', 
+                'resources/js/becasListado.js',
+                'resources/css/calendario.css',
                 'resources/js/calendario.js',
                 'resources/css/navbar.css',
                 'resources/js/navbar.js',
@@ -25,7 +25,7 @@ export default defineConfig({
                 'resources/css/foro/create.css',
                 'resources/css/rol-flow.css',
                 'resources/js/rolflow.js',
-             'resources/css/temaUnido.css',
+                'resources/css/temaUnido.css',
                 'resources/css/hub/hub.css',
                 'resources/js/hub-chat.js',
             ],
