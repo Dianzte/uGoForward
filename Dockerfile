@@ -62,4 +62,4 @@ RUN echo 'server { \
 EXPOSE 80 10000
 
 # Arrancar PHP-FPM en segundo plano y Nginx en primer plano
-CMD php artisan migrate --force && php-fpm -D && nginx -g 'daemon off;'
+CMD php artisan migrate --force || true && php-fpm -D && nginx -g 'daemon off;'
