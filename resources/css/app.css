@@ -268,3 +268,4 @@ body [class*="animate-"] {
 .dark .onda {
     fill: #1e3a5f;
 }
+@import './navbar.css';
