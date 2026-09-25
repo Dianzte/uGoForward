@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('dui');
+            // Se preserva la columna 'dui' como nullable para compatibilidad con PostgreSQL y seeders
+            if (!Schema::hasColumn('users', 'dui')) {
+                $table->string('dui')->nullable();
+            }
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('dui')->nullable();
+            //
         });
     }
 };

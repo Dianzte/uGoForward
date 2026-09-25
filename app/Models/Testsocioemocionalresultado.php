@@ -20,6 +20,10 @@ class TestSocioemocionalResultado extends Model
         'secondary_dimension',
         'carrera_sugerida',
         'universidades_sugeridas',
+        'carrera_principal',
+        'afinidad',
+        'razonamiento',
+        'resultado_json',
     ];
 
     protected $casts = [

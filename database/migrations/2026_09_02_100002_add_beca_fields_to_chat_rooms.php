@@ -14,6 +14,7 @@ return new class extends Migration
     {
         // En PostgreSQL convertimos a VARCHAR con default; en MySQL modificamos el ENUM
         if (DB::getDriverName() === 'pgsql') {
+            DB::statement("ALTER TABLE chat_rooms DROP CONSTRAINT IF EXISTS chat_rooms_tipo_check;");
             DB::statement("ALTER TABLE chat_rooms ALTER COLUMN tipo TYPE VARCHAR(50);");
             DB::statement("ALTER TABLE chat_rooms ALTER COLUMN tipo SET DEFAULT 'general';");
         } else {
@@ -45,6 +46,7 @@ return new class extends Migration
         });
 
         if (DB::getDriverName() === 'pgsql') {
+            DB::statement("ALTER TABLE chat_rooms DROP CONSTRAINT IF EXISTS chat_rooms_tipo_check;");
             DB::statement("ALTER TABLE chat_rooms ALTER COLUMN tipo TYPE VARCHAR(50);");
             DB::statement("ALTER TABLE chat_rooms ALTER COLUMN tipo SET DEFAULT 'general';");
         } else {

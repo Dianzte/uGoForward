@@ -16,37 +16,46 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $usuarios = [
-            ['usuario' => 'antho',
-            'nombre' => 'anthony',
-            'correo' => 'ant@gmail.com',
-            'contrasena' => Hash::make('123456789'),
-            'fechaNac' => '2000-10-10',
-            'departamento' => 'San Vicente',
-            'dui' => '123456',
-            'banner' => null,
-            'bio' => null,],
-
-            ['usuario' => 'rob',
-            'nombre' => 'robert',
-            'correo' => 'rob@gmail.com',
-            'contrasena' => Hash::make('123456789'),
-            'fechaNac' => '2000-10-10',
-            'departamento' => 'San Vicente',
-            'dui' => '123456',
-            'banner' => null,
-            'bio' => null,],
-
-            ['usuario' => 'owen',
-            'nombre' => 'owen',
-            'correo' => 'owen@gmail.com',
-            'contrasena' => Hash::make('123456789'),
-            'fechaNac' => '2000-10-10',
-            'departamento' => 'San Vicente',
-            'dui' => '123456',
-            'banner' => null,
-            'bio' => null,],
+            [
+                'usuario' => 'antho',
+                'nombre' => 'anthony',
+                'correo' => 'ant@gmail.com',
+                'contrasena' => Hash::make('123456789'),
+                'fechaNac' => '2000-10-10',
+                'departamento' => 'San Vicente',
+                'nie' => '12345678',
+                'dui' => '12345678-9',
+                'banner' => null,
+                'bio' => null,
+            ],
+            [
+                'usuario' => 'rob',
+                'nombre' => 'robert',
+                'correo' => 'rob@gmail.com',
+                'contrasena' => Hash::make('123456789'),
+                'fechaNac' => '2000-10-10',
+                'departamento' => 'San Vicente',
+                'nie' => '23456789',
+                'dui' => '23456789-0',
+                'banner' => null,
+                'bio' => null,
+            ],
+            [
+                'usuario' => 'owen',
+                'nombre' => 'owen',
+                'correo' => 'owen@gmail.com',
+                'contrasena' => Hash::make('123456789'),
+                'fechaNac' => '2000-10-10',
+                'departamento' => 'San Vicente',
+                'nie' => '34567890',
+                'dui' => '34567890-1',
+                'banner' => null,
+                'bio' => null,
+            ],
         ];
-foreach ($usuarios as $usuarios) {
-            User::create($usuarios);
-        }    }
+
+        foreach ($usuarios as $usuario) {
+            User::create($usuario);
+        }
+    }
 }
