@@ -62,8 +62,10 @@
     </footer>
     
     @include('components.chatbot')
+
+    {{-- Scripts de Vite y scripts adicionales de cada vista --}}
+    @vite(['resources/js/becasListado.js'])
+    @stack('scripts')
 </body>
-@vite(['resources/js/becasListado.js'])
-@stack('scripts')
 
 </html>

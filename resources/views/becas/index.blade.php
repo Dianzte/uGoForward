@@ -6,7 +6,7 @@
     <span class="subtitulo">{{ __('Un mar de oportunidades') }}</span>
     <h1 class="importante">{{ __('Explora las becas disponibles') }}</h1>
 
-    <div class="filtros-container">
+    <div class="filtros-container" style="display:none;">
         <form action="{{ route('becas.filtrar') }}" method="GET" class="filtros">
 
             <!-- Búsqueda por Texto -->
@@ -126,7 +126,7 @@
                                 <button
                                     class="btn-chat-padrino"
                                     data-beca-id="{{ $beca->id }}"
-                                    data-beca-titulo="{{ translate_db($beca->titulo) }}"
+                                    data-beca-titulo="{{ addslashes(translate_db($beca->titulo)) }}"
                                     data-url-init="{{ route('becas.chat.init', $beca->id) }}"
                                     data-url-mensaje="{{ route('becas.chat.mensaje', $beca->id) }}"
                                     title="{{ __('Contactar Padrino') }}"
@@ -218,207 +218,260 @@
 @push('scripts')
 <script>
 // ═══════════════════════════════════════════════════════
-// UGF — Becas Interactivas JS
+// UGF — Becas Interactivas JS (Index)
 // ═══════════════════════════════════════════════════════
 
-const CSRF = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+// ── CSRF Token ──────────────────────────────────────────────────
+const _ugfCsrf = document.querySelector('meta[name="csrf-token"]');
+if (!_ugfCsrf) {
+    console.error('[UGF Becas] CSRF meta tag no encontrado. Los botones no funcionarán.');
+}
+const UGF_CSRF = _ugfCsrf ? _ugfCsrf.content : '';
 
-// ─── TOAST ─────────────────────────────────────────────
-function showToast(msg, tipo = 'success') {
+// ── TOAST ────────────────────────────────────────────────────────
+window.showToast = function(msg, tipo) {
+    tipo = tipo || 'success';
     const t = document.getElementById('ugf-toast');
-    if (!t) return;
+    if (!t) { console.warn('[UGF] Toast element not found'); return; }
     t.textContent = msg;
     t.className = 'ugf-toast show ' + tipo;
-    setTimeout(() => { t.className = 'ugf-toast'; }, 3200);
-}
+    clearTimeout(t._ugfTimer);
+    t._ugfTimer = setTimeout(function() { t.className = 'ugf-toast'; }, 3200);
+};
 
-// ─── POSTULAR ──────────────────────────────────────────
-async function postularBeca(btn) {
-    if (btn.disabled) return;
-    const becaId = btn.dataset.becaId;
-    const url    = btn.dataset.url;
+// ── POSTULAR ──────────────────────────────────────────────────────
+window.postularBeca = async function(btn) {
+    console.log('[UGF] postularBeca llamado', btn);
 
-    // Estado de carga
+    if (!btn) { console.error('[UGF] btn es null en postularBeca'); return; }
+    if (btn.disabled || btn.classList.contains('postulado')) {
+        console.log('[UGF] Botón ya deshabilitado/postulado');
+        return;
+    }
+
+    const url = btn.dataset.url;
+    if (!url) { console.error('[UGF] data-url no encontrado en el botón'); return; }
+    if (!UGF_CSRF) { window.showToast('Error de sesión. Recarga la página.', 'error'); return; }
+
+    const textoOriginal = btn.innerHTML;
     btn.classList.add('loading');
     btn.disabled = true;
 
     try {
+        console.log('[UGF] Enviando POST a:', url);
         const resp = await fetch(url, {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+            headers: {
+                'X-CSRF-TOKEN': UGF_CSRF,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         });
+
+        console.log('[UGF] Respuesta status:', resp.status);
         const data = await resp.json();
+        console.log('[UGF] Respuesta data:', data);
 
         if (!resp.ok) {
-            showToast(data.error ?? '{{ __("Error al postularse.") }}', 'error');
+            window.showToast(data.error || '{{ __("Error al postularse.") }}', 'error');
             btn.disabled = false;
+            btn.innerHTML = textoOriginal;
         } else {
-            // Actualizar UI al estado "postulado"
-            btn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                {{ __('Postulado') }}`;
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ __("Postulado") }}';
             btn.classList.remove('loading');
             btn.classList.add('postulado');
-            showToast(data.mensaje ?? '{{ __("¡Postulación enviada!") }}', 'success');
+            window.showToast(data.mensaje || '{{ __("¡Postulación enviada!") }}', 'success');
         }
     } catch (e) {
-        showToast('{{ __("Error de conexión.") }}', 'error');
+        console.error('[UGF] Error en postularBeca:', e);
+        window.showToast('{{ __("Error de conexión.") }}', 'error');
         btn.disabled = false;
+        btn.innerHTML = textoOriginal;
     } finally {
         btn.classList.remove('loading');
     }
-}
+};
 
-// ─── GUARDAR / FAVORITO ────────────────────────────────
-async function toggleGuardar(btn) {
+// ── GUARDAR / FAVORITO ────────────────────────────────────────────
+window.toggleGuardar = async function(btn) {
+    console.log('[UGF] toggleGuardar llamado', btn);
+
+    if (!btn) { console.error('[UGF] btn es null en toggleGuardar'); return; }
+
     const url = btn.dataset.url;
+    if (!url) { console.error('[UGF] data-url no encontrado en btn guardar'); return; }
+    if (!UGF_CSRF) { window.showToast('Error de sesión. Recarga la página.', 'error'); return; }
 
     btn.classList.add('loading');
 
     try {
+        console.log('[UGF] Enviando POST guardar a:', url);
         const resp = await fetch(url, {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+            headers: {
+                'X-CSRF-TOKEN': UGF_CSRF,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         });
+
+        console.log('[UGF] Guardar status:', resp.status);
         const data = await resp.json();
+        console.log('[UGF] Guardar data:', data);
 
         if (!resp.ok) {
-            showToast(data.error ?? '{{ __("Error al guardar.") }}', 'error');
+            window.showToast(data.error || '{{ __("Error al guardar.") }}', 'error');
         } else {
             const isGuardado = data.guardado;
             btn.classList.toggle('guardado', isGuardado);
-
-            // Actualizar icono fill
             const svg = btn.querySelector('svg');
             if (svg) svg.setAttribute('fill', isGuardado ? 'currentColor' : 'none');
-
-            showToast(data.mensaje ?? '', isGuardado ? 'success' : 'info');
+            window.showToast(data.mensaje || '', isGuardado ? 'success' : 'info');
         }
     } catch (e) {
-        showToast('{{ __("Error de conexión.") }}', 'error');
+        console.error('[UGF] Error en toggleGuardar:', e);
+        window.showToast('{{ __("Error de conexión.") }}', 'error');
     } finally {
         btn.classList.remove('loading');
     }
-}
+};
 
-// ─── CHAT CON PADRINO ──────────────────────────────────
-let chatRoomId   = null;
-let chatUrlMensaje = null;
+// ── CHAT CON PADRINO ──────────────────────────────────────────────
+let _ugfChatRoomId   = null;
+let _ugfChatUrlMsg   = null;
 
-async function abrirChatBeca(btn) {
+window.abrirChatBeca = async function(btn) {
+    console.log('[UGF] abrirChatBeca llamado', btn);
+
+    if (!btn) { console.error('[UGF] btn es null en abrirChatBeca'); return; }
+
     const modal    = document.getElementById('modal-chat-beca');
     const nombre   = document.getElementById('modal-chat-beca-nombre');
     const mensajes = document.getElementById('modal-chat-mensajes');
-    const loading  = document.getElementById('chat-loading');
 
-    if (!modal) return;
+    if (!modal) { console.error('[UGF] #modal-chat-beca no encontrado en el DOM'); return; }
 
-    chatUrlMensaje = btn.dataset.urlMensaje;
+    _ugfChatUrlMsg = btn.dataset.urlMensaje;
+    console.log('[UGF] URL init:', btn.dataset.urlInit, 'URL msg:', _ugfChatUrlMsg);
 
-    // Mostrar modal y estado de carga
-    if (nombre) nombre.textContent = btn.dataset.becaTitulo;
-    mensajes.innerHTML = '';
-    if (loading) { loading.style.display = 'flex'; mensajes.appendChild(loading); }
+    if (nombre) nombre.textContent = btn.dataset.becaTitulo || '';
+    mensajes.innerHTML = '<div class="chat-loading"><div class="chat-spinner"></div><span>{{ __("Cargando chat...") }}</span></div>';
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 
     try {
         const resp = await fetch(btn.dataset.urlInit, {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+            headers: {
+                'X-CSRF-TOKEN': UGF_CSRF,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         });
-        const data = await resp.json();
 
-        chatRoomId = data.room_id;
-        loading?.remove();
+        console.log('[UGF] Chat init status:', resp.status);
+        const data = await resp.json();
+        console.log('[UGF] Chat init data:', data);
+
+        _ugfChatRoomId = data.room_id;
+        mensajes.innerHTML = '';
 
         if (data.messages && data.messages.length > 0) {
-            data.messages.forEach(m => agregarMensajeChat(m, false));
+            data.messages.forEach(function(m) { _ugfAgregarMensaje(m, false); });
         } else {
-            mensajes.innerHTML = `<div class="chat-empty">{{ __("Inicia la conversación con tu padrino.") }}</div>`;
+            mensajes.innerHTML = '<div class="chat-empty">{{ __("Inicia la conversación con tu padrino.") }}</div>';
         }
-        scrollChatAbajo();
-
+        _ugfScrollAbajo();
     } catch (e) {
-        mensajes.innerHTML = `<div class="chat-empty">{{ __("Error al cargar el chat.") }}</div>`;
+        console.error('[UGF] Error en abrirChatBeca:', e);
+        mensajes.innerHTML = '<div class="chat-empty">{{ __("Error al cargar el chat.") }}</div>';
     }
-}
+};
 
-function cerrarChatBeca() {
+window.cerrarChatBeca = function() {
     const modal = document.getElementById('modal-chat-beca');
     if (modal) modal.style.display = 'none';
     document.body.style.overflow = '';
-    chatRoomId = null;
-}
+    _ugfChatRoomId = null;
+};
 
-async function enviarMensajeChat() {
-    if (!chatRoomId || !chatUrlMensaje) return;
+window.enviarMensajeChat = async function() {
+    if (!_ugfChatRoomId || !_ugfChatUrlMsg) {
+        console.warn('[UGF] enviarMensajeChat: chatRoomId o urlMensaje no definidos');
+        return;
+    }
     const input = document.getElementById('chat-input-mensaje');
-    const texto = input?.value.trim();
+    const texto = input ? input.value.trim() : '';
     if (!texto) return;
 
     input.value = '';
     input.disabled = true;
 
     try {
-        const resp = await fetch(chatUrlMensaje, {
+        const resp = await fetch(_ugfChatUrlMsg, {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': CSRF,
+                'X-CSRF-TOKEN': UGF_CSRF,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
             },
-            body: JSON.stringify({ contenido: texto, room_id: chatRoomId })
+            body: JSON.stringify({ contenido: texto, room_id: _ugfChatRoomId })
         });
         const data = await resp.json();
-
         if (data.success) {
-            agregarMensajeChat(data.message, true);
-            scrollChatAbajo();
+            _ugfAgregarMensaje(data.message, true);
+            _ugfScrollAbajo();
         } else {
-            showToast(data.error ?? '{{ __("Error al enviar.") }}', 'error');
+            window.showToast(data.error || '{{ __("Error al enviar.") }}', 'error');
         }
     } catch (e) {
-        showToast('{{ __("Error de conexión.") }}', 'error');
+        console.error('[UGF] Error en enviarMensajeChat:', e);
+        window.showToast('{{ __("Error de conexión.") }}', 'error');
     } finally {
-        input.disabled = false;
-        input.focus();
+        if (input) { input.disabled = false; input.focus(); }
     }
-}
+};
 
-function agregarMensajeChat(msg, animate = true) {
+function _ugfAgregarMensaje(msg, animate) {
     const mensajes = document.getElementById('modal-chat-mensajes');
+    if (!mensajes) return;
     const div = document.createElement('div');
     div.className = 'chat-msg ' + (msg.mio ? 'chat-msg-mio' : 'chat-msg-otro') + (animate ? ' chat-msg-new' : '');
-    div.innerHTML = `
-        ${!msg.mio ? `<span class="chat-msg-autor">${escapeHtml(msg.autor)}</span>` : ''}
-        <div class="chat-bubble">${escapeHtml(msg.contenido)}</div>
-        <span class="chat-msg-hora">${escapeHtml(msg.created_at)}</span>
-    `;
+    div.innerHTML =
+        (!msg.mio ? '<span class="chat-msg-autor">' + _ugfEscape(msg.autor) + '</span>' : '') +
+        '<div class="chat-bubble">' + _ugfEscape(msg.contenido) + '</div>' +
+        '<span class="chat-msg-hora">' + _ugfEscape(msg.created_at) + '</span>';
     mensajes.appendChild(div);
 }
 
-function scrollChatAbajo() {
+function _ugfScrollAbajo() {
     const mensajes = document.getElementById('modal-chat-mensajes');
     if (mensajes) mensajes.scrollTop = mensajes.scrollHeight;
 }
 
-function escapeHtml(str) {
-    return String(str ?? '')
+function _ugfEscape(str) {
+    return String(str || '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
 }
 
-// Cerrar modal al hacer clic en el overlay
-document.getElementById('modal-chat-beca')?.addEventListener('click', function(e) {
-    if (e.target === this) cerrarChatBeca();
+// ── Cerrar modal con Escape o click en overlay ───────────────────
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('modal-chat-beca');
+    if (modal && e.target === modal) window.cerrarChatBeca();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') window.cerrarChatBeca();
 });
 
-// Cerrar modal con Escape
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') cerrarChatBeca();
+console.log('[UGF Becas] JS cargado. Funciones:', {
+    postularBeca: typeof window.postularBeca,
+    toggleGuardar: typeof window.toggleGuardar,
+    abrirChatBeca: typeof window.abrirChatBeca,
+    CSRF: UGF_CSRF ? 'OK (' + UGF_CSRF.substring(0, 8) + '...)' : 'FALTANTE'
 });
 </script>
 @endpush

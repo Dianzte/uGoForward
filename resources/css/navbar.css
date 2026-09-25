@@ -293,37 +293,8 @@ a {
 }
 .user-dropdown-logout:hover svg { color: #ff6b6b; }
 
-.burger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  margin-left: auto;
-}
+/* (duplicados eliminados — ver definiciones arriba en líneas 148–190) */
 
-.burger span {
-  display: block;
-  width: 24px;
-  height: 1.5px;
-  background: var(--white);
-  transition: 0.3s ease;
-}
-
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  padding: 1rem 2rem 1.5rem;
-  gap: 0.75rem;
-  border-top: 1px solid rgba(100,200,255,0.06);
-  background: rgba(4,21,37,0.98);
-}
-
-.mobile-menu.open { display: flex; }
-.mobile-menu a { color: var(--text-2); font-size: 1rem; font-weight: 500; padding: 0.4rem 0; }
-.mobile-menu .btn-primary { width: fit-content; margin-top: 0.5rem; }
 /* ======================================================
    DARK MODE OVERRIDES — Navbar
    ====================================================== */
@@ -449,8 +420,43 @@ a {
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
 }
 
-/* Responsive — mostrar toggle también en mobile */
+/* ======================================================
+   RESPONSIVE — Navbar breakpoints
+   ====================================================== */
+
+/* ── Tablet y Móvil (≤ 768px) ────────────────────────── */
 @media (max-width: 768px) {
+  /* Ocultar enlaces y acciones de escritorio */
+  .nav-links {
+    display: none;
+  }
+
+  .nav-actions .btn-ghost,
+  .nav-actions .btn-primary,
+  .nav-actions .user-name,
+  .nav-actions .lang-switcher,
+  .nav-actions .user-menu,
+  .nav-actions .theme-toggle {
+    display: none;
+  }
+
+  /* Mostrar el botón hamburguesa */
+  .burger {
+    display: flex;
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Reducir padding del nav-inner en móvil */
+  .nav-inner {
+    padding: 0 1rem;
+    gap: 0.75rem;
+  }
+
+  /* El theme toggle va dentro del menú móvil, no necesitamos el de desktop */
   .theme-toggle {
     width: 36px;
     height: 36px;
@@ -459,6 +465,38 @@ a {
   .theme-toggle svg {
     width: 16px;
     height: 16px;
+  }
+
+  /* El mobile-menu ocupa el ancho completo de forma legible */
+  .mobile-menu {
+    padding: 1rem 1.25rem 1.5rem;
+  }
+
+  .mobile-menu a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+  }
+}
+
+/* ── Móvil mínimo (≤ 480px) ──────────────────────────── */
+@media (max-width: 480px) {
+  .nav-inner {
+    padding: 0 0.75rem;
+  }
+
+  .nav-logo {
+    font-size: 1.1rem;
+  }
+
+  .mobile-menu {
+    padding: 0.85rem 1rem 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .mobile-lang {
+    font-size: 0.78rem;
   }
 }
 
@@ -497,4 +535,27 @@ a {
 .lang-divider {
   color: rgba(100, 200, 255, 0.25);
   font-size: 0.75rem;
+}
+
+/* ── iPhone SE estricto (≤ 375px) ────────────────────────── */
+@media (max-width: 375px) {
+  .nav-inner {
+    padding: 0 0.6rem;
+    gap: 0.5rem;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-size: 1rem;
+  }
+
+  .burger {
+    padding: 6px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .mobile-menu {
+    padding: 0.75rem 0.85rem 1.25rem;
+  }
 }

@@ -133,6 +133,48 @@
         border-color: rgba(99, 102, 241, 0.5) !important;
         box-shadow: 0 0 0 3px rgba(99,102,241,0.15) !important;
     }
+    .dark .faq-header:hover {
+        /* placeholder para que el bloque no quede vacío */
+    }
+
+    /* ===== RESPONSIVE — iPhone SE / Móvil (≤ 480px) ===== */
+    @media (max-width: 480px) {
+        /* El widget se pega más al borde inferior-izquierdo */
+        #chatbot-widget {
+            bottom: 70px !important;   /* arriba del dock/navbar inferior */
+            left: 12px !important;
+            max-height: calc(100vh - 5rem) !important;
+        }
+
+        /* La ventana del chat ocupa casi todo el ancho en móvil */
+        #chatbot-window {
+            width: calc(100vw - 24px) !important;
+            max-height: calc(100vh - 9rem) !important;
+        }
+
+        /* El área de mensajes se comprime un poco */
+        #chatbot-messages {
+            max-height: min(300px, calc(100vh - 20rem)) !important;
+        }
+    }
+
+    /* ===== iPhone SE estricto (≤ 375px) ===== */
+    @media (max-width: 375px) {
+        #chatbot-widget {
+            bottom: 64px !important;
+            left: 8px !important;
+        }
+
+        #chatbot-window {
+            width: calc(100vw - 16px) !important;
+        }
+
+        /* Botón flotante ligeramente más pequeño */
+        #chatbot-toggle-btn {
+            width: 52px !important;
+            height: 52px !important;
+        }
+    }
 </style>
 
 <div id="chatbot-widget" class="fixed bottom-6 left-6 z-50 font-sans flex flex-col items-start" style="max-height: calc(100vh - 3rem);">

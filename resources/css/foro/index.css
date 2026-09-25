@@ -530,3 +530,33 @@ body {
         padding: 20px;
     }
 }
+
+/* ── Móvil (≤ 480px) ─────────────────────────────────── */
+@media (max-width: 480px) {
+    .foro-header {
+        padding: 75px 0 20px;
+    }
+
+    .header-titles .main-title {
+        font-size: clamp(1.8rem, 8vw, 2.2rem);
+    }
+
+    .thread-card {
+        padding: 18px;
+    }
+
+    .threads-sidebar {
+        padding: 16px;
+    }
+}
+
+/* ── Móvil mínimo (≤ 360px) ─────────────────────────── */
+@media (max-width: 360px) {
+    .foro-header {
+        padding: 68px 0 16px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+}

@@ -52,4 +52,49 @@
   max-width: 1160px;
   margin: 0 auto;
   padding: 2rem 2rem;
+  box-sizing: border-box;
+}
+
+/* ── Tablet (≤ 768px) ─────────────────────────── */
+@media (max-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .footer {
+    padding: 2.5rem 0 0;
+  }
+}
+
+/* ── Móvil (≤ 480px) ──────────────────────────── */
+@media (max-width: 480px) {
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .container {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .footer-bottom {
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* ── iPhone SE (≤ 375px) ──────────────────────── */
+@media (max-width: 375px) {
+  .container {
+    padding: 1.25rem 1rem;
+  }
+
+  .footer {
+    padding: 2rem 0 0;
+  }
 }

@@ -20,7 +20,7 @@ class BecaController extends Controller
      */
     public function index()
     {
-       $becas = Beca::paginate(12);
+       $becas = Beca::with(['universidad', 'imagen'])->paginate(12);
        $universidades = Universidad::get();
 
        // Cargar estados de interacción para el usuario autenticado

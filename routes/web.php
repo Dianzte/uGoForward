@@ -37,10 +37,19 @@ Route::get('/homepage', function () {
 });
 
 
+// ============================================================
 // --- BECAS ---
+// IMPORTANTE: las rutas específicas van ANTES del wildcard {id}
+// ============================================================
 Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
-Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
-Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
+Route::get('/becas/index', [BecaController::class, 'filtrar'])->name('becas.filtrar');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
+    Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
+});
+
+// Wildcard al FINAL para que no capture 'crear' ni 'index'
 Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
 
 
@@ -71,16 +80,6 @@ Route::middleware('auth')->group(function(){
 Route::get('/foro', [ForoController::class, 'index'])->name('foro.index');
 Route::get('/foro/{foro:slug}', [ForoController::class, 'show'])->name('foro.show');
 Route::post('/foro/{ejemplo:slug}', [ComentarioController::class, 'store'])->name('comentario.store');
-
-Route::get('/becas', [BecaController::class, 'index'])->name('becas.index');
-Route::get('/becas/index', [BecaController::class, 'filtrar'])->name('becas.filtrar');
-
-Route::middleware('auth')->group(function(){
-    Route::get('/becas/crear', [BecaController::class, 'create'])->name('becas.create');
-    Route::post('/becas/crear', [BecaController::class, 'store'])->name('becas.store');
-});
-
-Route::get('/becas/{id}', [BecaController::class, 'show'])->name('becas.show');
 
 Route::get('/api/becas-calendario/eventos', [BecaCalendarioController::class, 'obtenerEventos']);
 

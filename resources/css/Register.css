@@ -20,7 +20,7 @@ html, body {
   align-items: center;
   justify-content: center;
   font-family: 'Raleway', sans-serif;
-  overflow: hidden;
+  overflow-x: hidden; /* Permitir scroll vertical para teclado virtual en móvil */
 }
 
 body::before {
@@ -469,9 +469,28 @@ body::before {
 }
 
 @media (max-width: 620px) {
-  .scene { min-height: unset; }
+  .scene { min-height: unset; width: min(460px, 95vw); }
   .card-flipper { min-height: unset; }
   .face { position: relative; flex-direction: column; }
-  .panel-left { padding: 40px 32px 32px; }
-  .panel-right, .panel-form { padding: 36px 32px 44px; }
+  /* Ocultar el panel decorativo: el formulario ocupa toda la tarjeta */
+  .panel-left { display: none; }
+  .panel-right, .panel-form {
+    padding: 40px 28px 50px;
+    flex: 1;
+  }
+}
+
+/* Móvil mínimo (≤ 400px) */
+@media (max-width: 400px) {
+  .scene {
+    width: 100%;
+  }
+  .face {
+    border-radius: 0;
+    min-height: 100vh;
+  }
+  .panel-right, .panel-form {
+    padding: 36px 20px 40px;
+    width: 100%;
+  }
 }

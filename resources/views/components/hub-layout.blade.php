@@ -174,22 +174,56 @@
 </div>
 
 <script>
-    // ── Sidebar toggle mobile ──
-    const sidebar = document.getElementById('hubSidebar');
+    // ── Sidebar toggle (responsive: 1024px breakpoint) ──
+    const sidebar   = document.getElementById('hubSidebar');
     const toggleBtn = document.getElementById('sidebarToggle');
 
-    if (window.innerWidth <= 768) {
-        if (toggleBtn) toggleBtn.style.display = 'flex';
+    const BREAKPOINT = 1024;
+
+    function syncToggleVisibility() {
+        if (!toggleBtn) return;
+        if (window.innerWidth <= BREAKPOINT) {
+            toggleBtn.style.display = 'flex';
+        } else {
+            toggleBtn.style.display = 'none';
+            // Cerrar sidebar si se agranda la pantalla
+            sidebar?.classList.remove('mobile-open');
+        }
     }
 
-    toggleBtn?.addEventListener('click', () => {
-        sidebar.classList.toggle('mobile-open');
+    // Inicialización al cargar
+    syncToggleVisibility();
+
+    // Reactivar en resize con ResizeObserver (más eficiente que window resize)
+    if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(syncToggleVisibility);
+        ro.observe(document.documentElement);
+    } else {
+        window.addEventListener('resize', syncToggleVisibility, { passive: true });
+    }
+
+    // Abrir/cerrar sidebar
+    toggleBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sidebar?.classList.toggle('mobile-open');
     });
 
+    // Cerrar sidebar al hacer clic fuera
     document.addEventListener('click', (e) => {
-        if (!sidebar.contains(e.target) && !toggleBtn?.contains(e.target)) {
+        if (sidebar && toggleBtn &&
+            !sidebar.contains(e.target) &&
+            !toggleBtn.contains(e.target)) {
             sidebar.classList.remove('mobile-open');
         }
+    });
+
+    // Cerrar sidebar al navegar (clic en cualquier enlace del sidebar)
+    sidebar?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= BREAKPOINT) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
     });
 
     // ── Auto-dismiss flash messages ──

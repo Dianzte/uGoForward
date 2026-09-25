@@ -459,10 +459,49 @@ a { text-decoration: none; color: inherit; }
 .profile-field input:disabled { opacity: 0.55; cursor: not-allowed; }
 .profile-form-actions { display: flex; gap: 0.8rem; margin-top: 0.3rem; }
 
+/* ── Tablet (≤ 1024px): el grid de 260px+1fr queda estrecho ─── */
+@media (max-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 220px 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .profile-grid { grid-template-columns: 1fr; }
   .profile-header { margin-top: -50px; }
   .profile-avatar { width: 100px; height: 100px; }
+  .profile-identity { min-width: 0; }
+  .profile-identity h1 { font-size: 1.4rem; }
+}
+
+/* ── Móvil (≤ 480px): formularios full-width ───────────── */
+@media (max-width: 480px) {
+  .profile-form {
+    padding: 1rem;
+  }
+
+  .profile-field input,
+  .profile-field select,
+  .profile-field textarea {
+    width: 100%;
+    font-size: 1rem; /* Evitar zoom en iOS al enfocar */
+    min-height: 44px;
+  }
+
+  .profile-form-actions {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .profile-form-actions .btn-primary,
+  .profile-form-actions .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-card {
+    padding: 1rem;
+  }
 }
 
 

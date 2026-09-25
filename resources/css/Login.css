@@ -19,7 +19,7 @@
       align-items: center;
       justify-content: center;
       font-family: 'Raleway', sans-serif;
-      overflow: hidden;
+      overflow-x: hidden; /* Permitir scroll vertical para teclado virtual en móvil */
     }
  
     body::before {
@@ -328,9 +328,33 @@
     }
  
     @media (max-width: 620px) {
-      .card { flex-direction: column; min-height: unset; }
-      .panel-left { padding: 40px 32px 32px; }
-      .panel-right { padding: 36px 32px 44px; }
+      .card {
+        flex-direction: column;
+        min-height: unset;
+        width: min(460px, 95vw);
+      }
+      /* Ocultar el panel decorativo en móvil: el formulario ocupa todo */
+      .panel-left {
+        display: none;
+      }
+      .panel-right {
+        padding: 40px 28px 50px;
+        flex: 1;
+      }
+    }
+
+    /* ── Móvil mínimo (≤ 400px) ─── */
+    @media (max-width: 400px) {
+      .card {
+        width: 100%;
+        border-radius: 0;
+        min-height: 100vh;
+        align-items: center;
+      }
+      .panel-right {
+        padding: 36px 20px 40px;
+        width: 100%;
+      }
     }
     @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
 

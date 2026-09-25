@@ -697,7 +697,7 @@
                     <p class="historia-quote">
                         {{ __('UGF was born from the mind of a high school student who could not afford university. Today it is the platform that connects Salvadoran talent with real opportunities, regardless of economic background.') }}
                     </p>
-                    <a href="#" class="btn-primary">{{ __('Learn the full story →') }}</a>
+                    <a href="https://integracion.gob.sv" target="_blank" rel="noopener noreferrer" class="btn-primary">{{ __('Conoce más sobre el tema →') }}</a>
                 </div>
                 <div class="mvv-cards">
                     <div class="mvv-card" data-reveal>

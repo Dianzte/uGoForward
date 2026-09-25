@@ -16,6 +16,13 @@ class BecaGuardadaController extends Controller
     {
         $user = Auth::user();
 
+        // Solo estudiantes pueden guardar becas
+        if ($user->role !== 'estudiante') {
+            return response()->json([
+                'error' => 'Solo los estudiantes pueden guardar becas.',
+            ], 403);
+        }
+
         $existente = BecaGuardada::where('user_id', $user->id)
                                  ->where('beca_id', $beca->id)
                                  ->first();

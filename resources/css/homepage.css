@@ -1989,7 +1989,7 @@ a {
 .floating-compass-widget {
   position: fixed;
   right: 25px;
-  bottom: 85px;
+  bottom: 30px;
   z-index: 90;
   width: 58px;
   height: 58px;
@@ -2561,4 +2561,87 @@ a {
 
 .dark .faq-header:hover {
   color: var(--teal);
+}
+
+/* ==========================================================================
+   RESPONSIVE — Floating Elements (Dock, Compass, Chatbot) — iPhone SE / Móvil
+   ========================================================================== */
+
+/* ── Tablet pequeña / móvil (≤ 640px) ────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  /* ── Floating Dock: reducir padding y gap ─────────────────────── */
+  .floating-marine-dock {
+    padding: 0.35rem 0.6rem;
+    gap: 0.25rem;
+    bottom: 16px;
+    max-width: 96vw;
+  }
+
+  .dock-item {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+}
+
+/* ── iPhone SE y móviles ≤ 480px ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* ── Dock: solo íconos, sin texto, para que quepa en 375px ────── */
+  .floating-marine-dock {
+    padding: 0.35rem 0.5rem;
+    gap: 0.15rem;
+    bottom: 12px;
+    border-radius: 40px;
+  }
+
+  .dock-item {
+    padding: 0.5rem 0.6rem;
+    font-size: 0;          /* ocultar texto */
+    gap: 0;
+    min-width: 40px;
+    min-height: 40px;
+    justify-content: center;
+  }
+
+  /* Mantener el ícono SVG/emoji visible */
+  .dock-item svg,
+  .dock-item span:first-child {
+    font-size: 1rem;        /* restaurar tamaño del ícono */
+  }
+
+  /* ── Brújula: moverla más arriba para no tapar la dock ──────── */
+  .floating-compass-widget {
+    bottom: 72px;           /* por encima del dock (12px dock + 44px altura + 16px gap) */
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .compass-needle {
+    width: 3px;
+    height: 26px;
+  }
+}
+
+/* ── iPhone SE estricto (≤ 375px) ───────────────────────────────────────── */
+@media (max-width: 375px) {
+
+  /* Dock aún más compacto */
+  .floating-marine-dock {
+    gap: 0.1rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .dock-item {
+    padding: 0.45rem 0.5rem;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  /* Brújula: ocultar en pantallas muy pequeñas donde ya hay muy poco espacio */
+  .floating-compass-widget {
+    display: none;
+  }
 }

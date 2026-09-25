@@ -19,6 +19,13 @@ class BecaChatController extends Controller
     {
         $user = Auth::user();
 
+        // Solo estudiantes pueden iniciar chats de beca
+        if ($user->role !== 'estudiante') {
+            return response()->json([
+                'error' => 'Solo los estudiantes pueden contactar a un padrino.',
+            ], 403);
+        }
+
         // Buscar sala existente para esta beca y este usuario
         $room = ChatRoom::where('beca_id', $beca->id)
                         ->where('owner_id', $user->id)
@@ -27,6 +34,11 @@ class BecaChatController extends Controller
         if (!$room) {
             // Generar un slug único: beca-{id}-user-{userId}
             $slug = 'beca-' . $beca->id . '-user-' . $user->id;
+
+            // Verificar si ya existe un slug igual (por si se creó antes y se borró)
+            if (ChatRoom::where('slug', $slug)->exists()) {
+                $slug = $slug . '-' . time();
+            }
 
             $room = ChatRoom::create([
                 'nombre'      => 'Chat Beca: ' . Str::limit(strip_tags($beca->titulo ?? ''), 40),
@@ -70,6 +82,13 @@ class BecaChatController extends Controller
     public function sendMessage(Request $request, Beca $beca)
     {
         $user = Auth::user();
+
+        // Solo estudiantes pueden enviar mensajes en el chat de beca
+        if ($user->role !== 'estudiante') {
+            return response()->json([
+                'error' => 'Sin permisos para enviar mensajes en este chat.',
+            ], 403);
+        }
 
         $validated = $request->validate([
             'contenido' => 'required|string|max:1000',

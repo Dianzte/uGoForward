@@ -13,6 +13,7 @@
           <ul class="nav-links">
               <li><a href="{{ route('index') }}">{{ __('Home') }}</a></li>
               <li><a href="{{ route('becas.index') }}">{{ __('Lista de becas') }}</a></li>
+              <li><a href="{{ route('becas.calendario') }}"> {{ __('Calendario') }}</a></li>
 
               <li>
                   <a href="{{ route('hub.feed') }}" class="nav-hub-btn">
@@ -48,13 +49,13 @@
                       </button>
 
                       <div class="user-dropdown" id="userDropdown">
-                          <a href="{{ route('perfil') }}" class="user-dropdown-item">
+                          <a href="{{ route('hub.perfil') }}" class="user-dropdown-item">
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                                   <circle cx="12" cy="7" r="4" />
                               </svg>
-                              {{ __('Perfil') }}
+                              {{ __('Ver perfil') }}
                           </a>
                           <form action="{{ route('logout') }}" method="POST" class="user-dropdown-item-form">
                               @csrf
@@ -114,13 +115,14 @@
           <a href="{{ route('index') }}#servicios">{{ __('Servicios') }}</a>
           <a href="{{ route('index') }}#universidades">{{ __('Universidades') }}</a>
           <a href="{{ route('becas.index') }}">{{ __('Lista de becas') }}</a>
+          <a href="{{ route('becas.calendario') }}">📅 {{ __('Calendario') }}</a>
           <a href="{{ route('hub.feed') }}">{{ __('UGF Hub') }}</a>
 
           @auth
               <span style="color: var(--gold, #e8c847); padding: 0.4rem 0; font-weight: 600;">
                   {{ __('Hola') }}, {{ Auth::user()->usuario }}
               </span>
-              <a href="{{ route('perfil') }}" class="user-dropdown-item">{{ __('Perfil') }}</a>
+              <a href="{{ route('hub.perfil') }}">{{ __('Ver perfil') }}</a>
               <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                   @csrf
                   <button type="submit"
@@ -174,36 +176,58 @@
           applyTheme(!isDarkMode());
       }
 
-      // ── Burger menu ────────────────────────────────────────────────────
-      document.addEventListener('DOMContentLoaded', function () {
-          var burger  = document.getElementById('burger');
-          var mobile  = document.getElementById('mobileMenu');
-          var toggleBtn   = document.getElementById('theme-toggle-btn');
+      // ── Burger menu — inicialización robusta ───────────────────────────
+      var _burgerInit = false;
+
+      function initBurger() {
+          if (_burgerInit) return;
+
+          var burger = document.getElementById('burger');
+          var mobile = document.getElementById('mobileMenu');
+
+          if (!burger || !mobile) return; // todavía no están en el DOM
+
+          _burgerInit = true;
+
+          burger.addEventListener('click', function (e) {
+              e.stopPropagation();
+              mobile.classList.toggle('open');
+          });
+
+          // Cerrar al hacer clic fuera del menú
+          document.addEventListener('click', function (e) {
+              if (!mobile.contains(e.target) && !burger.contains(e.target)) {
+                  mobile.classList.remove('open');
+              }
+          });
+      }
+
+      function initThemeToggles() {
+          var toggleBtn    = document.getElementById('theme-toggle-btn');
           var toggleMobile = document.getElementById('theme-toggle-mobile');
 
-          // Toggle de tema (desktop)
-          if (toggleBtn) {
-              toggleBtn.addEventListener('click', toggleTheme);
-          }
-          // Toggle de tema (mobile)
-          if (toggleMobile) {
-              toggleMobile.addEventListener('click', toggleTheme);
-          }
+          if (toggleBtn)    toggleBtn.addEventListener('click', toggleTheme);
+          if (toggleMobile) toggleMobile.addEventListener('click', toggleTheme);
+      }
 
-          // Burger / menú mobile
-          if (burger && mobile) {
-              burger.addEventListener('click', function () {
-                  mobile.classList.toggle('open');
-              });
-          }
-
-          // Scroll: navbar scrolled class
+      function initScroll() {
           window.addEventListener('scroll', function () {
               var navbar = document.getElementById('navbar');
               if (navbar) {
                   navbar.classList.toggle('scrolled', window.scrollY > 10);
               }
           }, { passive: true });
+      }
+
+      // Intentar inmediatamente (el script inline ya tiene el navbar en el DOM)
+      initBurger();
+      initThemeToggles();
+      initScroll();
+
+      // Fallback por si el DOM aún no estaba listo
+      document.addEventListener('DOMContentLoaded', function () {
+          initBurger();
+          initThemeToggles();
       });
 
       // ── Escuchar cambios de preferencia del sistema en tiempo real ─────
